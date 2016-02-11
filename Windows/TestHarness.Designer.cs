@@ -33,9 +33,12 @@
             this.orderChk = new System.Windows.Forms.CheckBox();
             this.TreeOutputList = new System.Windows.Forms.ListBox();
             this.IterateBtn = new System.Windows.Forms.Button();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.SerializationTab = new System.Windows.Forms.TabPage();
+            this.SerializeBtn = new System.Windows.Forms.Button();
+            this.DeserializeBtn = new System.Windows.Forms.Button();
             this.TestMenu.SuspendLayout();
             this.EnumerateTab.SuspendLayout();
+            this.SerializationTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // TestMenu
@@ -44,7 +47,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TestMenu.Controls.Add(this.EnumerateTab);
-            this.TestMenu.Controls.Add(this.tabPage2);
+            this.TestMenu.Controls.Add(this.SerializationTab);
             this.TestMenu.Location = new System.Drawing.Point(12, 12);
             this.TestMenu.Name = "TestMenu";
             this.TestMenu.SelectedIndex = 0;
@@ -97,15 +100,36 @@
             this.IterateBtn.UseVisualStyleBackColor = true;
             this.IterateBtn.Click += new System.EventHandler(this.OnIterateClick);
             // 
-            // tabPage2
+            // SerializationTab
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(518, 474);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.SerializationTab.Controls.Add(this.DeserializeBtn);
+            this.SerializationTab.Controls.Add(this.SerializeBtn);
+            this.SerializationTab.Location = new System.Drawing.Point(4, 22);
+            this.SerializationTab.Name = "SerializationTab";
+            this.SerializationTab.Padding = new System.Windows.Forms.Padding(3);
+            this.SerializationTab.Size = new System.Drawing.Size(518, 474);
+            this.SerializationTab.TabIndex = 1;
+            this.SerializationTab.Text = "Serialization Test";
+            this.SerializationTab.UseVisualStyleBackColor = true;
+            // 
+            // SerializeBtn
+            // 
+            this.SerializeBtn.Location = new System.Drawing.Point(163, 152);
+            this.SerializeBtn.Name = "SerializeBtn";
+            this.SerializeBtn.Size = new System.Drawing.Size(138, 38);
+            this.SerializeBtn.TabIndex = 0;
+            this.SerializeBtn.Text = "Serialize";
+            this.SerializeBtn.UseVisualStyleBackColor = true;
+            this.SerializeBtn.Click += new System.EventHandler(this.SerializeBtn_Click);
+            // 
+            // DeserializeBtn
+            // 
+            this.DeserializeBtn.Location = new System.Drawing.Point(163, 216);
+            this.DeserializeBtn.Name = "DeserializeBtn";
+            this.DeserializeBtn.Size = new System.Drawing.Size(138, 38);
+            this.DeserializeBtn.TabIndex = 1;
+            this.DeserializeBtn.Text = "Desrialize";
+            this.DeserializeBtn.UseVisualStyleBackColor = true;
             // 
             // TestHarness
             // 
@@ -118,6 +142,7 @@
             this.TestMenu.ResumeLayout(false);
             this.EnumerateTab.ResumeLayout(false);
             this.EnumerateTab.PerformLayout();
+            this.SerializationTab.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -128,8 +153,10 @@
         private System.Windows.Forms.TabPage EnumerateTab;
         private System.Windows.Forms.ListBox TreeOutputList;
         private System.Windows.Forms.Button IterateBtn;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage SerializationTab;
         private System.Windows.Forms.CheckBox orderChk;
+        private System.Windows.Forms.Button DeserializeBtn;
+        private System.Windows.Forms.Button SerializeBtn;
     }
 }
 

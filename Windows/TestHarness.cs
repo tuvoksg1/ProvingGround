@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Windows.Models.IterateTab;
+using Windows.Models.Serialization;
 
 namespace Windows
 {
@@ -19,6 +16,9 @@ namespace Windows
 
         private void OnIterateClick(object sender, EventArgs e)
         {
+            var date = DateTime.Parse("Tue, 31 Mar 2015 23:00:00 GMT");
+
+            MessageBox.Show(date.ToString());
             //TreeOutputList.Items.Clear();
             //var evaluateOrder = orderChk.Checked ? EvaluationOrder.ParentFirst : EvaluationOrder.ChildrenFirst;
 
@@ -45,7 +45,7 @@ namespace Windows
             //    }
             //}
 
-            EvaluateNodes();
+            //EvaluateNodes();
         }
 
         private void EvaluateNodes()
@@ -105,6 +105,25 @@ namespace Windows
             }
 
             return result;
+        }
+
+        private void SerializeBtn_Click(object sender, EventArgs e)
+        {
+            var data = new ComplexObject
+            {
+                Name = "Sample",
+                Identifier = Guid.NewGuid(),
+                Settings = new SerializableDictionary<string, string>
+                {
+                    {"Name", "Fola"},
+                    {"Company", "MaritzCX"},
+                    {"Project", "Pledge"}
+                }
+            };
+
+            var dataXml = data.SerializeToXml();
+
+            MessageBox.Show(@"Done");
         }
     }
 }
