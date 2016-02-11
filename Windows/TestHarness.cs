@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using Windows.Models.IterateTab;
@@ -122,6 +121,15 @@ namespace Windows
             };
 
             var dataXml = data.SerializeToXml();
+
+            MessageBox.Show(@"Done");
+        }
+
+        private void DeserializeBtn_Click(object sender, EventArgs e)
+        {
+            var dataXml = @"C:\Users\Fola\XmlData.txt";
+
+            var data = ComplexObject.DeserializeFromFile(dataXml);
 
             MessageBox.Show(@"Done");
         }

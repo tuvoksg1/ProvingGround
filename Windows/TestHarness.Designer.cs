@@ -34,8 +34,8 @@
             this.TreeOutputList = new System.Windows.Forms.ListBox();
             this.IterateBtn = new System.Windows.Forms.Button();
             this.SerializationTab = new System.Windows.Forms.TabPage();
-            this.SerializeBtn = new System.Windows.Forms.Button();
             this.DeserializeBtn = new System.Windows.Forms.Button();
+            this.SerializeBtn = new System.Windows.Forms.Button();
             this.TestMenu.SuspendLayout();
             this.EnumerateTab.SuspendLayout();
             this.SerializationTab.SuspendLayout();
@@ -112,6 +112,16 @@
             this.SerializationTab.Text = "Serialization Test";
             this.SerializationTab.UseVisualStyleBackColor = true;
             // 
+            // DeserializeBtn
+            // 
+            this.DeserializeBtn.Location = new System.Drawing.Point(163, 216);
+            this.DeserializeBtn.Name = "DeserializeBtn";
+            this.DeserializeBtn.Size = new System.Drawing.Size(138, 38);
+            this.DeserializeBtn.TabIndex = 1;
+            this.DeserializeBtn.Text = "Desrialize";
+            this.DeserializeBtn.UseVisualStyleBackColor = true;
+            this.DeserializeBtn.Click += new System.EventHandler(this.DeserializeBtn_Click);
+            // 
             // SerializeBtn
             // 
             this.SerializeBtn.Location = new System.Drawing.Point(163, 152);
@@ -121,15 +131,6 @@
             this.SerializeBtn.Text = "Serialize";
             this.SerializeBtn.UseVisualStyleBackColor = true;
             this.SerializeBtn.Click += new System.EventHandler(this.SerializeBtn_Click);
-            // 
-            // DeserializeBtn
-            // 
-            this.DeserializeBtn.Location = new System.Drawing.Point(163, 216);
-            this.DeserializeBtn.Name = "DeserializeBtn";
-            this.DeserializeBtn.Size = new System.Drawing.Size(138, 38);
-            this.DeserializeBtn.TabIndex = 1;
-            this.DeserializeBtn.Text = "Desrialize";
-            this.DeserializeBtn.UseVisualStyleBackColor = true;
             // 
             // TestHarness
             // 
