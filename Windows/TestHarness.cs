@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Windows.Models.IterateTab;
@@ -132,6 +133,16 @@ namespace Windows
             var data = ComplexObject.DeserializeFromFile(dataXml);
 
             MessageBox.Show(@"Done");
+        }
+
+        private void GetFilesBtn_Click(object sender, EventArgs e)
+        {
+            const string directory = @"C:\Users\sonoikf\Code\Common\PledgeMCX\Development\Pledge\netwrite\Export";
+            const string pattern = "PledgeConfiguration_2*";
+
+            var count = Directory.GetFiles(directory, pattern);
+
+            MessageBox.Show($"Detected {count.Length} files in the directory");
         }
     }
 }

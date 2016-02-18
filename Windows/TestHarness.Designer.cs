@@ -36,9 +36,12 @@
             this.SerializationTab = new System.Windows.Forms.TabPage();
             this.DeserializeBtn = new System.Windows.Forms.Button();
             this.SerializeBtn = new System.Windows.Forms.Button();
+            this.IOTab = new System.Windows.Forms.TabPage();
+            this.GetFilesBtn = new System.Windows.Forms.Button();
             this.TestMenu.SuspendLayout();
             this.EnumerateTab.SuspendLayout();
             this.SerializationTab.SuspendLayout();
+            this.IOTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // TestMenu
@@ -48,6 +51,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TestMenu.Controls.Add(this.EnumerateTab);
             this.TestMenu.Controls.Add(this.SerializationTab);
+            this.TestMenu.Controls.Add(this.IOTab);
             this.TestMenu.Location = new System.Drawing.Point(12, 12);
             this.TestMenu.Name = "TestMenu";
             this.TestMenu.SelectedIndex = 0;
@@ -132,6 +136,27 @@
             this.SerializeBtn.UseVisualStyleBackColor = true;
             this.SerializeBtn.Click += new System.EventHandler(this.SerializeBtn_Click);
             // 
+            // IOTab
+            // 
+            this.IOTab.Controls.Add(this.GetFilesBtn);
+            this.IOTab.Location = new System.Drawing.Point(4, 22);
+            this.IOTab.Name = "IOTab";
+            this.IOTab.Padding = new System.Windows.Forms.Padding(3);
+            this.IOTab.Size = new System.Drawing.Size(518, 474);
+            this.IOTab.TabIndex = 2;
+            this.IOTab.Text = "IO Test";
+            this.IOTab.UseVisualStyleBackColor = true;
+            // 
+            // GetFilesBtn
+            // 
+            this.GetFilesBtn.Location = new System.Drawing.Point(33, 25);
+            this.GetFilesBtn.Name = "GetFilesBtn";
+            this.GetFilesBtn.Size = new System.Drawing.Size(146, 40);
+            this.GetFilesBtn.TabIndex = 0;
+            this.GetFilesBtn.Text = "Get Files Test";
+            this.GetFilesBtn.UseVisualStyleBackColor = true;
+            this.GetFilesBtn.Click += new System.EventHandler(this.GetFilesBtn_Click);
+            // 
             // TestHarness
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -144,6 +169,7 @@
             this.EnumerateTab.ResumeLayout(false);
             this.EnumerateTab.PerformLayout();
             this.SerializationTab.ResumeLayout(false);
+            this.IOTab.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -158,6 +184,8 @@
         private System.Windows.Forms.CheckBox orderChk;
         private System.Windows.Forms.Button DeserializeBtn;
         private System.Windows.Forms.Button SerializeBtn;
+        private System.Windows.Forms.TabPage IOTab;
+        private System.Windows.Forms.Button GetFilesBtn;
     }
 }
 
