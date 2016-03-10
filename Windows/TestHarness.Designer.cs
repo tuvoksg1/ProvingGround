@@ -37,11 +37,17 @@
             this.DeserializeBtn = new System.Windows.Forms.Button();
             this.SerializeBtn = new System.Windows.Forms.Button();
             this.IOTab = new System.Windows.Forms.TabPage();
+            this.StreamBtn = new System.Windows.Forms.Button();
             this.GetFilesBtn = new System.Windows.Forms.Button();
+            this.ElasticTab = new System.Windows.Forms.TabPage();
+            this.LoadBtn = new System.Windows.Forms.Button();
+            this.IndexBtn = new System.Windows.Forms.Button();
+            this.QueryBtn = new System.Windows.Forms.Button();
             this.TestMenu.SuspendLayout();
             this.EnumerateTab.SuspendLayout();
             this.SerializationTab.SuspendLayout();
             this.IOTab.SuspendLayout();
+            this.ElasticTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // TestMenu
@@ -52,6 +58,7 @@
             this.TestMenu.Controls.Add(this.EnumerateTab);
             this.TestMenu.Controls.Add(this.SerializationTab);
             this.TestMenu.Controls.Add(this.IOTab);
+            this.TestMenu.Controls.Add(this.ElasticTab);
             this.TestMenu.Location = new System.Drawing.Point(12, 12);
             this.TestMenu.Name = "TestMenu";
             this.TestMenu.SelectedIndex = 0;
@@ -138,6 +145,7 @@
             // 
             // IOTab
             // 
+            this.IOTab.Controls.Add(this.StreamBtn);
             this.IOTab.Controls.Add(this.GetFilesBtn);
             this.IOTab.Location = new System.Drawing.Point(4, 22);
             this.IOTab.Name = "IOTab";
@@ -146,6 +154,16 @@
             this.IOTab.TabIndex = 2;
             this.IOTab.Text = "IO Test";
             this.IOTab.UseVisualStyleBackColor = true;
+            // 
+            // StreamBtn
+            // 
+            this.StreamBtn.Location = new System.Drawing.Point(33, 116);
+            this.StreamBtn.Name = "StreamBtn";
+            this.StreamBtn.Size = new System.Drawing.Size(146, 51);
+            this.StreamBtn.TabIndex = 1;
+            this.StreamBtn.Text = "Run Stream Benchmark Tests";
+            this.StreamBtn.UseVisualStyleBackColor = true;
+            this.StreamBtn.Click += new System.EventHandler(this.StreamBtn_Click);
             // 
             // GetFilesBtn
             // 
@@ -156,6 +174,49 @@
             this.GetFilesBtn.Text = "Get Files Test";
             this.GetFilesBtn.UseVisualStyleBackColor = true;
             this.GetFilesBtn.Click += new System.EventHandler(this.GetFilesBtn_Click);
+            // 
+            // ElasticTab
+            // 
+            this.ElasticTab.Controls.Add(this.QueryBtn);
+            this.ElasticTab.Controls.Add(this.LoadBtn);
+            this.ElasticTab.Controls.Add(this.IndexBtn);
+            this.ElasticTab.Location = new System.Drawing.Point(4, 22);
+            this.ElasticTab.Name = "ElasticTab";
+            this.ElasticTab.Padding = new System.Windows.Forms.Padding(3);
+            this.ElasticTab.Size = new System.Drawing.Size(518, 474);
+            this.ElasticTab.TabIndex = 3;
+            this.ElasticTab.Text = "Elastic Search";
+            this.ElasticTab.UseVisualStyleBackColor = true;
+            // 
+            // LoadBtn
+            // 
+            this.LoadBtn.Location = new System.Drawing.Point(141, 136);
+            this.LoadBtn.Name = "LoadBtn";
+            this.LoadBtn.Size = new System.Drawing.Size(166, 48);
+            this.LoadBtn.TabIndex = 1;
+            this.LoadBtn.Text = "Load Audit Data";
+            this.LoadBtn.UseVisualStyleBackColor = true;
+            this.LoadBtn.Click += new System.EventHandler(this.LoadBtn_Click);
+            // 
+            // IndexBtn
+            // 
+            this.IndexBtn.Location = new System.Drawing.Point(141, 66);
+            this.IndexBtn.Name = "IndexBtn";
+            this.IndexBtn.Size = new System.Drawing.Size(166, 48);
+            this.IndexBtn.TabIndex = 0;
+            this.IndexBtn.Text = "Create Audit Index";
+            this.IndexBtn.UseVisualStyleBackColor = true;
+            this.IndexBtn.Click += new System.EventHandler(this.IndexBtn_Click);
+            // 
+            // QueryBtn
+            // 
+            this.QueryBtn.Location = new System.Drawing.Point(141, 221);
+            this.QueryBtn.Name = "QueryBtn";
+            this.QueryBtn.Size = new System.Drawing.Size(166, 52);
+            this.QueryBtn.TabIndex = 2;
+            this.QueryBtn.Text = "Query Data";
+            this.QueryBtn.UseVisualStyleBackColor = true;
+            this.QueryBtn.Click += new System.EventHandler(this.QueryBtn_Click);
             // 
             // TestHarness
             // 
@@ -170,6 +231,7 @@
             this.EnumerateTab.PerformLayout();
             this.SerializationTab.ResumeLayout(false);
             this.IOTab.ResumeLayout(false);
+            this.ElasticTab.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -186,6 +248,11 @@
         private System.Windows.Forms.Button SerializeBtn;
         private System.Windows.Forms.TabPage IOTab;
         private System.Windows.Forms.Button GetFilesBtn;
+        private System.Windows.Forms.TabPage ElasticTab;
+        private System.Windows.Forms.Button IndexBtn;
+        private System.Windows.Forms.Button LoadBtn;
+        private System.Windows.Forms.Button StreamBtn;
+        private System.Windows.Forms.Button QueryBtn;
     }
 }
 

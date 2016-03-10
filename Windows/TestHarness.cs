@@ -2,8 +2,12 @@
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using Windows.Models.Elastic;
 using Windows.Models.IterateTab;
 using Windows.Models.Serialization;
+using Windows.Models.Stream;
+using Elasticsearch.Net.Connection;
+using Nest;
 
 namespace Windows
 {
@@ -143,6 +147,60 @@ namespace Windows
             var count = Directory.GetFiles(directory, pattern);
 
             MessageBox.Show($"Detected {count.Length} files in the directory");
+        }
+
+        private static Uri _node;
+        private static ConnectionSettings _settings;
+        private static ElasticClient _client;
+
+        private void IndexBtn_Click(object sender, EventArgs e)
+        {
+            _node = new Uri("http://localhost:9200");
+            _settings = new ConnectionSettings(_node, "auditlog");
+            _client = new ElasticClient(_settings);
+
+            var indexSettings = new IndexSettings
+            {
+                NumberOfReplicas = 1,
+                NumberOfShards = 1
+            };
+
+            _client.CreateIndex(
+                arg =>
+                    arg.Index("auditlog")
+                        .InitializeUsing(indexSettings)
+                        .AddMapping<LogEntry>(item => item.MapFromAttributes()));
+
+            MessageBox.Show(@"Index successfully created");
+        }
+
+        private void LoadBtn_Click(object sender, EventArgs e)
+        {
+            var repo = new Repository();
+            var logs = repo.GetAuditLogs();
+            var count = 0;
+
+            foreach (var log in logs)
+            {
+                count++;
+                _client.Index(log);
+            }
+
+            MessageBox.Show($"Loaded {count} logs from DB");
+        }
+
+        private void StreamBtn_Click(object sender, EventArgs e)
+        {
+            StreamProcessor.Start();
+
+            MessageBox.Show(@"Processing complete");
+        }
+
+        private void QueryBtn_Click(object sender, EventArgs e)
+        {
+            var node = new Uri("http://myserver:9200");
+            var config = new ConnectionConfiguration(node);
+            //var client = new ElasticLowLevelClient(config);
         }
     }
 }
