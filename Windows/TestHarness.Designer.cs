@@ -43,6 +43,8 @@
             this.LoadBtn = new System.Windows.Forms.Button();
             this.IndexBtn = new System.Windows.Forms.Button();
             this.QueryBtn = new System.Windows.Forms.Button();
+            this.SearchDateTxt = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.TestMenu.SuspendLayout();
             this.EnumerateTab.SuspendLayout();
             this.SerializationTab.SuspendLayout();
@@ -177,6 +179,8 @@
             // 
             // ElasticTab
             // 
+            this.ElasticTab.Controls.Add(this.label1);
+            this.ElasticTab.Controls.Add(this.SearchDateTxt);
             this.ElasticTab.Controls.Add(this.QueryBtn);
             this.ElasticTab.Controls.Add(this.LoadBtn);
             this.ElasticTab.Controls.Add(this.IndexBtn);
@@ -210,13 +214,30 @@
             // 
             // QueryBtn
             // 
-            this.QueryBtn.Location = new System.Drawing.Point(141, 221);
+            this.QueryBtn.Location = new System.Drawing.Point(141, 285);
             this.QueryBtn.Name = "QueryBtn";
             this.QueryBtn.Size = new System.Drawing.Size(166, 52);
             this.QueryBtn.TabIndex = 2;
             this.QueryBtn.Text = "Query Data";
             this.QueryBtn.UseVisualStyleBackColor = true;
             this.QueryBtn.Click += new System.EventHandler(this.QueryBtn_Click);
+            // 
+            // SearchDateTxt
+            // 
+            this.SearchDateTxt.Location = new System.Drawing.Point(190, 245);
+            this.SearchDateTxt.Name = "SearchDateTxt";
+            this.SearchDateTxt.Size = new System.Drawing.Size(117, 20);
+            this.SearchDateTxt.TabIndex = 3;
+            this.SearchDateTxt.Text = "20150601";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(154, 248);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(30, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Date";
             // 
             // TestHarness
             // 
@@ -232,6 +253,7 @@
             this.SerializationTab.ResumeLayout(false);
             this.IOTab.ResumeLayout(false);
             this.ElasticTab.ResumeLayout(false);
+            this.ElasticTab.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -253,6 +275,8 @@
         private System.Windows.Forms.Button LoadBtn;
         private System.Windows.Forms.Button StreamBtn;
         private System.Windows.Forms.Button QueryBtn;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox SearchDateTxt;
     }
 }
 

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -6,8 +8,9 @@ using Windows.Models.Elastic;
 using Windows.Models.IterateTab;
 using Windows.Models.Serialization;
 using Windows.Models.Stream;
-using Elasticsearch.Net.Connection;
+using Elasticsearch.Net;
 using Nest;
+using Newtonsoft.Json.Linq;
 
 namespace Windows
 {
@@ -155,21 +158,21 @@ namespace Windows
 
         private void IndexBtn_Click(object sender, EventArgs e)
         {
-            _node = new Uri("http://localhost:9200");
-            _settings = new ConnectionSettings(_node, "auditlog");
-            _client = new ElasticClient(_settings);
+            //_node = new Uri("http://localhost:9200");
+            //_settings = new ConnectionSettings(_node, "auditlog");
+            //_client = new ElasticClient(_settings);
 
-            var indexSettings = new IndexSettings
-            {
-                NumberOfReplicas = 1,
-                NumberOfShards = 1
-            };
+            //var indexSettings = new IndexSettings
+            //{
+            //    NumberOfReplicas = 1,
+            //    NumberOfShards = 1
+            //};
 
-            _client.CreateIndex(
-                arg =>
-                    arg.Index("auditlog")
-                        .InitializeUsing(indexSettings)
-                        .AddMapping<LogEntry>(item => item.MapFromAttributes()));
+            //_client.CreateIndex(
+            //    arg =>
+            //        arg.Index("auditlog")
+            //            .InitializeUsing(indexSettings)
+            //            .AddMapping<LogEntry>(item => item.MapFromAttributes()));
 
             MessageBox.Show(@"Index successfully created");
         }
@@ -198,9 +201,51 @@ namespace Windows
 
         private void QueryBtn_Click(object sender, EventArgs e)
         {
-            var node = new Uri("http://myserver:9200");
+            var hierarchies = HierarchySearch();
+
+            var versions = hierarchies.Where(arg => arg.Item1 == "Branch" && arg.Item2 == "GB").OrderByDescending(item => item.Item4).ToList();
+
+            if (versions.Any())
+            {
+                var parsedDate = DateTime.ParseExact(SearchDateTxt.Text, "yyyyMMdd", CultureInfo.InvariantCulture);
+                var version = versions.FirstOrDefault(arg => arg.Item4 <= parsedDate);
+
+                if (version != null)
+                {
+                    MessageBox.Show($"{version.Item3}_{version.Item1}_{version.Item2}");
+                }
+                else
+                {
+                    MessageBox.Show(@"No Matching Results");
+                }
+            }
+            else
+            {
+                MessageBox.Show(@"No Matching Results");
+            }
+        }
+
+        private static List<Tuple<string, string, string, DateTime>> HierarchySearch()
+        {
+            var node = new Uri("http://boom-box-1.boomerang.com:9200");
             var config = new ConnectionConfiguration(node);
-            //var client = new ElasticLowLevelClient(config);
+            var client = new ElasticLowLevelClient(config);
+            var result = client.SearchGet<object>("hsbc_conform", "osf_hierarchies", (arg) => arg.AddQueryString("size", "100"));
+            var root = JObject.FromObject(result.Body);
+            var hierarchies = new List<Tuple<string, string, string, DateTime>>();
+
+            foreach (var item in root["hits"]["hits"])
+            {
+                var date = item["_source"]["ctl"]["effective_date"].Value<string>();
+                var country = item["_source"]["conform"]["geography"].Value<string>();
+                var channel = item["_source"]["conform"]["channel"].Value<string>();
+
+                var parsedDate = DateTime.ParseExact(date, "yyyyMMdd", CultureInfo.InvariantCulture);
+                var tuple = Tuple.Create(channel, country, date, parsedDate);
+                hierarchies.Add(tuple);
+            }
+
+            return hierarchies;
         }
     }
 }
