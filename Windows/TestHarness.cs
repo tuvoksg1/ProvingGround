@@ -5,12 +5,14 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Windows.Models.Elastic;
+using Windows.Models.Extensions;
 using Windows.Models.IterateTab;
 using Windows.Models.Serialization;
 using Windows.Models.Stream;
 using Elasticsearch.Net;
 using Nest;
 using Newtonsoft.Json.Linq;
+//using Windows.Models.Extensions;
 
 namespace Windows
 {
@@ -116,21 +118,25 @@ namespace Windows
 
         private void SerializeBtn_Click(object sender, EventArgs e)
         {
-            var data = new ComplexObject
-            {
-                Name = "Sample",
-                Identifier = Guid.NewGuid(),
-                Settings = new SerializableDictionary<string, string>
-                {
-                    {"Name", "Fola"},
-                    {"Company", "MaritzCX"},
-                    {"Project", "Pledge"}
-                }
-            };
+            //var data = new ComplexObject
+            //{
+            //    Name = "Sample",
+            //    Identifier = Guid.NewGuid(),
+            //    Settings = new SerializableDictionary<string, string>
+            //    {
+            //        {"Name", "Fola"},
+            //        {"Company", "MaritzCX"},
+            //        {"Project", "Pledge"}
+            //    }
+            //};
 
-            var dataXml = data.SerializeToXml();
+            //var dataXml = data.SerializeToXml();
 
-            MessageBox.Show(@"Done");
+            //MessageBox.Show(@"Done");
+            var data = EnumInfo.ParseEnum<EvaluationOrder>();
+            var result = new EnumInfo(ResultType.Exception);
+
+            MessageBox.Show($"{result.Value}");
         }
 
         private void DeserializeBtn_Click(object sender, EventArgs e)

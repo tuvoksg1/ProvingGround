@@ -65,6 +65,8 @@
   <ItemGroup>
     <Compile Include="Models\Elastic\LogEntry.cs" />
     <Compile Include="Models\Elastic\Repository.cs" />
+    <Compile Include="Models\Extensions\EnumExtension.cs" />
+    <Compile Include="Models\Extensions\EnumInfo.cs" />
     <Compile Include="Models\IterateTab\BaseNode.cs" />
     <Compile Include="Models\IterateTab\Enums.cs" />
     <Compile Include="Models\IterateTab\IResult.cs" />
