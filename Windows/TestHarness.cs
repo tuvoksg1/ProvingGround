@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using Windows.Models.Elastic;
 using Windows.Models.Extensions;
 using Windows.Models.IterateTab;
+using Windows.Models.SendGrid;
 using Windows.Models.Serialization;
 using Windows.Models.Stream;
 using Elasticsearch.Net;
@@ -252,6 +253,30 @@ namespace Windows
             }
 
             return hierarchies;
+        }
+
+        private async void SendMailBtn_Click(object sender, EventArgs e)
+        {
+            var info = new MailServiceInfo
+            {
+                Host = "smtp.sendgrid.net",
+                DisplayName = "Joe Bloggs",
+                MailAccount = "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",
+                Password = "z1vylF9W2laxL38",
+                PortNumber = 10000,
+                SendAddress = "nobody@nowhere.com",
+                Timeout = 25000
+            };
+
+            var message = new EmailMessage
+            {
+                Body = "This email shows that the debug code is working",
+                Destination = "fola.sonoiki@maritzcx.com",
+                Subject = "Test Email"
+            };
+
+            var service = new EmailService(info);
+            await service.SendAsync(message);
         }
     }
 }

@@ -40,16 +40,19 @@
             this.StreamBtn = new System.Windows.Forms.Button();
             this.GetFilesBtn = new System.Windows.Forms.Button();
             this.ElasticTab = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
+            this.SearchDateTxt = new System.Windows.Forms.TextBox();
+            this.QueryBtn = new System.Windows.Forms.Button();
             this.LoadBtn = new System.Windows.Forms.Button();
             this.IndexBtn = new System.Windows.Forms.Button();
-            this.QueryBtn = new System.Windows.Forms.Button();
-            this.SearchDateTxt = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.MailTab = new System.Windows.Forms.TabPage();
+            this.SendMailBtn = new System.Windows.Forms.Button();
             this.TestMenu.SuspendLayout();
             this.EnumerateTab.SuspendLayout();
             this.SerializationTab.SuspendLayout();
             this.IOTab.SuspendLayout();
             this.ElasticTab.SuspendLayout();
+            this.MailTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // TestMenu
@@ -61,6 +64,7 @@
             this.TestMenu.Controls.Add(this.SerializationTab);
             this.TestMenu.Controls.Add(this.IOTab);
             this.TestMenu.Controls.Add(this.ElasticTab);
+            this.TestMenu.Controls.Add(this.MailTab);
             this.TestMenu.Location = new System.Drawing.Point(12, 12);
             this.TestMenu.Name = "TestMenu";
             this.TestMenu.SelectedIndex = 0;
@@ -192,6 +196,33 @@
             this.ElasticTab.Text = "Elastic Search";
             this.ElasticTab.UseVisualStyleBackColor = true;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(154, 248);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(30, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Date";
+            // 
+            // SearchDateTxt
+            // 
+            this.SearchDateTxt.Location = new System.Drawing.Point(190, 245);
+            this.SearchDateTxt.Name = "SearchDateTxt";
+            this.SearchDateTxt.Size = new System.Drawing.Size(117, 20);
+            this.SearchDateTxt.TabIndex = 3;
+            this.SearchDateTxt.Text = "20150601";
+            // 
+            // QueryBtn
+            // 
+            this.QueryBtn.Location = new System.Drawing.Point(141, 285);
+            this.QueryBtn.Name = "QueryBtn";
+            this.QueryBtn.Size = new System.Drawing.Size(166, 52);
+            this.QueryBtn.TabIndex = 2;
+            this.QueryBtn.Text = "Query Data";
+            this.QueryBtn.UseVisualStyleBackColor = true;
+            this.QueryBtn.Click += new System.EventHandler(this.QueryBtn_Click);
+            // 
             // LoadBtn
             // 
             this.LoadBtn.Location = new System.Drawing.Point(141, 136);
@@ -212,32 +243,26 @@
             this.IndexBtn.UseVisualStyleBackColor = true;
             this.IndexBtn.Click += new System.EventHandler(this.IndexBtn_Click);
             // 
-            // QueryBtn
+            // MailTab
             // 
-            this.QueryBtn.Location = new System.Drawing.Point(141, 285);
-            this.QueryBtn.Name = "QueryBtn";
-            this.QueryBtn.Size = new System.Drawing.Size(166, 52);
-            this.QueryBtn.TabIndex = 2;
-            this.QueryBtn.Text = "Query Data";
-            this.QueryBtn.UseVisualStyleBackColor = true;
-            this.QueryBtn.Click += new System.EventHandler(this.QueryBtn_Click);
+            this.MailTab.Controls.Add(this.SendMailBtn);
+            this.MailTab.Location = new System.Drawing.Point(4, 22);
+            this.MailTab.Name = "MailTab";
+            this.MailTab.Padding = new System.Windows.Forms.Padding(3);
+            this.MailTab.Size = new System.Drawing.Size(518, 474);
+            this.MailTab.TabIndex = 4;
+            this.MailTab.Text = " SendGrid Mail";
+            this.MailTab.UseVisualStyleBackColor = true;
             // 
-            // SearchDateTxt
+            // SendMailBtn
             // 
-            this.SearchDateTxt.Location = new System.Drawing.Point(190, 245);
-            this.SearchDateTxt.Name = "SearchDateTxt";
-            this.SearchDateTxt.Size = new System.Drawing.Size(117, 20);
-            this.SearchDateTxt.TabIndex = 3;
-            this.SearchDateTxt.Text = "20150601";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(154, 248);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(30, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Date";
+            this.SendMailBtn.Location = new System.Drawing.Point(175, 105);
+            this.SendMailBtn.Name = "SendMailBtn";
+            this.SendMailBtn.Size = new System.Drawing.Size(146, 33);
+            this.SendMailBtn.TabIndex = 0;
+            this.SendMailBtn.Text = "Send Mail";
+            this.SendMailBtn.UseVisualStyleBackColor = true;
+            this.SendMailBtn.Click += new System.EventHandler(this.SendMailBtn_Click);
             // 
             // TestHarness
             // 
@@ -254,6 +279,7 @@
             this.IOTab.ResumeLayout(false);
             this.ElasticTab.ResumeLayout(false);
             this.ElasticTab.PerformLayout();
+            this.MailTab.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -277,6 +303,8 @@
         private System.Windows.Forms.Button QueryBtn;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox SearchDateTxt;
+        private System.Windows.Forms.TabPage MailTab;
+        private System.Windows.Forms.Button SendMailBtn;
     }
 }
 
