@@ -37,7 +37,71 @@ namespace ElasticConsole
             var matchResult = elastic.Search<BlogPost>(s =>
                 s.Query(q => q.Match(m =>
                     m.Field(f => f.Title)
-                        .Query("test post 123"))));
+                        .Query("test post 123")
+                        .Operator(Operator.Or).
+                        MinimumShouldMatch(MinimumShouldMatch.Fixed(1)))));
+
+            Console.WriteLine(matchResult.ApiCall.Success);
+            Console.WriteLine(matchResult.Hits.Count());
+
+            foreach (var hit in matchResult.Hits)
+            {
+                Console.WriteLine(hit.Source);
+            }
+        }
+
+        private static void QueryMatchingBlogs1(IElasticClient elastic)
+        {
+            var matchResult = elastic.Search<BlogPost>(s => s
+                .Query(q => q
+                    .Bool(b => b
+                        .Must(m =>
+                            m.Match(mt1 => mt1.Field(f1 => f1.Title).Query("title")) &&
+                            m.Match(mt2 => mt2.Field(f2 => f2.Body).Query("001")))
+                    )).Sort(o => o.Ascending(p => p.Title)));
+
+            Console.WriteLine(matchResult.ApiCall.Success);
+            Console.WriteLine(matchResult.Hits.Count());
+
+            foreach (var hit in matchResult.Hits)
+            {
+                Console.WriteLine(hit.Source);
+            }
+        }
+
+        private static void QueryMatchingBlogs2(IElasticClient elastic)
+        {
+            var matchResult = elastic.Search<BlogPost>(s => s
+                .Query(q => q
+                    .Bool(b => b
+                        .Should(sh =>
+                            sh.Match(mt1 => mt1.Field(f1 => f1.Title).Query("title")) ||
+                            sh.Match(mt2 => mt2.Field(f2 => f2.Body).Query("001"))
+                        ))).Sort(o => o.Ascending(p => p.Title)));
+
+            Console.WriteLine(matchResult.ApiCall.Success);
+            Console.WriteLine(matchResult.Hits.Count());
+
+            foreach (var hit in matchResult.Hits)
+            {
+                Console.WriteLine(hit.Source);
+            }
+        }
+
+        private static void QueryMatchingBlogs3(IElasticClient elastic)
+        {
+            var matchResult = elastic.Search<BlogPost>(s => s
+                .Query(q => q
+                    .Bool(b => b
+                        .Should(sh =>
+                            sh.Match(mt1 => mt1.Field(f1 => f1.Title).Query("title")) ||
+                            sh.Match(mt2 => mt2.Field(f2 => f2.Title).Query("001")))
+                        .Must(ms =>
+                            ms.Match(mt2 => mt2.Field(f => f.Body).Query("this")))
+                        .MustNot(mn =>
+                            mn.Match(mt2 => mt2.Field(f => f.Body).Query("002"))
+                        )))
+                .Sort(o => o.Ascending(p => p.Title)));
 
             Console.WriteLine(matchResult.ApiCall.Success);
             Console.WriteLine(matchResult.Hits.Count());
