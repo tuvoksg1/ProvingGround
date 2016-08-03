@@ -15,7 +15,7 @@ namespace ElasticConsole
         [String(Name = "body", Index = FieldIndexOption.Analyzed)]
         public string Body { get; set; }
 
-        [Nested(Name = "author", IncludeInParent = true)]
+        [Nested(Name = "author", IncludeInParent = true, IncludeInRoot = true)]
         public Author Author { get; set; }
 
         public override string ToString()

@@ -7,10 +7,13 @@ namespace ElasticConsole
 {
     class Program
     {
+        private static readonly string _indexName = "blog_author_index";
+
         static void Main(string[] args)
         {
+            
             var local = new Uri("http://localhost:9200");
-            var settings = new ConnectionSettings(local).DefaultIndex("blog_post_index");
+            var settings = new ConnectionSettings(local).DefaultIndex(_indexName);
             var elastic = new ElasticClient(settings);
 
             var res = elastic.LowLevel.ClusterHealth<object>();
@@ -27,9 +30,144 @@ namespace ElasticConsole
 
             //QueryBlogs(elastic);
 
-            QueryMatchingBlogs(elastic);
+            //QueryMatchingBlogs(elastic);
+
+            //CreateNestedBlogs(elastic);
+
+            //QueryNestedBlogs(elastic);
+
+            //FilterMissingProperties(elastic);
+
+            RunDynamicQuery(elastic);
 
             Console.ReadLine();
+        }
+
+        private static void RunDynamicQuery(IElasticClient elastic)
+        {
+            const string name = "John";
+            const string surname = "Doe";
+            
+            Func<NestedQueryDescriptor<BlogPost>, NestedQueryDescriptor<BlogPost>> firstname = n => n
+                .Path(p => p.Author)
+                .Query(nq => nq
+                    .Match(nqm => nqm.Field(p => p.Author.FirstName).Query(name).Lenient()));
+
+            Func<NestedQueryDescriptor<BlogPost>, NestedQueryDescriptor<BlogPost>> lastname = n => n
+                .Path(p => p.Author)
+                .Query(nq => nq
+                    .Match(nqm => nqm.Field(p => p.Author.LastName).Query(surname).Lenient()));
+
+            Func<QueryContainerDescriptor<BlogPost>, QueryContainer> must;
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                must = m => m.Nested(n => firstname(n)) && m.Nested(n => lastname(n));
+            }
+            else
+            {
+                must = m => m.Nested(n => lastname(n));
+            }
+
+            Func<BoolQueryDescriptor<BlogPost>, BoolQueryDescriptor<BlogPost>> boolQuery = bq => bq.Must(m => must(m));
+
+            Func<QueryContainerDescriptor<BlogPost>, QueryContainer> filter = f => f
+                .Bool(b => b
+                    .Must(m2 => m2
+                        .Missing(p => p.Field(fd => fd.Body))));
+
+            Func<QueryContainerDescriptor<BlogPost>, QueryContainer> query = q => q
+                .Bool(b => boolQuery(b)
+                    .Filter(f2 => filter(f2)));
+
+            var dynamicResult = elastic.Search<BlogPost>(s => s.Query(query));
+
+            Console.WriteLine(dynamicResult.ApiCall.Success);
+            Console.WriteLine(dynamicResult.Hits.Count());
+
+            foreach (var hit in dynamicResult.Hits)
+            {
+                Console.WriteLine(hit.Source);
+            }
+        }
+
+        private static void FilterMissingProperties(IElasticClient elastic)
+        {
+            var missingResult = elastic.Search<BlogPost>(s => s
+                .Query(fq => fq
+                    .MatchAll())
+                .PostFilter(f2 => f2.Missing(p => p.Field(f3 => f3.Body))));
+
+            Console.WriteLine(missingResult.ApiCall.Success);
+            Console.WriteLine(missingResult.Hits.Count());
+
+            foreach (var hit in missingResult.Hits)
+            {
+                Console.WriteLine(hit.Source);
+            }
+        }
+
+        private static void QueryNestedBlogs(ElasticClient elastic)
+        {
+            var nestedRes = elastic.Search<BlogPost>(s => s
+                .Query(q => q
+                    .Nested(n => n
+                        .Path(b => b.Author)
+                        .Query(nq =>
+                            nq.Match(m1 => m1.Field(f1 => f1.Author.FirstName).Query("John")) &&
+                            nq.Match(m2 => m2.Field(f2 => f2.Author.LastName).Query("Doe")))
+                    )));
+
+            Console.WriteLine(nestedRes.ApiCall.Success);
+            Console.WriteLine(nestedRes.Hits.Count());
+
+            foreach (var hit in nestedRes.Hits)
+            {
+                Console.WriteLine(hit.Source);
+            }
+        }
+
+        private static void CreateNestedBlogs(IElasticClient elastic)
+        {
+            var author1 = new Author {Id = Guid.NewGuid(), FirstName = "John", LastName = "Doe"};
+            var author2 = new Author {Id = Guid.NewGuid(), FirstName = "Notjohn", LastName = "Doe"};
+            var author3 = new Author {Id = Guid.NewGuid(), FirstName = "John", LastName = "Notdoe"};
+
+            var blogPosts = new[]
+            {
+                new BlogPost {Id = Guid.NewGuid(), Title = "test post 1", Body = "1", Author = author1},
+                new BlogPost {Id = Guid.NewGuid(), Title = "test post 2", Body = "2", Author = author2},
+                new BlogPost {Id = Guid.NewGuid(), Title = "test post 3", Body = "3", Author = author3}
+            };
+
+            foreach (var blogPost in blogPosts)
+            {
+                elastic.Index(blogPost, p => p
+                    .Id(blogPost.Id.ToString())
+                    .Refresh());
+            }
+
+            //add blog with missing property
+            var author4 = new Author
+            {
+                Id = Guid.NewGuid(),
+                FirstName = "John",
+                LastName = "Doe"
+            };
+
+            var blogPost1 = new BlogPost
+            {
+                Id = Guid.NewGuid(),
+                Title = "test post 1",
+                Body = null,
+                Author = author4
+            };
+
+            elastic.Index(blogPost1, p => p
+               .Id(blogPost1.Id.ToString())
+               .Refresh());
+
+            Console.WriteLine("Nested blogs indexed");
         }
 
         private static void QueryMatchingBlogs(IElasticClient elastic)
@@ -191,9 +329,14 @@ namespace ElasticConsole
         {
             var result = elastic.CreateIndex(new IndexName
             {
-                Name = "blog_post_index",
+                //Name = _indexName,
                 Type = typeof (BlogPost)
-            });
+            }, ci => ci
+                //.Index(_indexName)
+                .Mappings(ms => ms
+                    .Map<BlogPost>(m => m.AutoMap())
+                    .Map<Author>(m => m.AutoMap())
+                ));
 
             Console.WriteLine(result.ApiCall.Success);
         }

@@ -10,7 +10,7 @@ namespace ElasticConsole
     [ElasticsearchType(Name = "author", IdProperty = "Id")]
     public class Author
     {
-        [String(Name = "_id", Index = FieldIndexOption.NotAnalyzed)]
+        [String(Index = FieldIndexOption.NotAnalyzed)]
         public Guid? Id { get; set; }
 
         [String(Name = "first_name", Index = FieldIndexOption.Analyzed)]
