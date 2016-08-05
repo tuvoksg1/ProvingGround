@@ -111,7 +111,7 @@ namespace ElasticConsole.Data
                 _client.CreateIndex(new IndexName
                 {
                     Name = index,
-                    Type = typeof(UserModel)
+                    Type = typeof (UserModel)
                 }, ci => ci
                     .Mappings(ms => ms
                         .Map<UserModel>(m => m.AutoMap()
@@ -124,8 +124,8 @@ namespace ElasticConsole.Data
                                     .Index(FieldIndexOption.NotAnalyzed))
                                 .String(field => field
                                     .Name(name => name.OrganisationId)
-                                    .Index(FieldIndexOption.NotAnalyzed))))
-                    ));
+                                    .Index(FieldIndexOption.NotAnalyzed))
+                                .Nested<UserModel>(field => field.Name(child => child.Claims))))));
             }
 
             if (index == ClaimIndex)
@@ -316,9 +316,9 @@ namespace ElasticConsole.Data
         {
             var matchResult = _client.Search<ClaimModel>(search =>
                 search.Index(ClaimIndex)
-                    .Query(query => query.Term(term =>
-                        term.Field(field => field.Owner)
-                            .Value(orgId.ToString()))));
+                    .Query(query => query.Term(term => term
+                        .Field(field => field.Owner)
+                        .Value(orgId.ToString()))));
 
             return matchResult.ApiCall.Success ? matchResult.Hits.Select(arg => arg.Source) : new List<ClaimModel>();
         }
@@ -327,11 +327,38 @@ namespace ElasticConsole.Data
         {
             var matchResult = _client.Search<ClaimModel>(search =>
                 search.Index(ClaimIndex)
-                    .Query(query => query.Term(term =>
-                        term.Field(field => field.Owner)
-                            .Value(serviceId.ToString()))));
+                    .Query(query => query.Term(term => term
+                        .Field(field => field.Owner)
+                        .Value(serviceId.ToString()))));
 
             return matchResult.ApiCall.Success ? matchResult.Hits.Select(arg => arg.Source) : new List<ClaimModel>();
+        }
+
+        public UserModel FindUser(string userName)
+        {
+            var result = _client.Search<UserModel>(search => search
+                .Index(UserIndex)
+                .Query(query => query
+                    .Term(term => term
+                        .Field(field => field.UserName)
+                        .Value(userName))));
+
+            var total = result.Hits.Count();
+
+            if (total <= 0) return null;
+
+            Console.WriteLine($"Found {result.Hits.Count()} results...");
+
+            return result.Hits.First().Source;
+        }
+
+        public void UpdateUser(UserModel model)
+        {
+            var result = _client.Update<UserModel>(model.Id.ToString(), item => item.Doc(model).Refresh());
+
+            Console.WriteLine(result.ApiCall.Success
+                ? $"Updated user: {model.UserName}"
+                : $"Unable to update user: {model.UserName}");
         }
     }
 }

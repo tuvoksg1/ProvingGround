@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ElasticConsole.Models
@@ -20,5 +21,7 @@ namespace ElasticConsole.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        public List<ClaimModel> Claims { get; set; }
     }
 }

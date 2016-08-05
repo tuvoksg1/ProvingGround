@@ -16,7 +16,7 @@ namespace ElasticConsole.Data
 
         public void Run()
         {
-            FindClaimsForService();
+            SetClaimsForUser();
         }
 
         private void DeleteClient()
@@ -103,6 +103,37 @@ namespace ElasticConsole.Data
             foreach (var claim in claims)
             {
                 Console.WriteLine($"Claim Type: {claim.Type} - Value: {claim.Value}");
+            }
+        }
+
+        private void SetClaimsForUser()
+        {
+            const string userName = "specialUser";
+            var user = _repository.FindUser(userName);
+
+            if (user != null)
+            {
+                user.Claims.Add(new ClaimModel
+                {
+                    Id = Guid.NewGuid(),
+                    Owner = user.Id,
+                    Type = Storage.ServiceUserClaim,
+                    Value = $"{Storage.ServiceUserClaim}_claim_api"
+                });
+
+                _repository.UpdateUser(user);
+            }
+
+            user = _repository.FindUser(userName);
+
+            if (user != null)
+            {
+                Console.WriteLine($"Found {user.Claims.Count()} claims");
+
+                foreach (var claim in user.Claims)
+                {
+                    Console.WriteLine($"Claim Type: {claim.Type} - Value: {claim.Value}");
+                }
             }
         }
     }

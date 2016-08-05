@@ -14,10 +14,13 @@ namespace ElasticConsole.Models
         internal static readonly Guid WebApiId = Guid.Parse("{5F3D6950-4A1E-4B52-93B2-8D658FCA0354}");
         internal static readonly Guid AnonymousId = Guid.Parse("{F0FAB524-F422-420E-971D-D5F013C2E392}");
 
+        internal static readonly Guid TestUserId = Guid.Parse("{D3924469-2569-4BCF-B1B0-1115A7EF3414}");
+
         internal const string ServiceClaim = "passport_service";
         internal const string ServiceAdminClaim = "service_admin";
         internal const string ServiceCreatorClaim = "service_content_creator";
         internal const string ServiceUserClaim = "service_content_user";
+        private const string TenantClaim = "tenant_key";
 
         internal static List<ServiceModel> Services()
         {
@@ -183,6 +186,31 @@ namespace ElasticConsole.Models
                 });
             }
 
+            store.Add(new UserModel
+            {
+                Id = TestUserId,
+                Email = "specialuser@passport.com",
+                OrganisationId = NissanId,
+                UserName = "specialUser",
+                Claims = new List<ClaimModel>
+                {
+                    new ClaimModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Owner = TestUserId,
+                        Type = ServiceCreatorClaim,
+                        Value = $"{ServiceCreatorClaim}_claim_web"
+                    },
+                    new ClaimModel
+                    {
+                        Id = Guid.NewGuid(),
+                        Owner = TestUserId,
+                        Type = ServiceAdminClaim,
+                        Value = $"{ServiceAdminClaim}_claim_web"
+                    }
+                }
+            });
+
             return store;
         }
 
@@ -206,6 +234,30 @@ namespace ElasticConsole.Models
             FillClaims(store, ServiceClaim, "cli", new List<Guid> {FordId, HsbcId});
             FillClaims(store, ServiceClaim, "web", new List<Guid> {FordId});
             FillClaims(store, ServiceClaim, "anon", new List<Guid> {HsbcId, NissanId, FordId});
+
+            store.Add(new ClaimModel
+            {
+                Id = Guid.NewGuid(),
+                Owner = HsbcId,
+                Type = TenantClaim,
+                Value = "hsbc"
+            });
+
+            store.Add(new ClaimModel
+            {
+                Id = Guid.NewGuid(),
+                Owner = NissanId,
+                Type = TenantClaim,
+                Value = "nissan"
+            });
+
+            store.Add(new ClaimModel
+            {
+                Id = Guid.NewGuid(),
+                Owner = FordId,
+                Type = TenantClaim,
+                Value = "ford"
+            });
 
             return store;
         }
