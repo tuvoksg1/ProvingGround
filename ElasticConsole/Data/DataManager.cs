@@ -5,18 +5,18 @@ using ElasticConsole.Models;
 
 namespace ElasticConsole.Data
 {
-    internal class ClientManager
+    internal class DataManager
     {
         private readonly Repository _repository;
 
-        public ClientManager()
+        public DataManager()
         {
             _repository = new Repository();
         }
 
         public void Run()
         {
-            UpdateClient();
+            FindClaimsForService();
         }
 
         private void DeleteClient()
@@ -62,6 +62,48 @@ namespace ElasticConsole.Data
 
             Console.WriteLine($"Id after update: {model?.Id}");
             Console.WriteLine($"Client update complete for {model?.Handle}");
+        }
+
+        private void FindUsersForOrg()
+        {
+            Console.WriteLine($"Searching for users that belong to OrgId: [{Storage.NissanId}]");
+
+            var users = _repository.GetUsersForOrganisation(Storage.NissanId).ToList();
+
+            Console.WriteLine($"Found {users.Count()} users");
+
+            foreach (var user in users)
+            {
+                Console.WriteLine(user.UserName);
+            }
+        }
+
+        private void FindClaimsForOrg()
+        {
+            Console.WriteLine($"Searching for claims that belong to OrgId: [{Storage.HsbcId}]");
+
+            var claims = _repository.GetClaimsForOrganisation(Storage.HsbcId).ToList();
+
+            Console.WriteLine($"Found {claims.Count()} claims");
+
+            foreach (var claim in claims)
+            {
+                Console.WriteLine($"Claim Type: {claim.Type} - Value: {claim.Value}");
+            }
+        }
+
+        private void FindClaimsForService()
+        {
+            Console.WriteLine($"Searching for claims that belong to service Id: [{Storage.WebApiId}]");
+
+            var claims = _repository.GetClaimsForService(Storage.WebApiId).ToList();
+
+            Console.WriteLine($"Found {claims.Count()} claims");
+
+            foreach (var claim in claims)
+            {
+                Console.WriteLine($"Claim Type: {claim.Type} - Value: {claim.Value}");
+            }
         }
     }
 }

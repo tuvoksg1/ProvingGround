@@ -12,7 +12,7 @@ namespace ElasticConsole
 
         static void Main(string[] args)
         {
-            var manager = new ClientManager();
+            var manager = new DataManager();
             manager.Run();
 
             //var local = new Uri("http://localhost:9200");

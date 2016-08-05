@@ -5,13 +5,27 @@ namespace ElasticConsole.Models
 {
     internal static class Storage
     {
-        internal static List<ClientModel> Clients()
+        internal static readonly Guid HsbcId = Guid.Parse("{B21D76EE-4EE2-459C-B40D-DDA1D5AD68EB}");
+        internal static readonly Guid NissanId = Guid.Parse("{CE1C55FB-C4E6-45FA-8E5B-17BF18845CD0}");
+        internal static readonly Guid FordId = Guid.Parse("{B31E7FC8-07E7-4092-AF4E-96421FE762A0}");
+
+        internal static readonly Guid JavascriptId = Guid.Parse("{61C15BDA-713B-4DEE-B492-69593565F278}");
+        internal static readonly Guid CommandLineId = Guid.Parse("{F6155E45-3A35-4402-8B35-0537ACED20AD}");
+        internal static readonly Guid WebApiId = Guid.Parse("{5F3D6950-4A1E-4B52-93B2-8D658FCA0354}");
+        internal static readonly Guid AnonymousId = Guid.Parse("{F0FAB524-F422-420E-971D-D5F013C2E392}");
+
+        internal const string ServiceClaim = "passport_service";
+        internal const string ServiceAdminClaim = "service_admin";
+        internal const string ServiceCreatorClaim = "service_content_creator";
+        internal const string ServiceUserClaim = "service_content_user";
+
+        internal static List<ServiceModel> Services()
         {
-            var store = new List<ClientModel>
+            var store = new List<ServiceModel>
             {
-                new ClientModel
+                new ServiceModel
                 {
-                    Id = Guid.NewGuid(),
+                    Id = JavascriptId,
                     IsDisabled = false,
                     Name = "JS Client",
                     Handle = "js",
@@ -33,36 +47,9 @@ namespace ElasticConsole.Models
                     },
                     RequiresAllGrants = true
                 },
-                new ClientModel
+                new ServiceModel
                 {
-                    Id = Guid.NewGuid(),
-                    IsDisabled = false,
-                    Name = "HTML Client",
-                    Handle = "js.tokenmanager",
-                    Type = ClientType.Javascript,
-
-                    LoginRedirectLinks = new List<string>
-                    {
-                        "http://localhost:5000/oidc-client-sample.html",
-                        "http://localhost:5000/oidc-client-sample-callback.html",
-                        "http://localhost:5000/user-manager-sample.html",
-                        "http://localhost:5000/user-manager-sample-popup.html",
-                        "http://localhost:5000/user-manager-sample-silent.html",
-                        "http://localhost:5000/user-manager-sample-callback.html"
-                    },
-                    LogoutRedirectLinks = new List<string>
-                    {
-                        "http://localhost:5000/index.html"
-                    },
-                    TrustedDomains = new List<string>
-                    {
-                        "http://localhost:5000"
-                    },
-                    RequiresAllGrants = true
-                },
-                new ClientModel
-                {
-                    Id = Guid.NewGuid(),
+                    Id = CommandLineId,
                     Name = "CLI Client",
                     Handle = "commandline",
                     IsDisabled = false,
@@ -77,92 +64,9 @@ namespace ElasticConsole.Models
                         "api"
                     }
                 },
-                new ClientModel
+                new ServiceModel
                 {
-                    Id = Guid.NewGuid(),
-                    Name = "CLI Client Id",
-                    Handle = "commandlineid",
-                    IsDisabled = false,
-                    Type = ClientType.Login,
-
-                    Secrets = new List<string>
-                    {
-                        "21B5F798-BE55-42BC-8AA8-0025B903DC3B"
-                    },
-
-                    Grants = new List<string>
-                    {
-                        "api"
-                    }
-                },
-                new ClientModel
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "MVC OWIN Implicit Client",
-                    Handle = "mvc.owin.implicit",
-                    Type = ClientType.WebApp,
-                    Grants = new List<string>
-                    {
-                        "api"
-                    },
-                    LoginRedirectLinks = new List<string>
-                    {
-                        "https://localhost:44301/"
-                    },
-
-                    LogoutRedirectLinks = new List<string>
-                    {
-                        "https://localhost:44301/Home/SignoutCleanup"
-                    }
-                },
-                new ClientModel
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "MVC OWIN Hybrid Client",
-                    Handle = "mvc.owin.hybrid",
-                    Type = ClientType.WebApp,
-                    Secrets = new List<string>
-                    {
-                        "secret"
-                    },
-                    Grants = new List<string>
-                    {
-                        "read",
-                        "write",
-                        "api"
-                    },
-                    LoginRedirectLinks = new List<string>
-                    {
-                        "https://localhost:44300/"
-                    },
-
-                    LogoutRedirectLinks = new List<string>
-                    {
-                        "https://localhost:44300/",
-                        "https://localhost:44300/Home/OidcSignOut"
-                    }
-                },
-                new ClientModel
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "OpenID Connect without Client Library Sample",
-                    Handle = "nolib.client",
-                    Type = ClientType.Native,
-
-                    Grants = new List<string>
-                    {
-                        "read",
-                        "write",
-                        "api"
-                    },
-                    LoginRedirectLinks = new List<string>
-                    {
-                        "http://localhost:11716/account/signInCallback"
-                    }
-                },
-                new ClientModel
-                {
-                    Id = Guid.NewGuid(),
+                    Id = WebApiId,
                     Name = "Home Office",
                     Handle = "homeoffice",
                     Type = ClientType.WebApp,
@@ -191,9 +95,9 @@ namespace ElasticConsole.Models
 
                     //LogoutUri = "https://localhost:44308/Home/OidcSignOut"
                 },
-                new ClientModel
+                new ServiceModel
                 {
-                    Id = Guid.NewGuid(),
+                    Id = AnonymousId,
                     Name = "Anonymous",
                     Handle = "anonymous",
                     IsDisabled = false,
@@ -215,13 +119,13 @@ namespace ElasticConsole.Models
             return store;
         }
 
-        private static List<OrganisationModel> Tenants()
+        internal static List<OrganisationModel> Tenants()
         {
             var store = new List<OrganisationModel>
             {
                 new OrganisationModel
                 {
-                    Id = Guid.NewGuid(),
+                    Id = HsbcId,
                     Name = "HSBC",
                     Claim = "hsbc",
                     IsActive = true,
@@ -229,7 +133,7 @@ namespace ElasticConsole.Models
                 },
                 new OrganisationModel
                 {
-                    Id = Guid.NewGuid(),
+                    Id = NissanId,
                     Name = "Nissan",
                     Claim = "nissan",
                     IsActive = true,
@@ -237,7 +141,7 @@ namespace ElasticConsole.Models
                 },
                 new OrganisationModel
                 {
-                    Id = Guid.NewGuid(),
+                    Id = FordId,
                     Name = "Ford",
                     Claim = "ford",
                     IsActive = false,
@@ -246,6 +150,113 @@ namespace ElasticConsole.Models
             };
 
             return store;
+        }
+
+        internal static List<UserModel> Users()
+        {
+            var store = new List<UserModel>();
+
+            for (var position = 1; position < 31; position++)
+            {
+                var orgId = Guid.Empty;
+
+                if (position%3 == 0)
+                {
+                    orgId = HsbcId;
+                }
+
+                if (position % 3 == 1)
+                {
+                    orgId = FordId;
+                }
+                if (position % 3 == 2)
+                {
+                    orgId = NissanId;
+                }
+
+                store.Add(new UserModel
+                {
+                    Id = Guid.NewGuid(),
+                    OrganisationId = orgId,
+                    Email = $"user{position}@email.com",
+                    UserName = $"user{position}"
+                });
+            }
+
+            return store;
+        }
+
+        internal static List<ClaimModel> Claims()
+        {
+            var store = new List<ClaimModel>();
+            FillClaims(store, ServiceClaim);
+            FillClaims(store, ServiceAdminClaim);
+            FillClaims(store, ServiceCreatorClaim);
+            FillClaims(store, ServiceUserClaim);
+
+            store.Add(new ClaimModel
+            {
+                Id = Guid.NewGuid(),
+                Owner = AnonymousId,
+                Type = ServiceClaim,
+                Value = $"{ServiceClaim}_claim_anon"
+            });
+
+            FillClaims(store, ServiceClaim, "java", new List<Guid> {HsbcId, NissanId});
+            FillClaims(store, ServiceClaim, "cli", new List<Guid> {FordId, HsbcId});
+            FillClaims(store, ServiceClaim, "web", new List<Guid> {FordId});
+            FillClaims(store, ServiceClaim, "anon", new List<Guid> {HsbcId, NissanId, FordId});
+
+            return store;
+        }
+
+        private static void FillClaims(ICollection<ClaimModel> store, string type)
+        {
+            for (var position = 0; position < 3; position++)
+            {
+                var ownerId = Guid.Empty;
+                var claimValue = string.Empty;
+
+                if (position == 0)
+                {
+                    ownerId = JavascriptId;
+                    claimValue = $"{type}_claim_java";
+                }
+
+                if (position == 1)
+                {
+                    ownerId = CommandLineId;
+                    claimValue = $"{type}_claim_cli";
+                }
+
+                if (position == 2)
+                {
+                    ownerId = WebApiId;
+                    claimValue = $"{type}_claim_web";
+                }
+
+                store.Add(new ClaimModel
+                {
+                    Id = Guid.NewGuid(),
+                    Owner = ownerId,
+                    Type = type,
+                    Value = claimValue
+                });
+            }
+        }
+
+        private static void FillClaims(ICollection<ClaimModel> store, string type, string benafactor, IEnumerable<Guid> beneficiaries)
+        {
+            foreach (var owner in beneficiaries)
+            {
+                store.Add(new ClaimModel
+                {
+                    Id = Guid.NewGuid(),
+                    Owner = owner,
+                    Type = type,
+                    Value = $"{type}_claim_{benafactor}"
+                });
+            }
         }
     }
 }

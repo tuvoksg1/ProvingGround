@@ -6,7 +6,7 @@ namespace ElasticConsole.Models
     /// <summary>
     /// Storage model for ID3 Clients
     /// </summary>
-    public class ClientModel
+    public class ServiceModel
     {
         /// <summary>
         /// Gets or sets the identifier.
