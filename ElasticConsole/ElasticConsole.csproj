@@ -46,6 +46,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -57,6 +58,15 @@
   <ItemGroup>
     <Compile Include="Author.cs" />
     <Compile Include="BlogPost.cs" />
+    <Compile Include="Data\ClientManager.cs" />
+    <Compile Include="Data\Repository.cs" />
+    <Compile Include="Models\ClaimModel.cs" />
+    <Compile Include="Models\ClientModel.cs" />
+    <Compile Include="Models\ClientType.cs" />
+    <Compile Include="Models\ScopeModel.cs" />
+    <Compile Include="Models\Storage.cs" />
+    <Compile Include="Models\OrganisationModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

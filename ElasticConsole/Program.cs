@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using ElasticConsole.Data;
 using Elasticsearch.Net;
 using Nest;
 
@@ -7,18 +8,20 @@ namespace ElasticConsole
 {
     class Program
     {
-        private static readonly string _indexName = "blog_author_index";
+        //private static readonly string _indexName = "blog_author_index";
 
         static void Main(string[] args)
         {
-            
-            var local = new Uri("http://localhost:9200");
-            var settings = new ConnectionSettings(local).DefaultIndex(_indexName);
-            var elastic = new ElasticClient(settings);
+            var manager = new ClientManager();
+            manager.Run();
 
-            var res = elastic.LowLevel.ClusterHealth<object>();
+            //var local = new Uri("http://localhost:9200");
+            //var settings = new ConnectionSettings(local).DefaultIndex(_indexName);
+            //var elastic = new ElasticClient(settings);
 
-            Console.WriteLine(res.SuccessOrKnownError);
+            //var res = elastic.LowLevel.ClusterHealth<object>();
+
+            //Console.WriteLine(res.SuccessOrKnownError);
 
             //CreateIndex(elastic);
 
@@ -38,7 +41,7 @@ namespace ElasticConsole
 
             //FilterMissingProperties(elastic);
 
-            RunDynamicQuery(elastic);
+            //RunDynamicQuery(elastic);
 
             Console.ReadLine();
         }
