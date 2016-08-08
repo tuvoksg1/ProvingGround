@@ -113,6 +113,9 @@ namespace ElasticConsole.Data
 
             if (user != null)
             {
+                Console.WriteLine($"Found {user.Claims.Count()} claims before update");
+
+                user.Claims.Clear();
                 user.Claims.Add(new ClaimModel
                 {
                     Id = Guid.NewGuid(),
@@ -121,14 +124,14 @@ namespace ElasticConsole.Data
                     Value = $"{Storage.ServiceUserClaim}_claim_api"
                 });
 
-                _repository.UpdateUser(user);
+                //_repository.UpdateUser(user);
             }
 
             user = _repository.FindUser(userName);
 
             if (user != null)
             {
-                Console.WriteLine($"Found {user.Claims.Count()} claims");
+                Console.WriteLine($"Found {user.Claims.Count()} claims after update");
 
                 foreach (var claim in user.Claims)
                 {

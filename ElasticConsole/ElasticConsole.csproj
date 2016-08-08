@@ -64,7 +64,7 @@
     <Compile Include="Models\ServiceModel.cs" />
     <Compile Include="Models\ClientType.cs" />
     <Compile Include="Models\ScopeModel.cs" />
-    <Compile Include="Models\Storage.cs" />
+    <Compile Include="Data\Storage.cs" />
     <Compile Include="Models\OrganisationModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Program.cs" />

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using ElasticConsole.Models;
 
-namespace ElasticConsole.Models
+namespace ElasticConsole.Data
 {
     internal static class Storage
     {

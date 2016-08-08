@@ -125,7 +125,7 @@ namespace ElasticConsole.Data
                                 .String(field => field
                                     .Name(name => name.OrganisationId)
                                     .Index(FieldIndexOption.NotAnalyzed))
-                                .Nested<UserModel>(field => field.Name(child => child.Claims))))));
+                                    .Nested<UserModel>(field => field.Name(child => child.Claims))))));
             }
 
             if (index == ClaimIndex)
@@ -354,11 +354,36 @@ namespace ElasticConsole.Data
 
         public void UpdateUser(UserModel model)
         {
-            var result = _client.Update<UserModel>(model.Id.ToString(), item => item.Doc(model).Refresh());
+            var result = _client.Update<UserModel>(model.Id.ToString(), item => item.Index(UserIndex).Doc(model).Refresh());
 
             Console.WriteLine(result.ApiCall.Success
                 ? $"Updated user: {model.UserName}"
                 : $"Unable to update user: {model.UserName}");
+        }
+
+        public IEnumerable<ClaimModel> GetClaimsForEntity(Guid ownerId)
+        {
+            var matchResult = _client.Search<ClaimModel>(search =>
+                search.Index(ClaimIndex)
+                    .Query(query => query.Term(term => term
+                        .Field(field => field.Owner)
+                        .Value(ownerId.ToString()))));
+
+            return matchResult.ApiCall.Success ? matchResult.Hits.Select(arg => arg.Source) : new List<ClaimModel>();
+        }
+
+        public void AddClaimForOwner(ClaimModel claim)
+        {
+            _client.Index(claim, p => p
+                       .Index(ClaimIndex)
+                       .Id(claim.Id.ToString())
+                       .Refresh());
+        }
+
+        public void RemoveClaimFromOwner(Guid claimId)
+        {
+            _client.Delete(new DocumentPath<ClaimModel>(claimId)
+                .Index(ClaimIndex), item => item.Refresh());
         }
     }
 }
