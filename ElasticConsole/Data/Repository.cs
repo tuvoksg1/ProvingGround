@@ -86,10 +86,10 @@ namespace ElasticConsole.Data
                 _client.CreateIndex(new IndexName
                 {
                     Name = index,
-                    Type = typeof(OrganisationModel)
+                    Type = typeof(TenantModel)
                 }, ci => ci
                     .Mappings(ms => ms
-                        .Map<OrganisationModel>(m => m.AutoMap()
+                        .Map<TenantModel>(m => m.AutoMap()
                             .Properties(prop => prop
                                 .String(field => field
                                     .Name(name => name.Claim)
@@ -111,10 +111,10 @@ namespace ElasticConsole.Data
                 _client.CreateIndex(new IndexName
                 {
                     Name = index,
-                    Type = typeof (UserModel)
+                    Type = typeof (Models.User)
                 }, ci => ci
                     .Mappings(ms => ms
-                        .Map<UserModel>(m => m.AutoMap()
+                        .Map<Models.User>(m => m.AutoMap()
                             .Properties(prop => prop
                                 .String(field => field
                                     .Name(name => name.Email)
@@ -123,9 +123,9 @@ namespace ElasticConsole.Data
                                     .Name(name => name.UserName)
                                     .Index(FieldIndexOption.NotAnalyzed))
                                 .String(field => field
-                                    .Name(name => name.OrganisationId)
+                                    .Name(name => name.TenantId)
                                     .Index(FieldIndexOption.NotAnalyzed))
-                                    .Nested<UserModel>(field => field.Name(child => child.Claims))))));
+                                    .Nested<ClaimModel>(field => field.Name(child => child.Claims))))));
             }
 
             if (index == ClaimIndex)
@@ -300,16 +300,16 @@ namespace ElasticConsole.Data
                 : $"Unable to update client with handle: {model.Handle}");
         }
 
-        public IEnumerable<UserModel> GetUsersForOrganisation(Guid orgId)
+        public IEnumerable<Models.User> GetUsersForOrganisation(Guid orgId)
         {
-            var matchResult = _client.Search<UserModel>(search =>
+            var matchResult = _client.Search<Models.User>(search =>
                 search.Index(UserIndex)
                     .Query(query => query.Term(term =>
-                        term.Field(field => field.OrganisationId)
+                        term.Field(field => field.TenantId)
                             .Value(orgId.ToString())))
                             .Sort(sort => sort.Ascending(field => field.UserName)));
 
-            return matchResult.ApiCall.Success ? matchResult.Hits.Select(arg => arg.Source) : new List<UserModel>();
+            return matchResult.ApiCall.Success ? matchResult.Hits.Select(arg => arg.Source) : new List<Models.User>();
         }
 
         public IEnumerable<ClaimModel> GetClaimsForOrganisation(Guid orgId)
@@ -334,9 +334,9 @@ namespace ElasticConsole.Data
             return matchResult.ApiCall.Success ? matchResult.Hits.Select(arg => arg.Source) : new List<ClaimModel>();
         }
 
-        public UserModel FindUser(string userName)
+        public Models.User FindUser(string userName)
         {
-            var result = _client.Search<UserModel>(search => search
+            var result = _client.Search<Models.User>(search => search
                 .Index(UserIndex)
                 .Query(query => query
                     .Term(term => term
@@ -352,9 +352,9 @@ namespace ElasticConsole.Data
             return result.Hits.First().Source;
         }
 
-        public void UpdateUser(UserModel model)
+        public void UpdateUser(Models.User model)
         {
-            var result = _client.Update<UserModel>(model.Id.ToString(), item => item.Index(UserIndex).Doc(model).Refresh());
+            var result = _client.Update<Models.User>(model.Id.ToString(), item => item.Index(UserIndex).Doc(model).Refresh());
 
             Console.WriteLine(result.ApiCall.Success
                 ? $"Updated user: {model.UserName}"
@@ -384,6 +384,79 @@ namespace ElasticConsole.Data
         {
             _client.Delete(new DocumentPath<ClaimModel>(claimId)
                 .Index(ClaimIndex), item => item.Refresh());
+        }
+
+        public void QueryMatchingServices(IEnumerable<string> options)
+        {
+            //var matchResult = _client.Search<ServiceModel>(search => search
+            //    .Index(ServiceIndex)
+            //    .Query(q => q
+            //        .Bool(b => b
+            //            .Should(sh =>
+            //                sh.Match(mt1 => mt1.Field(f1 => f1.Handle).Query("js")) ||
+            //                sh.Match(mt2 => mt2.Field(f2 => f2.Handle).Query("homeoffice"))
+            //            ))).Sort(o => o.Ascending(p => p.Name)));
+
+            var filters = options.Select(option => (Func<QueryContainerDescriptor<ServiceModel>, QueryContainer>)
+                (filter => filter
+                    .Match(match => match
+                        .Field(field => field.Handle)
+                        .Query(option))));
+
+            var matchResult = _client.Search<ServiceModel>(search => search
+                .Index(ServiceIndex)
+                .Query(q => q
+                    .Bool(b => b
+                        .Should(filters))).Sort(o => o.Ascending(p => p.Name)));
+
+            Console.WriteLine($"Found {matchResult.Hits.Count()} matching results");
+
+            foreach (var hit in matchResult.Hits)
+            {
+                Console.WriteLine($"{hit.Source.Handle}");
+            }
+        }
+
+        public void QueryClaims()
+        {
+            var userResult = _client.Search<Models.User>(search => search
+                .Index(UserIndex)
+                .Query(query => query
+                    .Term(term => term
+                        .Field(field => field.UserName)
+                        .Value("andycorp"))));
+
+            var orgResult = _client.Search<TenantModel>(search => search
+                .Index(OrgIndex)
+                .Query(query => query
+                    .Bool(condition => condition
+                        .Must(must => must
+                            .Match(match => match
+                                .Field(field => field.Id)
+                                .Query(userResult.Hits.First().Source.TenantId))))));
+
+            var filters = orgResult.Hits.First().Source.Claims.Select(claim => (Func<QueryContainerDescriptor<ServiceModel>, QueryContainer>)
+                (filter => filter
+                    .Match(match => match
+                        .Field(field => field.Handle)
+                        .Query(claim.Value))));
+
+            var serviceResult = _client.Search<ServiceModel>(search => search
+                .Index(ServiceIndex)
+                .Query(q => q
+                    .Bool(b => b
+                        .Should(filters))).Sort(o => o.Ascending(p => p.Name)));
+
+            foreach (var hit in serviceResult.Hits)
+            {
+                if (hit.Source.Rights != null)
+                {
+                    foreach (var claim in hit.Source.Rights)
+                    {
+                        Console.WriteLine($"{hit.Source.Handle}:{claim}");
+                    }
+                }
+            }
         }
     }
 }

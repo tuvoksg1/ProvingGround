@@ -123,11 +123,11 @@ namespace ElasticConsole.Data
             return store;
         }
 
-        internal static List<OrganisationModel> Tenants()
+        internal static List<TenantModel> Tenants()
         {
-            var store = new List<OrganisationModel>
+            var store = new List<TenantModel>
             {
-                new OrganisationModel
+                new TenantModel
                 {
                     Id = HsbcId,
                     Name = "HSBC",
@@ -135,7 +135,7 @@ namespace ElasticConsole.Data
                     IsActive = true,
                     UserCount = 150
                 },
-                new OrganisationModel
+                new TenantModel
                 {
                     Id = NissanId,
                     Name = "Nissan",
@@ -143,7 +143,7 @@ namespace ElasticConsole.Data
                     IsActive = true,
                     UserCount = 250
                 },
-                new OrganisationModel
+                new TenantModel
                 {
                     Id = FordId,
                     Name = "Ford",
@@ -156,9 +156,9 @@ namespace ElasticConsole.Data
             return store;
         }
 
-        internal static List<UserModel> Users()
+        internal static List<Models.User> Users()
         {
-            var store = new List<UserModel>();
+            var store = new List<Models.User>();
 
             for (var position = 1; position < 31; position++)
             {
@@ -178,20 +178,20 @@ namespace ElasticConsole.Data
                     orgId = NissanId;
                 }
 
-                store.Add(new UserModel
+                store.Add(new Models.User
                 {
-                    Id = Guid.NewGuid(),
-                    OrganisationId = orgId,
+                    Id = Guid.NewGuid().ToString(),
+                    TenantId = orgId.ToString(),
                     Email = $"user{position}@email.com",
                     UserName = $"user{position}"
                 });
             }
 
-            store.Add(new UserModel
+            store.Add(new Models.User
             {
-                Id = TestUserId,
+                Id = TestUserId.ToString(),
                 Email = "specialuser@passport.com",
-                OrganisationId = NissanId,
+                TenantId = NissanId.ToString(),
                 UserName = "specialUser",
                 Claims = new List<ClaimModel>
                 {

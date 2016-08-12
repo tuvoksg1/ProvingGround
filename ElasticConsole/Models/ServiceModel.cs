@@ -99,52 +99,5 @@ namespace ElasticConsole.Models
         /// <c>true</c> if the client requires refresh tokens; otherwise, <c>false</c>.
         /// </value>
         public bool RequiresRefreshToken { get; set; }
-
-        public List<string> GetList(string name)
-        {
-            switch (name)
-            {
-                case "Login":
-                    return LoginRedirectLinks ?? new List<string>();
-                case "Logout":
-                    return LogoutRedirectLinks ?? new List<string>();
-                case "Domains":
-                    return TrustedDomains ?? new List<string>();
-                case "Secrets":
-                    return Secrets ?? new List<string>();
-                case "Rights":
-                    return Rights ?? new List<string>();
-                default:
-                    return new List<string>();
-            }
-        }
-
-        public void SetList(string name, List<string> content)
-        {
-            if (name == "Login")
-            {
-                LoginRedirectLinks = content;
-            }
-
-            if (name == "Logout")
-            {
-                LogoutRedirectLinks = content;
-            }
-
-            if (name == "Domains")
-            {
-                TrustedDomains = content;
-            }
-
-            if (name == "Secrets")
-            {
-                Secrets = content;
-            }
-
-            if (name == "Rights")
-            {
-                Rights = content;
-            }
-        }
     }
 }

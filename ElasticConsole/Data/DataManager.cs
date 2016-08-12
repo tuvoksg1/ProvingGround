@@ -16,7 +16,7 @@ namespace ElasticConsole.Data
 
         public void Run()
         {
-            SetClaimsForUser();
+            RunQuery();
         }
 
         private void DeleteClient()
@@ -119,7 +119,7 @@ namespace ElasticConsole.Data
                 user.Claims.Add(new ClaimModel
                 {
                     Id = Guid.NewGuid(),
-                    Owner = user.Id,
+                    Owner = Guid.Parse(user.Id),
                     Type = Storage.ServiceUserClaim,
                     Value = $"{Storage.ServiceUserClaim}_claim_api"
                 });
@@ -138,6 +138,12 @@ namespace ElasticConsole.Data
                     Console.WriteLine($"Claim Type: {claim.Type} - Value: {claim.Value}");
                 }
             }
+        }
+
+        private void RunQuery()
+        {
+            //_repository.QueryMatchingServices(new List<string> {"js", "homeoffice", "commandline"});
+            _repository.QueryClaims();
         }
     }
 }
