@@ -1,8 +1,7 @@
-﻿using Nancy;
-using Nancy.Owin;
+﻿using Nancy.Owin;
 using Owin;
 
-namespace NancySelfHost
+namespace NancySelfHost.Configuration
 {
     public class Startup
     {
@@ -11,12 +10,10 @@ namespace NancySelfHost
             var option = new NancyOptions
             {
                 Bootstrapper = new Bootstrapper(),
-                PerformPassThrough = context =>
-                  context.Response.StatusCode == HttpStatusCode.NotFound
             };
 
-            option.PassThroughWhenStatusCodesAre(HttpStatusCode.ServiceUnavailable);
-            app.UseNancy(option);
+            //app.UseNancy(option);
+            app.UseNancy();
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Owin.Hosting;
 using Nancy.Hosting.Self;
-//using NancySelfHost.Configuration;
+using NancySelfHost.Configuration;
 
 namespace NancySelfHost
 {
