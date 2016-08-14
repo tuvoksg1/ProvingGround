@@ -98,6 +98,7 @@
     <Compile Include="Configuration\Startup.cs" />
     <Compile Include="Entities\Entities.cs" />
     <Compile Include="Modules\IndexModule.cs" />
+    <Compile Include="Modules\LoginModule.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -114,6 +115,9 @@
     <None Include="Entities\DevRoot.cer" />
     <None Include="Entities\idsrv3test.cer" />
     <EmbeddedResource Include="Entities\idsrv3test.pfx" />
+    <None Include="Views\Login\login.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
