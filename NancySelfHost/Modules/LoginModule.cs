@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Nancy;
 using Nancy.ModelBinding;
@@ -13,28 +14,30 @@ namespace NancySelfHost.Modules
     {
         public LoginModule()
         {
-            Get["/core/custom/login", runAsync: true] = async (parameters, token) =>
-            {
-                Console.WriteLine("Doing work");
-                await Task.Delay(0);
+            Get["/core/custom/login/{id}", runAsync: true] = LoginGet;
 
-                //return Task.FromResult(View["login"]);
+            Post["/core/custom/login/{test}", runAsync: true] = LoginPost;
+        }
 
-                return View["login"];
-                //return Negotiate
-                //    .WithModel(new LoginModel {UserName = "Nancy", Password = "Reagan"})
-                //    .WithView("login");
-            };
+        private async Task<dynamic> LoginGet(dynamic parameters, CancellationToken token)
+        {
+            await Task.Delay(0, token);
+            var userId = ((DynamicDictionary)parameters)["id"].Value;
+            //return View["login"];
+            return Negotiate
+                .WithModel(new LoginModel { UserName = "Nancy", Password = "Reagan", SignInId = userId })
+                .WithView("login");
+        }
 
-            Post["/core/custom/login", runAsync: true] = async (parameters, token) =>
-            {
-                var model = this.Bind<LoginModel>();
-                Console.WriteLine($"Logged in for {model.UserName}");
-                await Task.Delay(0);
+        private async Task<dynamic> LoginPost(dynamic parameters, CancellationToken token)
+        {
+            var model = this.Bind<LoginModel>();
+            var userId = ((DynamicDictionary)parameters)["id"].Value;
+            Console.WriteLine($"Logged in for {model.UserName}");
+            await Task.Delay(0, token);
 
-                return Response.AsRedirect("~/");
-                //return Task.FromResult(View["index"]);
-            };
+            return Response.AsRedirect("~/?status=test");
+            //return Task.FromResult(View["index"]);
         }
     }
 }

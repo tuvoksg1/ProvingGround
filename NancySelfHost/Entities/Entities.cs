@@ -59,8 +59,8 @@ namespace NancySelfHost.Entities
             return new List<InMemoryUser> {
             new InMemoryUser {
                 Subject = "1",
-                Username = "Scott Brady",
-                Password = "Password123!",
+                Username = "folacorp",
+                Password = "Fola@1234",
                 Claims = new List<Claim> {
                     new Claim(Constants.ClaimTypes.GivenName, "Scott"),
                     new Claim(Constants.ClaimTypes.FamilyName, "Brady"),
