@@ -47,6 +47,7 @@
             this.IndexBtn = new System.Windows.Forms.Button();
             this.MailTab = new System.Windows.Forms.TabPage();
             this.SendMailBtn = new System.Windows.Forms.Button();
+            this.SendSMSButton = new System.Windows.Forms.Button();
             this.TestMenu.SuspendLayout();
             this.EnumerateTab.SuspendLayout();
             this.SerializationTab.SuspendLayout();
@@ -245,6 +246,7 @@
             // 
             // MailTab
             // 
+            this.MailTab.Controls.Add(this.SendSMSButton);
             this.MailTab.Controls.Add(this.SendMailBtn);
             this.MailTab.Location = new System.Drawing.Point(4, 22);
             this.MailTab.Name = "MailTab";
@@ -263,6 +265,16 @@
             this.SendMailBtn.Text = "Send Mail";
             this.SendMailBtn.UseVisualStyleBackColor = true;
             this.SendMailBtn.Click += new System.EventHandler(this.SendMailBtn_Click);
+            // 
+            // SendSMSButton
+            // 
+            this.SendSMSButton.Location = new System.Drawing.Point(175, 173);
+            this.SendSMSButton.Name = "SendSMSButton";
+            this.SendSMSButton.Size = new System.Drawing.Size(146, 34);
+            this.SendSMSButton.TabIndex = 1;
+            this.SendSMSButton.Text = "Send SMS";
+            this.SendSMSButton.UseVisualStyleBackColor = true;
+            this.SendSMSButton.Click += new System.EventHandler(this.SendSMSButton_Click);
             // 
             // TestHarness
             // 
@@ -305,6 +317,7 @@
         private System.Windows.Forms.TextBox SearchDateTxt;
         private System.Windows.Forms.TabPage MailTab;
         private System.Windows.Forms.Button SendMailBtn;
+        private System.Windows.Forms.Button SendSMSButton;
     }
 }
 

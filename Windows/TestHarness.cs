@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Windows.Models.Elastic;
 using Windows.Models.Extensions;
@@ -13,6 +15,8 @@ using Windows.Models.Stream;
 using Elasticsearch.Net;
 using Nest;
 using Newtonsoft.Json.Linq;
+using Twilio;
+
 //using Windows.Models.Extensions;
 
 namespace Windows
@@ -277,6 +281,17 @@ namespace Windows
 
             var service = new EmailService(info);
             await service.SendAsync(message);
+        }
+
+        private void SendSMSButton_Click(object sender, EventArgs e)
+        {
+            var twilio = new TwilioRestClient("ACafbd4ac2cb2d264856b110ab36bb1478", "d37cca9d8e9f52f6c2c5a308e7305a59");
+
+            var result = twilio.SendMessage("+447481344084", "+447944062159", "2FA Test");
+
+            Trace.TraceInformation(result.Status);
+
+            MessageBox.Show(@"Message Sent");
         }
     }
 }

@@ -458,5 +458,25 @@ namespace ElasticConsole.Data
                 }
             }
         }
+
+        public void PrintCounts()
+        {
+            var userCount = _client.Count<Models.User>(search => search
+                .Index(UserIndex));
+
+            var orgCount = _client.Count<TenantModel>(search => search
+                .Index(OrgIndex));
+
+            var appCount = _client.Count<ServiceModel>(search => search
+                .Index(ServiceIndex));
+
+            var jointCount = _client.Count<ServiceModel>(search => search
+                .Index(Indices.Parse($"{UserIndex}, {OrgIndex}, {ServiceIndex}")));
+
+            Console.WriteLine($"Users: {userCount.Count}");
+            Console.WriteLine($"Tenant: {orgCount.Count}");
+            Console.WriteLine($"Service: {appCount.Count}");
+            Console.WriteLine($"Total: {jointCount.Count}");
+        }
     }
 }

@@ -143,7 +143,7 @@ namespace ElasticConsole.Data
         private void RunQuery()
         {
             //_repository.QueryMatchingServices(new List<string> {"js", "homeoffice", "commandline"});
-            _repository.QueryClaims();
+            _repository.PrintCounts();
         }
     }
 }
