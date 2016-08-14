@@ -1,20 +1,39 @@
-﻿@{
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<NancySelfHost.Models.LoginModel>
+
+@{
     ViewBag.Title = "Home Page";
 }
 
 <h1>Fake Login</h1>
 
-@using (Html.BeginForm())
-{
-    <div class="form-group">
-        <label>Subject</label>
-        <input name="sub" value="123" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label>Name</label>
-        <input name="name" value="Bob Loblaw" class="form-control" />
-    </div>
-    <div class="form-group">
-        <button class="btn btn-primary">Login</button>
-    </div>
-}
+<form name="form" method="post" action="/core/custom/login" class="ng-valid-maxlength ng-dirty ng-valid-parse ng-valid ng-valid-required">
+    <fieldset>
+        <div class="form-group">
+            <label>Subject</label>
+            <input type="text" name="UserName" id ="UserName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" name="Password" id="Password" class="form-control" />
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Submit" class="btn btn-default" />
+            </div>
+        </div>
+    </fieldset>
+</form>
+    @*@using (Html.BeginForm())
+    {
+        <div class="form-group">
+            <label>Subject</label>
+            <input name="sub" value="123" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Name</label>
+            <input name="name" value="Bob Loblaw" class="form-control" />
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary">Login</button>
+        </div>
+    }*@

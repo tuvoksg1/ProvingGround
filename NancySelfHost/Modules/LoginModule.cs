@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Nancy;
+using Nancy.ModelBinding;
+using NancySelfHost.Models;
 
 namespace NancySelfHost.Modules
 {
@@ -16,15 +18,22 @@ namespace NancySelfHost.Modules
                 Console.WriteLine("Doing work");
                 await Task.Delay(0);
 
-                return Task.FromResult(View["login"]);
+                //return Task.FromResult(View["login"]);
+
+                return View["login"];
+                //return Negotiate
+                //    .WithModel(new LoginModel {UserName = "Nancy", Password = "Reagan"})
+                //    .WithView("login");
             };
 
             Post["/core/custom/login", runAsync: true] = async (parameters, token) =>
             {
-                Console.WriteLine("Doing work");
+                var model = this.Bind<LoginModel>();
+                Console.WriteLine($"Logged in for {model.UserName}");
                 await Task.Delay(0);
 
-                return Task.FromResult(View["index"]);
+                return Response.AsRedirect("~/");
+                //return Task.FromResult(View["index"]);
             };
         }
     }
