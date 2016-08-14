@@ -9,7 +9,7 @@ namespace NancySelfHost
     {
         static void Main(string[] args)
         {
-            var url = "http://localhost:56001";
+            var url = "https://localhost:44388";
 
             var uri =
                 new Uri(url);
