@@ -8,215 +8,20 @@ namespace ElasticConsole.Data
 {
     internal class Repository
     {
-        private const string DefaultIndex = "cx_passport";
-        private const string ServiceIndex = "cx_passport_apps";
-        private const string UserIndex = "cx_passport_users";
-        private const string ClaimIndex = "cx_passport_claims";
-        private const string OrgIndex = "cx_passport_tenants";
-        private readonly List<string> _passportIndices;
-        private ElasticClient _client;
+        //private const string DefaultIndex = "cx_passport";
+        //private const string ServiceIndex = "cx_passport_apps";
+        //private const string UserIndex = "cx_passport_users";
+        //private const string ClaimIndex = "cx_passport_claims";
+        //private const string OrgIndex = "cx_passport_tenants";
+        //private readonly List<string> _passportIndices;
+        private readonly IElasticClient _client;
 
         public Repository()
         {
-            _passportIndices = new List<string> {ServiceIndex, UserIndex, ClaimIndex, OrgIndex};
-            InitialiseConnection();
-        }
-
-        private void InitialiseConnection()
-        {
-            var local = new Uri("http://localhost:9200");
-            var settings = new ConnectionSettings(local).DefaultIndex(DefaultIndex);
-            _client = new ElasticClient(settings);
-
-            var res = _client.LowLevel.ClusterHealth<object>();
-
-            Console.WriteLine(res.SuccessOrKnownError);
-
-            foreach (var index in _passportIndices)
-            {
-                res = _client.LowLevel.IndicesExists<object>(index);
-
-                if (res.HttpStatusCode != 200)
-                {
-                    Console.WriteLine($"{index} Index does not exist - Initialising");
-                    InitialiseIndex(index);
-                }
-                else
-                {
-                    Console.WriteLine($"{index} Index is accesible");
-                }
-            }  
-        }
-
-        private void InitialiseIndex(string index)
-        {
-            if (index == ServiceIndex)
-            {
-                _client.CreateIndex(new IndexName
-                {
-                    Name = index,
-                    Type = typeof (ServiceModel)
-                }, ci => ci
-                    .Mappings(ms => ms
-                        .Map<ServiceModel>(m => m.AutoMap()
-                            .Properties(prop => prop
-                                .String(field => field
-                                    .Name(name => name.Handle)
-                                    .Index(FieldIndexOption.NotAnalyzed))
-                                .String(field => field
-                                    .Name(name => name.Name)
-                                    .Index(FieldIndexOption.NotAnalyzed))
-                                .Boolean(field => field
-                                    .Name(name => name.IsDisabled)
-                                    .Index(NonStringIndexOption.No))
-                                .Boolean(field => field
-                                    .Name(name => name.RequiresAllGrants)
-                                    .Index(NonStringIndexOption.No))
-                                .Boolean(field => field
-                                    .Name(name => name.RequiresRefreshToken)
-                                    .Index(NonStringIndexOption.No))
-                                .Number(field => field
-                                    .Name(name => name.Type)
-                                    .Index(NonStringIndexOption.No))))
-                    ));
-            }
-
-            if (index == OrgIndex)
-            {
-                _client.CreateIndex(new IndexName
-                {
-                    Name = index,
-                    Type = typeof(TenantModel)
-                }, ci => ci
-                    .Mappings(ms => ms
-                        .Map<TenantModel>(m => m.AutoMap()
-                            .Properties(prop => prop
-                                .String(field => field
-                                    .Name(name => name.Claim)
-                                    .Index(FieldIndexOption.NotAnalyzed))
-                                .String(field => field
-                                    .Name(name => name.Name)
-                                    .Index(FieldIndexOption.NotAnalyzed))
-                                .Boolean(field => field
-                                    .Name(name => name.IsActive)
-                                    .Index(NonStringIndexOption.No))
-                                .Number(field => field
-                                    .Name(name => name.UserCount)
-                                    .Index(NonStringIndexOption.No))))
-                    ));
-            }
-
-            if (index == UserIndex)
-            {
-                _client.CreateIndex(new IndexName
-                {
-                    Name = index,
-                    Type = typeof (Models.User)
-                }, ci => ci
-                    .Mappings(ms => ms
-                        .Map<Models.User>(m => m.AutoMap()
-                            .Properties(prop => prop
-                                .String(field => field
-                                    .Name(name => name.Email)
-                                    .Index(FieldIndexOption.NotAnalyzed))
-                                .String(field => field
-                                    .Name(name => name.UserName)
-                                    .Index(FieldIndexOption.NotAnalyzed))
-                                .String(field => field
-                                    .Name(name => name.TenantId)
-                                    .Index(FieldIndexOption.NotAnalyzed))
-                                    .Nested<ClaimModel>(field => field.Name(child => child.Claims))))));
-            }
-
-            if (index == ClaimIndex)
-            {
-                _client.CreateIndex(new IndexName
-                {
-                    Name = index,
-                    Type = typeof(ClaimModel)
-                }, ci => ci
-                    .Mappings(ms => ms
-                        .Map<ClaimModel>(m => m.AutoMap()
-                            .Properties(prop => prop
-                                .String(field => field
-                                    .Name(name => name.Owner)
-                                    .Index(FieldIndexOption.NotAnalyzed))
-                                .String(field => field
-                                    .Name(name => name.Type)
-                                    .Index(FieldIndexOption.NotAnalyzed))
-                                .String(field => field
-                                    .Name(name => name.Value)
-                                    .Index(FieldIndexOption.No))))
-                    ));
-            }
-
-            Console.WriteLine($"{index} Index created");
-            Console.WriteLine($"Populating {index} index....");
-
-            AddDataToStorage(index);
-        }
-
-        private void AddDataToStorage(string index)
-        {
-            if (index == ServiceIndex)
-            {
-                var items = Storage.Services();
-
-                foreach (var item in items)
-                {
-                    _client.Index(item, p => p
-                        .Index(index)
-                        .Id(item.Id.ToString())
-                        .Refresh());
-                }
-
-                Console.WriteLine($"{items.Count} services indexed");
-            }
-
-            if (index == OrgIndex)
-            {
-                var items = Storage.Tenants();
-
-                foreach (var item in items)
-                {
-                    _client.Index(item, p => p
-                        .Index(index)
-                        .Id(item.Id.ToString())
-                        .Refresh());
-                }
-
-                Console.WriteLine($"{items.Count} organisations indexed");
-            }
-
-            if (index == UserIndex)
-            {
-                var items = Storage.Users();
-
-                foreach (var item in items)
-                {
-                    _client.Index(item, p => p
-                        .Index(index)
-                        .Id(item.Id.ToString())
-                        .Refresh());
-                }
-
-                Console.WriteLine($"{items.Count} users indexed");
-            }
-
-            if (index == ClaimIndex)
-            {
-                var items = Storage.Claims();
-
-                foreach (var item in items)
-                {
-                    _client.Index(item, p => p
-                        .Index(index)
-                        .Id(item.Id.ToString())
-                        .Refresh());
-                }
-
-                Console.WriteLine($"{items.Count} claims indexed");
-            }
+            //_passportIndices = new List<string> {ServiceIndex, UserIndex, ClaimIndex, OrgIndex};
+            var storage = new Storage("http://localhost:9200");
+            _client = storage.Connection;
+            //InitialiseConnection();
         }
 
         public void QueryClients()
@@ -300,10 +105,10 @@ namespace ElasticConsole.Data
                 : $"Unable to update client with handle: {model.Handle}");
         }
 
-        public IEnumerable<Models.User> GetUsersForOrganisation(Guid orgId)
+        public IEnumerable<Models.User> GetUsersForOrganisation(string orgId)
         {
             var matchResult = _client.Search<Models.User>(search =>
-                search.Index(UserIndex)
+                search.Index(Storage.UserIndex)
                     .Query(query => query.Term(term =>
                         term.Field(field => field.TenantId)
                             .Value(orgId.ToString())))
@@ -312,10 +117,10 @@ namespace ElasticConsole.Data
             return matchResult.ApiCall.Success ? matchResult.Hits.Select(arg => arg.Source) : new List<Models.User>();
         }
 
-        public IEnumerable<ClaimModel> GetClaimsForOrganisation(Guid orgId)
+        public IEnumerable<ClaimModel> GetClaimsForOrganisation(string orgId)
         {
             var matchResult = _client.Search<ClaimModel>(search =>
-                search.Index(ClaimIndex)
+                search.Index(Storage.ClaimIndex)
                     .Query(query => query.Term(term => term
                         .Field(field => field.Owner)
                         .Value(orgId.ToString()))));
@@ -323,10 +128,10 @@ namespace ElasticConsole.Data
             return matchResult.ApiCall.Success ? matchResult.Hits.Select(arg => arg.Source) : new List<ClaimModel>();
         }
 
-        public IEnumerable<ClaimModel> GetClaimsForService(Guid serviceId)
+        public IEnumerable<ClaimModel> GetClaimsForService(string serviceId)
         {
             var matchResult = _client.Search<ClaimModel>(search =>
-                search.Index(ClaimIndex)
+                search.Index(Storage.ClaimIndex)
                     .Query(query => query.Term(term => term
                         .Field(field => field.Owner)
                         .Value(serviceId.ToString()))));
@@ -337,7 +142,7 @@ namespace ElasticConsole.Data
         public Models.User FindUser(string userName)
         {
             var result = _client.Search<Models.User>(search => search
-                .Index(UserIndex)
+                .Index(Storage.UserIndex)
                 .Query(query => query
                     .Term(term => term
                         .Field(field => field.UserName)
@@ -354,7 +159,7 @@ namespace ElasticConsole.Data
 
         public void UpdateUser(Models.User model)
         {
-            var result = _client.Update<Models.User>(model.Id.ToString(), item => item.Index(UserIndex).Doc(model).Refresh());
+            var result = _client.Update<Models.User>(model.Id.ToString(), item => item.Index(Storage.UserIndex).Doc(model).Refresh());
 
             Console.WriteLine(result.ApiCall.Success
                 ? $"Updated user: {model.UserName}"
@@ -364,7 +169,7 @@ namespace ElasticConsole.Data
         public IEnumerable<ClaimModel> GetClaimsForEntity(Guid ownerId)
         {
             var matchResult = _client.Search<ClaimModel>(search =>
-                search.Index(ClaimIndex)
+                search.Index(Storage.ClaimIndex)
                     .Query(query => query.Term(term => term
                         .Field(field => field.Owner)
                         .Value(ownerId.ToString()))));
@@ -375,7 +180,7 @@ namespace ElasticConsole.Data
         public void AddClaimForOwner(ClaimModel claim)
         {
             _client.Index(claim, p => p
-                       .Index(ClaimIndex)
+                       .Index(Storage.ClaimIndex)
                        .Id(claim.Id.ToString())
                        .Refresh());
         }
@@ -383,7 +188,7 @@ namespace ElasticConsole.Data
         public void RemoveClaimFromOwner(Guid claimId)
         {
             _client.Delete(new DocumentPath<ClaimModel>(claimId)
-                .Index(ClaimIndex), item => item.Refresh());
+                .Index(Storage.ClaimIndex), item => item.Refresh());
         }
 
         public void QueryMatchingServices(IEnumerable<string> options)
@@ -404,7 +209,7 @@ namespace ElasticConsole.Data
                         .Query(option))));
 
             var matchResult = _client.Search<ServiceModel>(search => search
-                .Index(ServiceIndex)
+                .Index(Storage.ServiceIndex)
                 .Query(q => q
                     .Bool(b => b
                         .Should(filters))).Sort(o => o.Ascending(p => p.Name)));
@@ -420,14 +225,14 @@ namespace ElasticConsole.Data
         public void QueryClaims()
         {
             var userResult = _client.Search<Models.User>(search => search
-                .Index(UserIndex)
+                .Index(Storage.UserIndex)
                 .Query(query => query
                     .Term(term => term
                         .Field(field => field.UserName)
                         .Value("andycorp"))));
 
             var orgResult = _client.Search<TenantModel>(search => search
-                .Index(OrgIndex)
+                .Index(Storage.TenantIndex)
                 .Query(query => query
                     .Bool(condition => condition
                         .Must(must => must
@@ -442,7 +247,7 @@ namespace ElasticConsole.Data
                         .Query(claim.Value))));
 
             var serviceResult = _client.Search<ServiceModel>(search => search
-                .Index(ServiceIndex)
+                .Index(Storage.ServiceIndex)
                 .Query(q => q
                     .Bool(b => b
                         .Should(filters))).Sort(o => o.Ascending(p => p.Name)));
@@ -462,16 +267,16 @@ namespace ElasticConsole.Data
         public void PrintCounts()
         {
             var userCount = _client.Count<Models.User>(search => search
-                .Index(UserIndex));
+                .Index(Storage.UserIndex));
 
             var orgCount = _client.Count<TenantModel>(search => search
-                .Index(OrgIndex));
+                .Index(Storage.TenantIndex));
 
             var appCount = _client.Count<ServiceModel>(search => search
-                .Index(ServiceIndex));
+                .Index(Storage.ServiceIndex));
 
             var jointCount = _client.Count<ServiceModel>(search => search
-                .Index(Indices.Parse($"{UserIndex}, {OrgIndex}, {ServiceIndex}")));
+                .Index(Indices.Parse($"{Storage.UserIndex}, {Storage.TenantIndex}, {Storage.ServiceIndex}")));
 
             Console.WriteLine($"Users: {userCount.Count}");
             Console.WriteLine($"Tenant: {orgCount.Count}");

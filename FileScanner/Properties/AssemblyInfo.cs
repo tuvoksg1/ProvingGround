@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("FileScanner")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Scans a directory and its sub-directories and produces a CSV report on the contents")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Maritz CX")]
 [assembly: AssemblyProduct("FileScanner")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]

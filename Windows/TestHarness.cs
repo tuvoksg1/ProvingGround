@@ -290,11 +290,10 @@ namespace Windows
         {
             var originalText = "https://localhost:44340/core/connect/authorize?client_id=listservice&redirect_uri=http%3A%2F%2Flocalhost%3A52300%2FList%2FIndex%2F&response_mode=form_post&response_type=code%20id_token%20token&scope=openid%20profile%20offline_access%20api%20listservice&state=OpenIdConnect.AuthenticationProperties%3DpbyYssoNwD_DtPGpLAXpUcqGFbnzEVCUHStyLL_flr2Q5qhC-wuTp3zMK85SCLXnDKyyFN_Q3-Li-yLE35icB67DICo3sVp_pYXhkKiBlIWwtGvD0Xwkszuja0f9DEaPqH3LGUOPn6GJUI35k_gg18EOxNtUabMHYvSBTZK3rPG3Y3_9FtrjW9ysHN5N1j0rawPyqrYB4fWW9IETq2QcQg&nonce=636067951330093052.NzkwNjRjYjQtOGYxOC00MTFlLTk3ZTMtMDBlMmI3ZDQ1MTYxMWI4MDI0ZjktNTM5ZS00NTYwLThlYzctZWNiNzgxYjM1YzZm";
 
-            var encodedBytes = HttpUtility.UrlEncodeToBytes(originalText, Encoding.UTF8);
-            
-            var doubleEncoded = System.Web.HttpServerUtility.UrlTokenEncode(encodedBytes);
-            var decodedBytes = System.Web.HttpServerUtility.UrlTokenDecode(doubleEncoded);
-            var finalText = HttpUtility.UrlDecode(decodedBytes, Encoding.UTF8);
+            var queryStringCollection = HttpUtility.ParseQueryString(originalText, Encoding.UTF8);
+
+            var redirectUrl = queryStringCollection["redirect_uri"];
+            var finalText = HttpUtility.UrlDecode(redirectUrl, Encoding.UTF8);
             //var twilio = new TwilioRestClient("ACafbd4ac2cb2d264856b110ab36bb1478", "d37cca9d8e9f52f6c2c5a308e7305a59");
 
             //var result = twilio.SendMessage("+447481344084", "+447944062159", "2FA Test");
@@ -302,35 +301,6 @@ namespace Windows
             //Trace.TraceInformation(result.Status);
 
             //MessageBox.Show(@"Message Sent");
-
-            string url = "http://tinyurl.com/so-hints";
-            Console.WriteLine(LengthenUrl(url));
-        }
-
-        private static string LengthenUrl(string url)
-        {
-            var request = WebRequest.CreateHttp(url);
-            request.AllowAutoRedirect = false;
-            using (var response = request.GetResponse())
-            {
-                var status = ((HttpWebResponse)response).StatusCode;
-                if (status == HttpStatusCode.Moved ||
-                    status == HttpStatusCode.MovedPermanently)
-                {
-                    return response.Headers["Location"];
-                }
-                // TODO: Work out a better exception
-                throw new Exception("No redirect required.");
-            }
-        }
-
-        private static string ShortenUrl(string url)
-        {
-            Uri address = new Uri("http://tinyurl.com/api-create.php?url=" + url);
-            WebClient client = new WebClient();
-            string tinyUrl = client.DownloadString(address);
-            Console.WriteLine(tinyUrl);
-            return tinyUrl;
         }
     }
 }

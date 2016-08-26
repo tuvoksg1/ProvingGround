@@ -118,8 +118,8 @@ namespace ElasticConsole.Data
                 user.Claims.Clear();
                 user.Claims.Add(new ClaimModel
                 {
-                    Id = Guid.NewGuid(),
-                    Owner = Guid.Parse(user.Id),
+                    Id = Guid.NewGuid().ToString(),
+                    Owner = user.Id,
                     Type = Storage.ServiceUserClaim,
                     Value = $"{Storage.ServiceUserClaim}_claim_api"
                 });
