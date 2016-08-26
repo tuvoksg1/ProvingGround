@@ -1,12 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Serilog;
 
 namespace ProjectC
 {
     public class ClassC
     {
+        protected ClassC()
+        {
+            CreateLogger();
+        }
+
+        private static void CreateLogger()
+        {
+            Log.Logger = new LoggerConfiguration()
+                           .MinimumLevel.Verbose()
+                           .WriteTo.Console()
+                           .CreateLogger();
+        }
     }
 }

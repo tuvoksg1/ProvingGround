@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.SqlClient;
 using ProjectB;
 
 namespace ProjectA
 {
-    public class ClassA : ClassB
+    public class ClassA
     {
+        private ClassB _classB;
+
+        public ClassA(string connectionString)
+        {
+            _classB = new ClassB(new SqlConnection(connectionString));
+        }
     }
 }
