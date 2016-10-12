@@ -46,14 +46,17 @@
             this.LoadBtn = new System.Windows.Forms.Button();
             this.IndexBtn = new System.Windows.Forms.Button();
             this.MailTab = new System.Windows.Forms.TabPage();
-            this.SendMailBtn = new System.Windows.Forms.Button();
             this.SendSMSButton = new System.Windows.Forms.Button();
+            this.SendMailBtn = new System.Windows.Forms.Button();
+            this.TestTab = new System.Windows.Forms.TabPage();
+            this.TestBtn = new System.Windows.Forms.Button();
             this.TestMenu.SuspendLayout();
             this.EnumerateTab.SuspendLayout();
             this.SerializationTab.SuspendLayout();
             this.IOTab.SuspendLayout();
             this.ElasticTab.SuspendLayout();
             this.MailTab.SuspendLayout();
+            this.TestTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // TestMenu
@@ -66,6 +69,7 @@
             this.TestMenu.Controls.Add(this.IOTab);
             this.TestMenu.Controls.Add(this.ElasticTab);
             this.TestMenu.Controls.Add(this.MailTab);
+            this.TestMenu.Controls.Add(this.TestTab);
             this.TestMenu.Location = new System.Drawing.Point(12, 12);
             this.TestMenu.Name = "TestMenu";
             this.TestMenu.SelectedIndex = 0;
@@ -256,6 +260,16 @@
             this.MailTab.Text = " SendGrid Mail";
             this.MailTab.UseVisualStyleBackColor = true;
             // 
+            // SendSMSButton
+            // 
+            this.SendSMSButton.Location = new System.Drawing.Point(175, 173);
+            this.SendSMSButton.Name = "SendSMSButton";
+            this.SendSMSButton.Size = new System.Drawing.Size(146, 34);
+            this.SendSMSButton.TabIndex = 1;
+            this.SendSMSButton.Text = "Send SMS";
+            this.SendSMSButton.UseVisualStyleBackColor = true;
+            this.SendSMSButton.Click += new System.EventHandler(this.SendSMSButton_Click);
+            // 
             // SendMailBtn
             // 
             this.SendMailBtn.Location = new System.Drawing.Point(175, 105);
@@ -266,15 +280,29 @@
             this.SendMailBtn.UseVisualStyleBackColor = true;
             this.SendMailBtn.Click += new System.EventHandler(this.SendMailBtn_Click);
             // 
-            // SendSMSButton
+            // TestTab
             // 
-            this.SendSMSButton.Location = new System.Drawing.Point(175, 173);
-            this.SendSMSButton.Name = "SendSMSButton";
-            this.SendSMSButton.Size = new System.Drawing.Size(146, 34);
-            this.SendSMSButton.TabIndex = 1;
-            this.SendSMSButton.Text = "Send SMS";
-            this.SendSMSButton.UseVisualStyleBackColor = true;
-            this.SendSMSButton.Click += new System.EventHandler(this.SendSMSButton_Click);
+            this.TestTab.Controls.Add(this.TestBtn);
+            this.TestTab.Location = new System.Drawing.Point(4, 22);
+            this.TestTab.Name = "TestTab";
+            this.TestTab.Padding = new System.Windows.Forms.Padding(3);
+            this.TestTab.Size = new System.Drawing.Size(518, 474);
+            this.TestTab.TabIndex = 5;
+            this.TestTab.Text = "Run Test";
+            this.TestTab.UseVisualStyleBackColor = true;
+            // 
+            // TestBtn
+            // 
+            this.TestBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TestBtn.Location = new System.Drawing.Point(200, 179);
+            this.TestBtn.Name = "TestBtn";
+            this.TestBtn.Size = new System.Drawing.Size(101, 39);
+            this.TestBtn.TabIndex = 0;
+            this.TestBtn.Text = "Execute";
+            this.TestBtn.UseVisualStyleBackColor = true;
+            this.TestBtn.Click += new System.EventHandler(this.TestBtn_Click);
             // 
             // TestHarness
             // 
@@ -292,6 +320,7 @@
             this.ElasticTab.ResumeLayout(false);
             this.ElasticTab.PerformLayout();
             this.MailTab.ResumeLayout(false);
+            this.TestTab.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -318,6 +347,8 @@
         private System.Windows.Forms.TabPage MailTab;
         private System.Windows.Forms.Button SendMailBtn;
         private System.Windows.Forms.Button SendSMSButton;
+        private System.Windows.Forms.TabPage TestTab;
+        private System.Windows.Forms.Button TestBtn;
     }
 }
 

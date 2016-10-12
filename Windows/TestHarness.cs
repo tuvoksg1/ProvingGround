@@ -302,5 +302,29 @@ namespace Windows
 
             //MessageBox.Show(@"Message Sent");
         }
+
+        private void TestBtn_Click(object sender, EventArgs e)
+        {
+            const string testValue = "May";
+            var startPosition = 9;
+            var copyLength = 2;
+
+            startPosition = startPosition < 0 ? 0 : startPosition;
+            copyLength = copyLength < 0 ? 0 : copyLength;
+
+            if (testValue.Length < startPosition)
+            {
+                startPosition = testValue.Length;
+            }
+
+            if (testValue.Length < startPosition + copyLength)
+            {
+                copyLength = testValue.Length - startPosition;
+            }
+
+            var result = testValue.Substring(startPosition, copyLength);
+
+            MessageBox.Show($"The substring value is [{result}]");
+        }
     }
 }
