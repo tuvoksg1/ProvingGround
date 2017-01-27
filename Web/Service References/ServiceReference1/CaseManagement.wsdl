@@ -1,0 +1,2578 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="CaseManagement" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagementAPI.DTO" />
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.DTO" />
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.Library" />
+      <xs:element name="ServicesCheck">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="companyName" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ServicesCheckResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="ServicesCheckResult" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Authenticate">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="password" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="companyName" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="companyId" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AuthenticateResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagementAPI.DTO" minOccurs="0" name="AuthenticateResult" nillable="true" type="q1:AuthenticateResponse" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Logout">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="LogoutResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagementAPI.DTO" minOccurs="0" name="LogoutResult" nillable="true" type="q2:CaseGenericStatusResponse" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="InsertUpdateDeviceId">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="deviceRegistrationToken" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="applicationTypeId" type="xs:int" />
+            <xs:element minOccurs="0" name="deviceTypeId" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="InsertUpdateDeviceIdResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagementAPI.DTO" minOccurs="0" name="InsertUpdateDeviceIdResult" nillable="true" type="q3:CaseGenericStatusResponse" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="RemoveDeviceId">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="deviceRegistrationToken" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="applicationTypeId" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="RemoveDeviceIdResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagementAPI.DTO" minOccurs="0" name="RemoveDeviceIdResult" nillable="true" type="q4:CaseGenericStatusResponse" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetCaseView">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="caseId" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="removeTimeFields" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetCaseViewResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagementAPI.DTO" minOccurs="0" name="GetCaseViewResult" nillable="true" type="q5:CaseViewResponse" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UpdateCaseView">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+            <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.DTO" minOccurs="0" name="oldCaseViewValues" nillable="true" type="q6:CaseViewValues" />
+            <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.DTO" minOccurs="0" name="newCaseViewValues" nillable="true" type="q7:CaseViewValues" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UpdateCaseViewResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagementAPI.DTO" minOccurs="0" name="UpdateCaseViewResult" nillable="true" type="q8:CaseViewResponse" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UpdateCaseOwner">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="caseId" nillable="true" type="xs:string" />
+            <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="prevUserId" type="q9:guid" />
+            <xs:element xmlns:q10="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="newUserId" type="q10:guid" />
+            <xs:element minOccurs="0" name="messageToNewOwner" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UpdateCaseOwnerResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagementAPI.DTO" minOccurs="0" name="UpdateCaseOwnerResult" nillable="true" type="q11:CaseGenericStatusResponse" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UpdateCaseWatchers">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="caseId" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="accessTypeId" type="xs:int" />
+            <xs:element minOccurs="0" name="watchersToAdd" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="watchersToRemove" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="messageToNewWatchers" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UpdateCaseWatchersResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagementAPI.DTO" minOccurs="0" name="UpdateCaseWatchersResult" nillable="true" type="q12:CaseGenericStatusResponse" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="InsertUpdateActivityNote">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="caseActivityNoteId" type="xs:long" />
+            <xs:element minOccurs="0" name="caseId" type="xs:long" />
+            <xs:element minOccurs="0" name="noteText" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="InsertUpdateActivityNoteResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagementAPI.DTO" minOccurs="0" name="InsertUpdateActivityNoteResult" nillable="true" type="q13:InsertUpdateActivityNoteResponse" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetUserList">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="searchTerm" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="caseSensitiveSearch" type="xs:boolean" />
+            <xs:element minOccurs="0" name="startPage" type="xs:int" />
+            <xs:element minOccurs="0" name="pageSize" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetUserListResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagementAPI.DTO" minOccurs="0" name="GetUserListResult" nillable="true" type="q14:UserListResponse" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="InsertCaseHistory">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="historyChangeType" type="xs:int" />
+            <xs:element minOccurs="0" name="caseId" type="xs:long" />
+            <xs:element minOccurs="0" name="previousText" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="changedText" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="previousInt" nillable="true" type="xs:int" />
+            <xs:element minOccurs="0" name="changeInt" nillable="true" type="xs:int" />
+            <xs:element minOccurs="0" name="changedBit" nillable="true" type="xs:boolean" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="InsertCaseHistoryResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagementAPI.DTO" minOccurs="0" name="InsertCaseHistoryResult" nillable="true" type="q15:CaseGenericStatusResponse" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetMobileCaseInboxItems">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+            <xs:element xmlns:q16="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="filter" nillable="true" type="q16:ArrayOfstring" />
+            <xs:element minOccurs="0" name="searchTerm" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="sortBy" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="caseSensitiveSearch" type="xs:boolean" />
+            <xs:element minOccurs="0" name="startPage" type="xs:int" />
+            <xs:element minOccurs="0" name="pageSize" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetMobileCaseInboxItemsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagementAPI.DTO" minOccurs="0" name="GetMobileCaseInboxItemsResult" nillable="true" type="q17:MobileInboxData" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetCaseStatistics">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetCaseStatisticsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagementAPI.DTO" minOccurs="0" name="GetCaseStatisticsResult" nillable="true" type="q18:CaseStats" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UpdateSessionTimeout">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UpdateSessionTimeoutResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagementAPI.DTO" minOccurs="0" name="UpdateSessionTimeoutResult" nillable="true" type="q19:CaseUpdateSessionStatusResponse" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DeleteCaseActivityNote">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="activityNoteId" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="DeleteCaseActivityNoteResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagementAPI.DTO" minOccurs="0" name="DeleteCaseActivityNoteResult" nillable="true" type="q20:CaseGenericStatusResponse" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateNotification">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="notificationType" type="xs:int" />
+            <xs:element minOccurs="0" name="deviceID" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="caseId" type="xs:long" />
+            <xs:element minOccurs="0" name="userIdToSendNotification" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="alertName" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateNotificationResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagementAPI.DTO" minOccurs="0" name="CreateNotificationResult" nillable="true" type="q21:CaseGenericStatusResponse" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateMessage">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="caseId" type="xs:int" />
+            <xs:element minOccurs="0" name="messageText" nillable="true" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CreateMessageResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagementAPI.DTO" minOccurs="0" name="CreateMessageResult" nillable="true" type="q22:MobileMessageInfo" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetMessages">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="caseId" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetMessagesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagementAPI.DTO" minOccurs="0" name="GetMessagesResult" nillable="true" type="q23:MobileMessageInfo" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetMessageScriptedResponses">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="caseId" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetMessageScriptedResponsesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagementAPI.DTO" minOccurs="0" name="GetMessageScriptedResponsesResult" nillable="true" type="q24:MobilePredefinedResponses" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="MarkMessagesRead">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+            <xs:element xmlns:q25="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="caseMessageIds" nillable="true" type="q25:ArrayOfint" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="MarkMessagesReadResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagementAPI.DTO" minOccurs="0" name="MarkMessagesReadResult" nillable="true" type="q26:CaseGenericStatusResponse" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetMobileNotificationMode">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+            <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.Library" minOccurs="0" name="mobileNotificationMode" type="q27:CaseManagementEnums.CaseMobileNotificationModeType" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="SetMobileNotificationModeResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagementAPI.DTO" minOccurs="0" name="SetMobileNotificationModeResult" nillable="true" type="q28:CaseGenericStatusResponse" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TestCall">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+            <xs:element minOccurs="0" name="surveyId" type="xs:int" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="TestCallResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q29="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="TestCallResult" nillable="true" type="q29:ArrayOfstring" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="anyType" nillable="true" type="xs:anyType" />
+      <xs:element name="anyURI" nillable="true" type="xs:anyURI" />
+      <xs:element name="base64Binary" nillable="true" type="xs:base64Binary" />
+      <xs:element name="boolean" nillable="true" type="xs:boolean" />
+      <xs:element name="byte" nillable="true" type="xs:byte" />
+      <xs:element name="dateTime" nillable="true" type="xs:dateTime" />
+      <xs:element name="decimal" nillable="true" type="xs:decimal" />
+      <xs:element name="double" nillable="true" type="xs:double" />
+      <xs:element name="float" nillable="true" type="xs:float" />
+      <xs:element name="int" nillable="true" type="xs:int" />
+      <xs:element name="long" nillable="true" type="xs:long" />
+      <xs:element name="QName" nillable="true" type="xs:QName" />
+      <xs:element name="short" nillable="true" type="xs:short" />
+      <xs:element name="string" nillable="true" type="xs:string" />
+      <xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte" />
+      <xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt" />
+      <xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong" />
+      <xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort" />
+      <xs:element name="char" nillable="true" type="tns:char" />
+      <xs:simpleType name="char">
+        <xs:restriction base="xs:int" />
+      </xs:simpleType>
+      <xs:element name="duration" nillable="true" type="tns:duration" />
+      <xs:simpleType name="duration">
+        <xs:restriction base="xs:duration">
+          <xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?" />
+          <xs:minInclusive value="-P10675199DT2H48M5.4775808S" />
+          <xs:maxInclusive value="P10675199DT2H48M5.4775807S" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="guid" nillable="true" type="tns:guid" />
+      <xs:simpleType name="guid">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:attribute name="FactoryType" type="xs:QName" />
+      <xs:attribute name="Id" type="xs:ID" />
+      <xs:attribute name="Ref" type="xs:IDREF" />
+    </xs:schema>
+    <xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagementAPI.DTO" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagementAPI.DTO" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/Allegiance.EntityManagement" />
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.DTO" />
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xs:complexType name="AuthenticateResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="activeCompanyId" type="xs:int" />
+          <xs:element minOccurs="0" name="activeCompanyName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="activeCompanyProfile" nillable="true" type="xs:string" />
+          <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Allegiance.EntityManagement" minOccurs="0" name="companies" nillable="true" type="q1:ArrayOfCompany" />
+          <xs:element minOccurs="0" name="currentUserNotificationMode" type="xs:int" />
+          <xs:element minOccurs="0" name="hasActionPlanFeature" type="xs:boolean" />
+          <xs:element minOccurs="0" name="hasCaseManagementFeature" type="xs:boolean" />
+          <xs:element minOccurs="0" name="programsHaveGoals" type="xs:boolean" />
+          <xs:element minOccurs="0" name="sessionTimeout" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="statusMessage" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="token" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="userId" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="AuthenticateResponse" nillable="true" type="tns:AuthenticateResponse" />
+      <xs:complexType name="CaseGenericStatusResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="statusMessage" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CaseGenericStatusResponse" nillable="true" type="tns:CaseGenericStatusResponse" />
+      <xs:complexType name="CaseViewResponse">
+        <xs:sequence>
+          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.DTO" minOccurs="0" name="caseView" nillable="true" type="q2:CaseView" />
+          <xs:element minOccurs="0" name="messagingEnabled" type="xs:boolean" />
+          <xs:element minOccurs="0" name="statusMessage" nillable="true" type="xs:string" />
+          <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.DTO" minOccurs="0" name="viewValues" nillable="true" type="q3:CaseViewValues" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CaseViewResponse" nillable="true" type="tns:CaseViewResponse" />
+      <xs:complexType name="InsertUpdateActivityNoteResponse">
+        <xs:sequence>
+          <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.DTO" minOccurs="0" name="caseActivityNote" nillable="true" type="q4:CaseActivityNote" />
+          <xs:element minOccurs="0" name="statusMessage" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="InsertUpdateActivityNoteResponse" nillable="true" type="tns:InsertUpdateActivityNoteResponse" />
+      <xs:complexType name="UserListResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="statusMessage" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="totalSearchCount" type="xs:int" />
+          <xs:element minOccurs="0" name="userAccount" nillable="true" type="tns:ArrayOfCmUserAccount" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="UserListResponse" nillable="true" type="tns:UserListResponse" />
+      <xs:complexType name="ArrayOfCmUserAccount">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="CmUserAccount" nillable="true" type="tns:CmUserAccount" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfCmUserAccount" nillable="true" type="tns:ArrayOfCmUserAccount" />
+      <xs:complexType name="CmUserAccount">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UserId" type="ser:guid" />
+          <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CmUserAccount" nillable="true" type="tns:CmUserAccount" />
+      <xs:complexType name="MobileInboxData">
+        <xs:sequence>
+          <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.DTO" minOccurs="0" name="caseMobileInboxData" nillable="true" type="q5:CaseMobileInboxData" />
+          <xs:element minOccurs="0" name="statusMessage" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="MobileInboxData" nillable="true" type="tns:MobileInboxData" />
+      <xs:complexType name="CaseStats">
+        <xs:sequence>
+          <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.DTO" minOccurs="0" name="caseStatistics" nillable="true" type="q6:CaseStatistics" />
+          <xs:element minOccurs="0" name="statusMessage" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CaseStats" nillable="true" type="tns:CaseStats" />
+      <xs:complexType name="CaseUpdateSessionStatusResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="sessionTimeout" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="statusMessage" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CaseUpdateSessionStatusResponse" nillable="true" type="tns:CaseUpdateSessionStatusResponse" />
+      <xs:complexType name="MobileMessageInfo">
+        <xs:sequence>
+          <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.DTO" minOccurs="0" name="caseMessageInfo" nillable="true" type="q7:CaseMessageInfo" />
+          <xs:element minOccurs="0" name="statusMessage" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="MobileMessageInfo" nillable="true" type="tns:MobileMessageInfo" />
+      <xs:complexType name="MobilePredefinedResponses">
+        <xs:sequence>
+          <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.DTO" minOccurs="0" name="casePredefinedResponse" nillable="true" type="q8:ArrayOfCasePredefinedResponse" />
+          <xs:element minOccurs="0" name="statusMessage" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="totalResponseCount" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="MobilePredefinedResponses" nillable="true" type="tns:MobilePredefinedResponses" />
+    </xs:schema>
+    <xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/Allegiance.EntityManagement" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Allegiance.EntityManagement" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/Allegiance.Core.Library.Licensing" />
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/Allegiance.Core.Library.Globalization" />
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/Allegiance.EntityManagement.Constants" />
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xs:complexType name="ArrayOfCompany">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Company" nillable="true" type="tns:Company" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfCompany" nillable="true" type="tns:ArrayOfCompany" />
+      <xs:complexType name="Company">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Address" nillable="true" type="tns:Address" />
+          <xs:element minOccurs="0" name="AnalysisGroup" type="xs:int" />
+          <xs:element minOccurs="0" name="CompanyDBGroupId" type="xs:int" />
+          <xs:element minOccurs="0" name="CompanyId" type="xs:int" />
+          <xs:element minOccurs="0" name="CompanyName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CompanySettings" nillable="true" type="tns:CompanySettings" />
+          <xs:element minOccurs="0" name="EscalationDays" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="InquisiteMapping" nillable="true" type="tns:InquisiteMapping" />
+          <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Allegiance.Core.Library.Licensing" minOccurs="0" name="LicenseFeatures" nillable="true" type="q1:AllegianceLicense" />
+          <xs:element minOccurs="0" name="Logo" nillable="true" type="xs:base64Binary" />
+          <xs:element minOccurs="0" name="ParentCompanyId" type="xs:int" />
+          <xs:element minOccurs="0" name="PasswordPolicy" nillable="true" type="tns:PasswordPolicy" />
+          <xs:element minOccurs="0" name="PhoneNumber" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RemeasurementDay" type="xs:int" />
+          <xs:element minOccurs="0" name="Selected" type="xs:boolean" />
+          <xs:element minOccurs="0" name="UserCompanySettings" nillable="true" type="tns:UserCompanySettings" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Company" nillable="true" type="tns:Company" />
+      <xs:complexType name="Address">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AddressLine1" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressLine2" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AddressLine3" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="City" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PostalCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="State" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Address" nillable="true" type="tns:Address" />
+      <xs:complexType name="CompanySettings">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:Settings">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="AccessThroughSsoOnly" type="xs:boolean" />
+              <xs:element minOccurs="0" name="Db2EntryPage" type="xs:int" />
+              <xs:element minOccurs="0" name="DefaultRoleId" type="xs:int" />
+              <xs:element minOccurs="0" name="HeaderThemeInfo" nillable="true" type="tns:HeaderTheme" />
+              <xs:element minOccurs="0" name="IsIPAddressRestricted" type="xs:boolean" />
+              <xs:element minOccurs="0" name="LandingPage" type="xs:int" />
+              <xs:element minOccurs="0" name="MaxBinaryData" type="xs:int" />
+              <xs:element minOccurs="0" name="MaxRetryOnFailure" type="xs:int" />
+              <xs:element minOccurs="0" name="ProductSequence" nillable="true" type="xs:string" />
+              <xs:element minOccurs="0" name="RestrictedIPs" nillable="true" type="tns:ArrayOfIPAddressRange" />
+              <xs:element minOccurs="0" name="SessionTimeOut" type="xs:int" />
+              <xs:element minOccurs="0" name="ShowApiInfo" type="xs:boolean" />
+              <xs:element minOccurs="0" name="TSAcceptedDate" nillable="true" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="Version" nillable="true" type="xs:string" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="CompanySettings" nillable="true" type="tns:CompanySettings" />
+      <xs:complexType name="Settings">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="DateTimeFormat" nillable="true" type="tns:DateFormat" />
+          <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Items" nillable="true" type="q2:ArrayOfKeyValueOfstringstring" />
+          <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Allegiance.Core.Library.Globalization" minOccurs="0" name="Language" nillable="true" type="q3:Language" />
+          <xs:element minOccurs="0" name="TimeFormat" nillable="true" type="tns:TimeFormat" />
+          <xs:element minOccurs="0" name="TimeZone" nillable="true" type="tns:TimeZoneInformation" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Settings" nillable="true" type="tns:Settings" />
+      <xs:complexType name="DateFormat">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="DateFormatId" type="xs:int" />
+          <xs:element minOccurs="0" name="DateFormatText" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="DateFormat" nillable="true" type="tns:DateFormat" />
+      <xs:complexType name="TimeFormat">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="TimeFormatText" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="TimeFormat" nillable="true" type="tns:TimeFormat" />
+      <xs:complexType name="TimeZoneInformation">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="BaseUtcOffset" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DisplayName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="StandardName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SupportDaylightSavingTime" type="xs:boolean" />
+          <xs:element minOccurs="0" name="TimeZoneId" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="TimeZoneInformation" nillable="true" type="tns:TimeZoneInformation" />
+      <xs:complexType name="HeaderTheme">
+        <xs:sequence>
+          <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Allegiance.EntityManagement.Constants" minOccurs="0" name="Background" type="q4:HeaderBackgroundType" />
+          <xs:element minOccurs="0" name="HighlightColor" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="HeaderTheme" nillable="true" type="tns:HeaderTheme" />
+      <xs:complexType name="ArrayOfIPAddressRange">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="IPAddressRange" nillable="true" type="tns:IPAddressRange" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfIPAddressRange" nillable="true" type="tns:ArrayOfIPAddressRange" />
+      <xs:complexType name="IPAddressRange">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CompanyId" type="xs:int" />
+          <xs:element minOccurs="0" name="EndIp" type="xs:long" />
+          <xs:element minOccurs="0" name="Id" type="xs:int" />
+          <xs:element minOccurs="0" name="SSOCompanyId" type="xs:int" />
+          <xs:element minOccurs="0" name="StartIp" type="xs:long" />
+          <xs:element minOccurs="0" name="UserId" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="IPAddressRange" nillable="true" type="tns:IPAddressRange" />
+      <xs:complexType name="InquisiteMapping">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CompanyId" type="xs:int" />
+          <xs:element minOccurs="0" name="InquisiteSiteURL" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ProfileName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Token" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UserManagementURL" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="InquisiteMapping" nillable="true" type="tns:InquisiteMapping" />
+      <xs:complexType name="PasswordPolicy">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CarouselDuration" type="xs:int" />
+          <xs:element minOccurs="0" name="CarouselLength" type="xs:int" />
+          <xs:element minOccurs="0" name="CompanyId" type="xs:int" />
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MaxFailedLoginAttempts" type="xs:int" />
+          <xs:element minOccurs="0" name="MinimumLength" type="xs:int" />
+          <xs:element minOccurs="0" name="PasswordExpirationDays" type="xs:int" />
+          <xs:element minOccurs="0" name="PasswordPolicyId" type="xs:int" />
+          <xs:element minOccurs="0" name="RE_Rules" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RequireLowerCase" type="xs:boolean" />
+          <xs:element minOccurs="0" name="RequireNumber" type="xs:boolean" />
+          <xs:element minOccurs="0" name="RequirePasswordChange" type="xs:boolean" />
+          <xs:element minOccurs="0" name="RequireUpperCase" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="PasswordPolicy" nillable="true" type="tns:PasswordPolicy" />
+      <xs:complexType name="UserCompanySettings">
+        <xs:complexContent mixed="false">
+          <xs:extension base="tns:Settings">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="AccountId" type="xs:int" />
+              <xs:element minOccurs="0" name="Active" type="xs:int" />
+              <xs:element minOccurs="0" name="AdminAccess" type="xs:boolean" />
+              <xs:element minOccurs="0" name="ContactCompanyId" type="xs:int" />
+              <xs:element minOccurs="0" name="DefaultdDashboard2Id" nillable="true" type="ser:guid" />
+              <xs:element minOccurs="0" name="RoleId" type="xs:int" />
+              <xs:element minOccurs="0" name="SortPosition" type="xs:int" />
+              <xs:element minOccurs="0" name="UserGuid" type="ser:guid" />
+              <xs:element minOccurs="0" name="UserRole" nillable="true" type="tns:Role" />
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:element name="UserCompanySettings" nillable="true" type="tns:UserCompanySettings" />
+      <xs:complexType name="Role">
+        <xs:sequence>
+          <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Allegiance.EntityManagement.Constants" minOccurs="0" name="ActiveSurveyPermissions" nillable="true" type="q5:ArrayOfASPermissions" />
+          <xs:element minOccurs="0" name="AsSecurityLevel" type="xs:int" />
+          <xs:element minOccurs="0" name="CalsSecurityLevel" type="xs:int" />
+          <xs:element minOccurs="0" name="CompanyId" type="xs:int" />
+          <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Allegiance.EntityManagement.Constants" minOccurs="0" name="CustomerPulsePermission" nillable="true" type="q6:ArrayOfCVoicePermissions" />
+          <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Allegiance.EntityManagement.Constants" minOccurs="0" name="CustomerVoicePermission" nillable="true" type="q7:ArrayOfCVoicePermissions" />
+          <xs:element minOccurs="0" name="DefaultSurveyId" type="xs:int" />
+          <xs:element minOccurs="0" name="EalsSecurityLevel" type="xs:int" />
+          <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Allegiance.EntityManagement.Constants" minOccurs="0" name="EmployeePulsePermission" nillable="true" type="q8:ArrayOfEVoicePermissions" />
+          <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Allegiance.EntityManagement.Constants" minOccurs="0" name="EmployeeVoicePermission" nillable="true" type="q9:ArrayOfEVoicePermissions" />
+          <xs:element xmlns:q10="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Engage7Permissions" nillable="true" type="q10:ArrayOfstring" />
+          <xs:element minOccurs="0" name="InqSecurityLevel" type="xs:int" />
+          <xs:element minOccurs="0" name="PalsSecurityLevel" type="xs:int" />
+          <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Allegiance.EntityManagement.Constants" minOccurs="0" name="PartnerVoicePermission" nillable="true" type="q11:ArrayOfPVoicePermissions" />
+          <xs:element minOccurs="0" name="RoleId" type="xs:int" />
+          <xs:element minOccurs="0" name="RoleName" nillable="true" type="xs:string" />
+          <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Allegiance.EntityManagement.Constants" minOccurs="0" name="SurveyPermissions" nillable="true" type="q12:ArrayOfSurveyPermissionsEnum" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Role" nillable="true" type="tns:Role" />
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/Arrays" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.DTO" />
+      <xs:complexType name="ArrayOfKeyValueOfstringstring">
+        <xs:annotation>
+          <xs:appinfo>
+            <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValueOfstringstring">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Key" nillable="true" type="xs:string" />
+                <xs:element name="Value" nillable="true" type="xs:string" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfKeyValueOfstringstring" nillable="true" type="tns:ArrayOfKeyValueOfstringstring" />
+      <xs:complexType name="ArrayOfstring">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfstring" nillable="true" type="tns:ArrayOfstring" />
+      <xs:complexType name="ArrayOfint">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="int" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfint" nillable="true" type="tns:ArrayOfint" />
+      <xs:complexType name="ArrayOfKeyValueOfintSourceResponsehQfJM3p9">
+        <xs:annotation>
+          <xs:appinfo>
+            <IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+          </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="KeyValueOfintSourceResponsehQfJM3p9">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="Key" type="xs:int" />
+                <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.DTO" name="Value" nillable="true" type="q1:SourceResponse" />
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfKeyValueOfintSourceResponsehQfJM3p9" nillable="true" type="tns:ArrayOfKeyValueOfintSourceResponsehQfJM3p9" />
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Allegiance.Core.Library.Globalization" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Allegiance.Core.Library.Globalization" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="Language">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CkEditorLang" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CldrLang" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Culture" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DisplayValue" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="IsActive" type="xs:boolean" />
+          <xs:element minOccurs="0" name="LanguageId" type="xs:int" />
+          <xs:element minOccurs="0" name="Locale" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PrimaryLanguage" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Language" nillable="true" type="tns:Language" />
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Allegiance.EntityManagement.Constants" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Allegiance.EntityManagement.Constants" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xs:simpleType name="HeaderBackgroundType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Light" />
+          <xs:enumeration value="Dark" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="HeaderBackgroundType" nillable="true" type="tns:HeaderBackgroundType" />
+      <xs:complexType name="ArrayOfASPermissions">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="ASPermissions" type="tns:ASPermissions" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfASPermissions" nillable="true" type="tns:ArrayOfASPermissions" />
+      <xs:simpleType name="ASPermissions">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Administrator">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="CreateSurvey" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="ASPermissions" nillable="true" type="tns:ASPermissions" />
+      <xs:complexType name="ArrayOfCVoicePermissions">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="CVoicePermissions" type="tns:CVoicePermissions" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfCVoicePermissions" nillable="true" type="tns:ArrayOfCVoicePermissions" />
+      <xs:simpleType name="CVoicePermissions">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="DialogueManager">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ReportManager">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="FeedbackTools">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">8</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Delegation">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">16</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Reclassify">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">32</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="InternalRegarding">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">128</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ReportsComments">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">256</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="CustomerPulse">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">512</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="AdvanceReportes">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1024</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="CVoicePermissions" nillable="true" type="tns:CVoicePermissions" />
+      <xs:complexType name="ArrayOfEVoicePermissions">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="EVoicePermissions" type="tns:EVoicePermissions" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfEVoicePermissions" nillable="true" type="tns:ArrayOfEVoicePermissions" />
+      <xs:simpleType name="EVoicePermissions">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="MyFeedback">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Delegation">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="DialogueManager">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ReportManager">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">16</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="EmployeePulse">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">64</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="FeedbackTools">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">128</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Reclassify">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">256</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="InternalRegarding">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">512</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ReportComments">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2048</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="AdvanceReports">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1024</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="EVoicePermissions" nillable="true" type="tns:EVoicePermissions" />
+      <xs:complexType name="ArrayOfPVoicePermissions">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="PVoicePermissions" type="tns:PVoicePermissions" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfPVoicePermissions" nillable="true" type="tns:ArrayOfPVoicePermissions" />
+      <xs:simpleType name="PVoicePermissions">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Delegation">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="DilogueManager">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ReportManager">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">16</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="FeedbackTools">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">32</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Reclassify">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">64</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="InternalRegarding">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">256</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ReportComments">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">512</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="AdvanceReports">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">128</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="PVoicePermissions" nillable="true" type="tns:PVoicePermissions" />
+      <xs:complexType name="ArrayOfSurveyPermissionsEnum">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="SurveyPermissionsEnum" type="tns:SurveyPermissionsEnum" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfSurveyPermissionsEnum" nillable="true" type="tns:ArrayOfSurveyPermissionsEnum" />
+      <xs:simpleType name="SurveyPermissionsEnum">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Admin">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">-1</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SiteAdministrator" />
+          <xs:enumeration value="SurveyAdministrator" />
+          <xs:enumeration value="Analyst">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Respondent">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">8</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="RestrictResponseDetailView">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">16</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SMSAdministrator">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">32</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SocialMediaAdministrator">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">64</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SocialMediaUser">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">128</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Reviewer">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">256</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SystemAdministrator">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">512</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="RMMSharedQuestionUser">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1024</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="RMMSharedQuestionAdministrator">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2048</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="AdvancedAnalyst">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4096</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="OrgStructureAdministrator">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">8192</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="InvitationReportViewer">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">16384</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="BasicUser">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">32768</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="AdvancedUser">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">65536</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SurveyManager">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">131072</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="TextMiningAdministrator">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">262144</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="TextMiningViewer">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">524288</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="DataMiningViewer">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1048576</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="BonfireSurveyAdministrator">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2097152</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ReaderUser">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4194304</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SignInAsUser">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">8388608</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="PublishToCompany">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">16777216</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="CreateNewTheme">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">33554432</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ShareThemeWithCompany">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">67108864</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="CaseManagement">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">134217728</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="InviteReminderTemplate">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">268435456</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="CompanyOptOuts">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">536870912</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ShowResponseList">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1073741824</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="SurveyPermissionsEnum" nillable="true" type="tns:SurveyPermissionsEnum" />
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Allegiance.Core.Library.Licensing" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Allegiance.Core.Library.Licensing" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/Allegiance.Core.Library.Enumerations" />
+      <xs:complexType name="AllegianceLicense">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CompanyId" type="xs:int" />
+          <xs:element minOccurs="0" name="CompanyMask" type="xs:long" />
+          <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Allegiance.Core.Library.Enumerations" minOccurs="0" name="Features" nillable="true" type="q1:ArrayOfEnums.AllegianceFeatureFlags" />
+          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Allegiance.Core.Library.Enumerations" minOccurs="0" name="License" nillable="true" type="q2:ArrayOfEnums.AllegianceFeatureFlags" />
+          <xs:element minOccurs="0" name="LicenseMask" type="xs:long" />
+          <xs:element minOccurs="0" name="ProfileName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UseMasked" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="AllegianceLicense" nillable="true" type="tns:AllegianceLicense" />
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Allegiance.Core.Library.Enumerations" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Allegiance.Core.Library.Enumerations" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xs:complexType name="ArrayOfEnums.AllegianceFeatureFlags">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Enums.AllegianceFeatureFlags" type="tns:Enums.AllegianceFeatureFlags" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfEnums.AllegianceFeatureFlags" nillable="true" type="tns:ArrayOfEnums.AllegianceFeatureFlags" />
+      <xs:simpleType name="Enums.AllegianceFeatureFlags">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="CustomerVoice" />
+          <xs:enumeration value="EmployeeVoice" />
+          <xs:enumeration value="PartnerVoice" />
+          <xs:enumeration value="SignInAsAnother" />
+          <xs:enumeration value="ActiveSurvey" />
+          <xs:enumeration value="AllowReaderUsers" />
+          <xs:enumeration value="RoundedNPS" />
+          <xs:enumeration value="CustomerPulse">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">9</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="EmployeePulse">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="QuotaManagement">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">11</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SalesforceIntegration">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">12</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ResponseViewUnanswered">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">13</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Engage8Header">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">14</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ActionBoard">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">15</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="AllegiancePlatform">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">16</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="InquisitePlatform">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">17</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="OnPremises">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">18</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SMS">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">19</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SocialMedia">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">20</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="TextMining">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">21</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="QuadChart">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">22</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="CustomReports">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">23</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ResponseList">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">24</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="EnableBonfireForAllUsers">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">25</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="LocalizedDateFormat">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">26</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ActionPlanning">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">27</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="OrgStructure">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">28</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="CustomFields">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">29</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Alerts">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">30</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="InvitationManagement">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">31</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="WordCloud">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">32</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ComplexAnalystFilters">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">33</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="FastNPSCustomField">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">34</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ShareMyReports">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">35</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ScheduledImports">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">36</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="AllegianceAuthentication">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">37</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="HierarchyPreProcessing">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">38</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ResponseListCSVExport">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">39</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="TextQuestionTools">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">40</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="AllowTypeAheadFiltering">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">41</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="GlobalDeploymentCalendar">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">42</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="DataMining">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">43</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SendInvitationWizard">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">44</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SoftwareGlobalization">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">45</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ScheduledReportsEmailNonAllegiance">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">46</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="RespondentSummary">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">47</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ResponseReOpenAsCopy">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">48</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Dashboards2">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">49</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ScheduledMyReports">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">50</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ServerExtensibility">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">51</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="DownloadDesktopBuilder">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">52</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="BonfireFileUploadQuestion">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">53</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SurveyLibrary">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">54</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="CaseManagement">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">55</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="GlobalFatigueManagement">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">56</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="AutomatedEmailListUpload">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">57</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ShowAllegianceSurveysInSurveyLibrary">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">58</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="WeightedCustomField">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">59</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="QuestionLibrary">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">60</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="BonfireLogicReport">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">61</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="BonfireTableAnswerDisplayLogic">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">62</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Tableau">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">64</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Adobe">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">65</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Marketo">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">66</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="DynamicLanguageContent">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">67</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="EnableChartExport">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">68</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ForresterCxIndex">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">69</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="Enums.AllegianceFeatureFlags" nillable="true" type="tns:Enums.AllegianceFeatureFlags" />
+    </xs:schema>
+    <xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.DTO" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.DTO" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.Library" />
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xs:complexType name="CaseView">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CaseCanvasSettings" nillable="true" type="xs:string" />
+          <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="CaseStatusIds" nillable="true" type="q1:ArrayOfint" />
+          <xs:element minOccurs="0" name="CaseViewItems" nillable="true" type="tns:ArrayOfCaseViewItem" />
+          <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ClosingStatusIds" nillable="true" type="q2:ArrayOfint" />
+          <xs:element minOccurs="0" name="IsActionPlan" type="xs:boolean" />
+          <xs:element minOccurs="0" name="NewStatusId" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CaseView" nillable="true" type="tns:CaseView" />
+      <xs:complexType name="ArrayOfCaseViewItem">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="CaseViewItem" nillable="true" type="tns:CaseViewItem" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfCaseViewItem" nillable="true" type="tns:ArrayOfCaseViewItem" />
+      <xs:complexType name="CaseViewItem">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CaseId" type="xs:long" />
+          <xs:element minOccurs="0" name="CaseItemId" type="xs:int" />
+          <xs:element minOccurs="0" name="CaseItemText" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CaseProgramId" type="xs:int" />
+          <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.Library" minOccurs="0" name="CaseQuestionTypeId" type="q3:CaseManagementEnums.CaseQuestionType" />
+          <xs:element minOccurs="0" name="DefaultValue" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DropdownValues" nillable="true" type="tns:ArrayOfCaseViewListItem" />
+          <xs:element minOccurs="0" name="FormatString" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="IsEmailAddress" type="xs:boolean" />
+          <xs:element minOccurs="0" name="IsPhoneNumber" type="xs:boolean" />
+          <xs:element minOccurs="0" name="NeededToClose" type="xs:boolean" />
+          <xs:element minOccurs="0" name="ResourceKey" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RootCauseValues" nillable="true" type="tns:ArrayOfCaseViewRootCause" />
+          <xs:element minOccurs="0" name="SourceScaleId" type="xs:int" />
+          <xs:element minOccurs="0" name="isGroupParent" type="xs:boolean" />
+          <xs:element minOccurs="0" name="mobileIndex" type="xs:int" />
+          <xs:element minOccurs="0" name="parentItemID" type="xs:long" />
+          <xs:element minOccurs="0" name="showTimeField" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CaseViewItem" nillable="true" type="tns:CaseViewItem" />
+      <xs:complexType name="ArrayOfCaseViewListItem">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="CaseViewListItem" nillable="true" type="tns:CaseViewListItem" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfCaseViewListItem" nillable="true" type="tns:ArrayOfCaseViewListItem" />
+      <xs:complexType name="CaseViewListItem">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Id" type="xs:int" />
+          <xs:element minOccurs="0" name="LocalizedLabel" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Text" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CaseViewListItem" nillable="true" type="tns:CaseViewListItem" />
+      <xs:complexType name="ArrayOfCaseViewRootCause">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="CaseViewRootCause" nillable="true" type="tns:CaseViewRootCause" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfCaseViewRootCause" nillable="true" type="tns:ArrayOfCaseViewRootCause" />
+      <xs:complexType name="CaseViewRootCause">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AllowOtherNode" type="xs:boolean" />
+          <xs:element minOccurs="0" name="CaseItemId" type="xs:int" />
+          <xs:element minOccurs="0" name="CaseRootCauseId" type="xs:int" />
+          <xs:element minOccurs="0" name="ParentTreeId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RootCauseName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TreeId" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CaseViewRootCause" nillable="true" type="tns:CaseViewRootCause" />
+      <xs:complexType name="CaseViewValues">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ActivityNotes" nillable="true" type="tns:ArrayOfCaseActivityNote" />
+          <xs:element minOccurs="0" name="AlertName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CaseId" type="xs:long" />
+          <xs:element minOccurs="0" name="CasePriorityId" type="xs:int" />
+          <xs:element minOccurs="0" name="CaseRootCauseAnswers" nillable="true" type="tns:ArrayOfCaseViewRootCauseAnswer" />
+          <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="CaseRootCauseTreeIds" nillable="true" type="q4:ArrayOfstring" />
+          <xs:element minOccurs="0" name="CaseStatusId" type="xs:int" />
+          <xs:element minOccurs="0" name="CaseWatchers" nillable="true" type="tns:ArrayOfCaseWatcher" />
+          <xs:element minOccurs="0" name="CurrentUserId" type="ser:guid" />
+          <xs:element minOccurs="0" name="DateClosed" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="DateClosedFormatted" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DateSubmitted" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="DateSubmittedFormatted" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DisableCaseReassignmentNotifications" type="xs:boolean" />
+          <xs:element minOccurs="0" name="DisableCaseWatcherNotifications" type="xs:boolean" />
+          <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ItemAnswers" nillable="true" type="tns:ArrayOfCaseViewItemAnswer" />
+          <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ModifiedDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ModifiedDateFormatted" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="OwnerFullName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="OwnerUserId" type="ser:guid" />
+          <xs:element minOccurs="0" name="ProgramName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RespondentHash" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RespondentId" type="xs:int" />
+          <xs:element minOccurs="0" name="SourceName" nillable="true" type="xs:string" />
+          <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SourceResponses" nillable="true" type="q5:ArrayOfKeyValueOfintSourceResponsehQfJM3p9" />
+          <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SourceValues" nillable="true" type="q6:ArrayOfKeyValueOfstringstring" />
+          <xs:element minOccurs="0" name="SurveyId" type="xs:int" />
+          <xs:element minOccurs="0" name="SurveyName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TimeToClose" type="xs:long" />
+          <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.Library" minOccurs="0" name="TimeToCloseColor" type="q7:CaseManagementEnums.CaseTimeColor" />
+          <xs:element minOccurs="0" name="TimeToCloseDays" type="xs:int" />
+          <xs:element minOccurs="0" name="TimeToCloseDisplay" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TimeToCloseGoal" type="xs:long" />
+          <xs:element minOccurs="0" name="TimeToCloseGoalDays" type="xs:int" />
+          <xs:element minOccurs="0" name="TimeToCloseGoalDisplay" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TimeToCloseGoalHours" type="xs:int" />
+          <xs:element minOccurs="0" name="TimeToCloseHours" type="xs:int" />
+          <xs:element minOccurs="0" name="TimeToRespond" type="xs:long" />
+          <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.Library" minOccurs="0" name="TimeToRespondColor" type="q8:CaseManagementEnums.CaseTimeColor" />
+          <xs:element minOccurs="0" name="TimeToRespondDays" type="xs:int" />
+          <xs:element minOccurs="0" name="TimeToRespondDisplay" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TimeToRespondGoal" type="xs:long" />
+          <xs:element minOccurs="0" name="TimeToRespondGoalDays" type="xs:int" />
+          <xs:element minOccurs="0" name="TimeToRespondGoalDisplay" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TimeToRespondGoalHours" type="xs:int" />
+          <xs:element minOccurs="0" name="TimeToRespondHours" type="xs:int" />
+          <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.Library" minOccurs="0" name="WatcherType" type="q9:CaseManagementEnums.CaseWatcherType" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CaseViewValues" nillable="true" type="tns:CaseViewValues" />
+      <xs:complexType name="ArrayOfCaseActivityNote">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="CaseActivityNote" nillable="true" type="tns:CaseActivityNote" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfCaseActivityNote" nillable="true" type="tns:ArrayOfCaseActivityNote" />
+      <xs:complexType name="CaseActivityNote">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ActivityNote" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ActivityNoteDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="CaseActivityNoteId" type="xs:long" />
+          <xs:element minOccurs="0" name="CaseId" type="xs:long" />
+          <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="HashCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="NoteFile" nillable="true" type="tns:CaseActivityNoteFile" />
+          <xs:element minOccurs="0" name="UserId" type="ser:guid" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CaseActivityNote" nillable="true" type="tns:CaseActivityNote" />
+      <xs:complexType name="CaseActivityNoteFile">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CaseActivityNoteFileId" type="xs:long" />
+          <xs:element minOccurs="0" name="CaseActivityNoteId" type="xs:long" />
+          <xs:element minOccurs="0" name="ContentType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EncryptedParams" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FileNameOnDisk" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FileSize" type="xs:long" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CaseActivityNoteFile" nillable="true" type="tns:CaseActivityNoteFile" />
+      <xs:complexType name="ArrayOfCaseViewRootCauseAnswer">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="CaseViewRootCauseAnswer" nillable="true" type="tns:CaseViewRootCauseAnswer" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfCaseViewRootCauseAnswer" nillable="true" type="tns:ArrayOfCaseViewRootCauseAnswer" />
+      <xs:complexType name="CaseViewRootCauseAnswer">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CaseItemId" type="xs:int" />
+          <xs:element minOccurs="0" name="CaseRootCauseId" type="xs:int" />
+          <xs:element minOccurs="0" name="TreeId" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CaseViewRootCauseAnswer" nillable="true" type="tns:CaseViewRootCauseAnswer" />
+      <xs:complexType name="ArrayOfCaseWatcher">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="CaseWatcher" nillable="true" type="tns:CaseWatcher" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfCaseWatcher" nillable="true" type="tns:ArrayOfCaseWatcher" />
+      <xs:complexType name="CaseWatcher">
+        <xs:sequence>
+          <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.Library" minOccurs="0" name="Access" type="q10:CaseManagementEnums.CaseWatcherType" />
+          <xs:element minOccurs="0" name="Id" type="ser:guid" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CaseWatcher" nillable="true" type="tns:CaseWatcher" />
+      <xs:complexType name="ArrayOfCaseViewItemAnswer">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="CaseViewItemAnswer" nillable="true" type="tns:CaseViewItemAnswer" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfCaseViewItemAnswer" nillable="true" type="tns:ArrayOfCaseViewItemAnswer" />
+      <xs:complexType name="CaseViewItemAnswer">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="BoolValue" type="xs:boolean" />
+          <xs:element minOccurs="0" name="CaseId" type="xs:long" />
+          <xs:element minOccurs="0" name="CaseItemAnswerId" type="xs:long" />
+          <xs:element minOccurs="0" name="CaseItemId" type="xs:int" />
+          <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.Library" minOccurs="0" name="CaseQuestionTypeId" type="q11:CaseManagementEnums.CaseQuestionType" />
+          <xs:element minOccurs="0" name="DoubleValue" type="xs:double" />
+          <xs:element minOccurs="0" name="IntValue" type="xs:int" />
+          <xs:element minOccurs="0" name="IsEmpty" type="xs:boolean" />
+          <xs:element minOccurs="0" name="TextValue" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="TimeValue" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CaseViewItemAnswer" nillable="true" type="tns:CaseViewItemAnswer" />
+      <xs:complexType name="SourceResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AnswerText" nillable="true" type="xs:string" />
+          <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.Library" minOccurs="0" name="DisplayType" type="q12:CaseManagementEnums.DataDefinitionDisplayType" />
+          <xs:element minOccurs="0" name="QuestionText" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="SourceResponse" nillable="true" type="tns:SourceResponse" />
+      <xs:complexType name="CaseMobileInboxData">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Rows" nillable="true" type="tns:ArrayOfCaseMobileRowData" />
+          <xs:element minOccurs="0" name="TotalNewMessageCount" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CaseMobileInboxData" nillable="true" type="tns:CaseMobileInboxData" />
+      <xs:complexType name="ArrayOfCaseMobileRowData">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="CaseMobileRowData" nillable="true" type="tns:CaseMobileRowData" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfCaseMobileRowData" nillable="true" type="tns:ArrayOfCaseMobileRowData" />
+      <xs:complexType name="CaseMobileRowData">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CaseId" type="xs:long" />
+          <xs:element minOccurs="0" name="Columns" nillable="true" type="tns:ArrayOfCaseMobileColumnData" />
+          <xs:element minOccurs="0" name="IsActionPlan" type="xs:boolean" />
+          <xs:element minOccurs="0" name="NewMessageCount" type="xs:int" />
+          <xs:element minOccurs="0" name="RespondentId" type="xs:int" />
+          <xs:element minOccurs="0" name="SortIndex" type="xs:int" />
+          <xs:element minOccurs="0" name="StatusName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CaseMobileRowData" nillable="true" type="tns:CaseMobileRowData" />
+      <xs:complexType name="ArrayOfCaseMobileColumnData">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="CaseMobileColumnData" nillable="true" type="tns:CaseMobileColumnData" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfCaseMobileColumnData" nillable="true" type="tns:ArrayOfCaseMobileColumnData" />
+      <xs:complexType name="CaseMobileColumnData">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CaseQuestionTypeId" type="xs:int" />
+          <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.Library" minOccurs="0" name="ColumnColorValue" type="q13:CaseManagementEnums.CaseTimeColor" />
+          <xs:element minOccurs="0" name="ColumnName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ColumnValue" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SortIndex" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CaseMobileColumnData" nillable="true" type="tns:CaseMobileColumnData" />
+      <xs:complexType name="CaseStatistics">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AvgResolutionTime" type="xs:int" />
+          <xs:element minOccurs="0" name="AvgResponseTime" type="xs:int" />
+          <xs:element minOccurs="0" name="InProgressCases" type="xs:int" />
+          <xs:element minOccurs="0" name="NewCases" type="xs:int" />
+          <xs:element minOccurs="0" name="OverdueItems" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CaseStatistics" nillable="true" type="tns:CaseStatistics" />
+      <xs:complexType name="CaseMessageInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CaseID" type="xs:long" />
+          <xs:element minOccurs="0" name="CurrentUserName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EnableCaseMessaging" type="xs:boolean" />
+          <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MessageSubject" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Messages" nillable="true" type="tns:ArrayOfCaseMessage" />
+          <xs:element minOccurs="0" name="MessagingEmployeeIdentificationLabel" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MessagingLabel" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PredefineTemplateCount" type="xs:int" />
+          <xs:element minOccurs="0" name="TotalMessageCount" type="xs:int" />
+          <xs:element minOccurs="0" name="TotalNewMessageCount" type="xs:int" />
+          <xs:element minOccurs="0" name="UseAnonymousName" type="xs:boolean" />
+          <xs:element minOccurs="0" name="messageInfo" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CaseMessageInfo" nillable="true" type="tns:CaseMessageInfo" />
+      <xs:complexType name="ArrayOfCaseMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="CaseMessage" nillable="true" type="tns:CaseMessage" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfCaseMessage" nillable="true" type="tns:ArrayOfCaseMessage" />
+      <xs:complexType name="CaseMessage">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CaseID" type="xs:long" />
+          <xs:element minOccurs="0" name="CaseMessageID" type="xs:long" />
+          <xs:element minOccurs="0" name="CaseMessageTypeID" type="xs:int" />
+          <xs:element minOccurs="0" name="MessageDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="MessageDateFormatted" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MessageFile" nillable="true" type="tns:ArrayOfCaseMessageFile" />
+          <xs:element minOccurs="0" name="MessageText" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MessageUnread" type="xs:boolean" />
+          <xs:element minOccurs="0" name="ModifiedDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="RecordStatusTypeID" type="xs:int" />
+          <xs:element minOccurs="0" name="UserID" type="ser:guid" />
+          <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CaseMessage" nillable="true" type="tns:CaseMessage" />
+      <xs:complexType name="ArrayOfCaseMessageFile">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="CaseMessageFile" nillable="true" type="tns:CaseMessageFile" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfCaseMessageFile" nillable="true" type="tns:ArrayOfCaseMessageFile" />
+      <xs:complexType name="CaseMessageFile">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CaseMessageFileID" type="xs:long" />
+          <xs:element minOccurs="0" name="CaseMessageID" type="xs:long" />
+          <xs:element minOccurs="0" name="ContentType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EncryptedParams" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FileNameOnDisk" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FileSize" type="xs:long" />
+          <xs:element minOccurs="0" name="RecordStatusTypeID" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CaseMessageFile" nillable="true" type="tns:CaseMessageFile" />
+      <xs:complexType name="ArrayOfCasePredefinedResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="CasePredefinedResponse" nillable="true" type="tns:CasePredefinedResponse" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfCasePredefinedResponse" nillable="true" type="tns:ArrayOfCasePredefinedResponse" />
+      <xs:complexType name="CasePredefinedResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CasePredefinedResponseId" type="xs:int" />
+          <xs:element minOccurs="0" name="CaseProgramId" type="xs:int" />
+          <xs:element minOccurs="0" name="CreatedBy" type="ser:guid" />
+          <xs:element minOccurs="0" name="CreatedDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="DefaultAlerts" nillable="true" type="tns:ArrayOfCasePredefinedResponseDefaultAlert" />
+          <xs:element minOccurs="0" name="ModifiedDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RecordStatusTypeId" type="xs:int" />
+          <xs:element minOccurs="0" name="Response" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CasePredefinedResponse" nillable="true" type="tns:CasePredefinedResponse" />
+      <xs:complexType name="ArrayOfCasePredefinedResponseDefaultAlert">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="CasePredefinedResponseDefaultAlert" nillable="true" type="tns:CasePredefinedResponseDefaultAlert" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfCasePredefinedResponseDefaultAlert" nillable="true" type="tns:ArrayOfCasePredefinedResponseDefaultAlert" />
+      <xs:complexType name="CasePredefinedResponseDefaultAlert">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CasePredefinedResponseId" type="xs:int" />
+          <xs:element minOccurs="0" name="CaseTriggerId" type="xs:int" />
+          <xs:element minOccurs="0" name="CaseTriggerName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CasePredefinedResponseDefaultAlert" nillable="true" type="tns:CasePredefinedResponseDefaultAlert" />
+    </xs:schema>
+    <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.Library" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Allegiance.CaseManagement.Service.Library" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xs:simpleType name="CaseManagementEnums.CaseQuestionType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="CaseId">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ProgramName">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SubmittedDate">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Status">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Priority">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="RootCause">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Comment">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">7</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Email">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">8</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="CaseOwner">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">9</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="AlertType">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">10</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ShortText">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">11</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="LongText">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">12</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Dropdown">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">13</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Checkbox">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">14</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Source">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">15</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ClosedDate">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">16</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SurveyName">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">17</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="TimeToRespond">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">18</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="TimeToClose">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">19</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Paragraph">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">20</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Divider">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">21</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="CcWatcher">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">22</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Escalated">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">23</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SurveyNameDuplicate">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">24</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ModifiedDate">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">25</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="DatePicker">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">26</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Numeric">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">27</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="MessageCount">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">28</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="CaseManagementEnums.CaseQuestionType" nillable="true" type="tns:CaseManagementEnums.CaseQuestionType" />
+      <xs:simpleType name="CaseManagementEnums.CaseWatcherType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="None" />
+          <xs:enumeration value="FullAccess" />
+          <xs:enumeration value="LimitedAccess" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="CaseManagementEnums.CaseWatcherType" nillable="true" type="tns:CaseManagementEnums.CaseWatcherType" />
+      <xs:simpleType name="CaseManagementEnums.DataDefinitionDisplayType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Question" />
+          <xs:enumeration value="Answer" />
+          <xs:enumeration value="AnswerWithValue" />
+          <xs:enumeration value="QuestionWithAnswer" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="CaseManagementEnums.DataDefinitionDisplayType" nillable="true" type="tns:CaseManagementEnums.DataDefinitionDisplayType" />
+      <xs:simpleType name="CaseManagementEnums.CaseTimeColor">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="None" />
+          <xs:enumeration value="Red" />
+          <xs:enumeration value="Yellow" />
+          <xs:enumeration value="Green" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="CaseManagementEnums.CaseTimeColor" nillable="true" type="tns:CaseManagementEnums.CaseTimeColor" />
+      <xs:simpleType name="CaseManagementEnums.CaseMobileNotificationModeType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="NewMessageOnly">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="NewStatusOnly">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="BothNewMessageAndNewStatus">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="CaseManagementEnums.CaseMobileNotificationModeType" nillable="true" type="tns:CaseManagementEnums.CaseMobileNotificationModeType" />
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="ICaseManagement_ServicesCheck_InputMessage">
+    <wsdl:part name="parameters" element="tns:ServicesCheck" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_ServicesCheck_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ServicesCheckResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_Authenticate_InputMessage">
+    <wsdl:part name="parameters" element="tns:Authenticate" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_Authenticate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AuthenticateResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_Logout_InputMessage">
+    <wsdl:part name="parameters" element="tns:Logout" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_Logout_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LogoutResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_InsertUpdateDeviceId_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertUpdateDeviceId" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_InsertUpdateDeviceId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertUpdateDeviceIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_RemoveDeviceId_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveDeviceId" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_RemoveDeviceId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveDeviceIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_GetCaseView_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCaseView" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_GetCaseView_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCaseViewResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_UpdateCaseView_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateCaseView" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_UpdateCaseView_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateCaseViewResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_UpdateCaseOwner_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateCaseOwner" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_UpdateCaseOwner_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateCaseOwnerResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_UpdateCaseWatchers_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateCaseWatchers" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_UpdateCaseWatchers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateCaseWatchersResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_InsertUpdateActivityNote_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertUpdateActivityNote" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_InsertUpdateActivityNote_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertUpdateActivityNoteResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_GetUserList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserList" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_GetUserList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUserListResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_InsertCaseHistory_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertCaseHistory" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_InsertCaseHistory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertCaseHistoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_GetMobileCaseInboxItems_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMobileCaseInboxItems" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_GetMobileCaseInboxItems_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMobileCaseInboxItemsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_GetCaseStatistics_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCaseStatistics" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_GetCaseStatistics_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCaseStatisticsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_UpdateSessionTimeout_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateSessionTimeout" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_UpdateSessionTimeout_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateSessionTimeoutResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_DeleteCaseActivityNote_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteCaseActivityNote" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_DeleteCaseActivityNote_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteCaseActivityNoteResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_CreateNotification_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateNotification" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_CreateNotification_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateNotificationResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_CreateMessage_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateMessage" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_CreateMessage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_GetMessages_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMessages" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_GetMessages_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMessagesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_GetMessageScriptedResponses_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMessageScriptedResponses" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_GetMessageScriptedResponses_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMessageScriptedResponsesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_MarkMessagesRead_InputMessage">
+    <wsdl:part name="parameters" element="tns:MarkMessagesRead" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_MarkMessagesRead_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MarkMessagesReadResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_SetMobileNotificationMode_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetMobileNotificationMode" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_SetMobileNotificationMode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetMobileNotificationModeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_TestCall_InputMessage">
+    <wsdl:part name="parameters" element="tns:TestCall" />
+  </wsdl:message>
+  <wsdl:message name="ICaseManagement_TestCall_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TestCallResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ICaseManagement">
+    <wsdl:operation name="ServicesCheck">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICaseManagement/ServicesCheck" message="tns:ICaseManagement_ServicesCheck_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICaseManagement/ServicesCheckResponse" message="tns:ICaseManagement_ServicesCheck_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Authenticate">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICaseManagement/Authenticate" message="tns:ICaseManagement_Authenticate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICaseManagement/AuthenticateResponse" message="tns:ICaseManagement_Authenticate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICaseManagement/Logout" message="tns:ICaseManagement_Logout_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICaseManagement/LogoutResponse" message="tns:ICaseManagement_Logout_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertUpdateDeviceId">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICaseManagement/InsertUpdateDeviceId" message="tns:ICaseManagement_InsertUpdateDeviceId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICaseManagement/InsertUpdateDeviceIdResponse" message="tns:ICaseManagement_InsertUpdateDeviceId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveDeviceId">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICaseManagement/RemoveDeviceId" message="tns:ICaseManagement_RemoveDeviceId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICaseManagement/RemoveDeviceIdResponse" message="tns:ICaseManagement_RemoveDeviceId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCaseView">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICaseManagement/GetCaseView" message="tns:ICaseManagement_GetCaseView_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICaseManagement/GetCaseViewResponse" message="tns:ICaseManagement_GetCaseView_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCaseView">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICaseManagement/UpdateCaseView" message="tns:ICaseManagement_UpdateCaseView_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICaseManagement/UpdateCaseViewResponse" message="tns:ICaseManagement_UpdateCaseView_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCaseOwner">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICaseManagement/UpdateCaseOwner" message="tns:ICaseManagement_UpdateCaseOwner_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICaseManagement/UpdateCaseOwnerResponse" message="tns:ICaseManagement_UpdateCaseOwner_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCaseWatchers">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICaseManagement/UpdateCaseWatchers" message="tns:ICaseManagement_UpdateCaseWatchers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICaseManagement/UpdateCaseWatchersResponse" message="tns:ICaseManagement_UpdateCaseWatchers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertUpdateActivityNote">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICaseManagement/InsertUpdateActivityNote" message="tns:ICaseManagement_InsertUpdateActivityNote_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICaseManagement/InsertUpdateActivityNoteResponse" message="tns:ICaseManagement_InsertUpdateActivityNote_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUserList">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICaseManagement/GetUserList" message="tns:ICaseManagement_GetUserList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICaseManagement/GetUserListResponse" message="tns:ICaseManagement_GetUserList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertCaseHistory">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICaseManagement/InsertCaseHistory" message="tns:ICaseManagement_InsertCaseHistory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICaseManagement/InsertCaseHistoryResponse" message="tns:ICaseManagement_InsertCaseHistory_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMobileCaseInboxItems">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICaseManagement/GetMobileCaseInboxItems" message="tns:ICaseManagement_GetMobileCaseInboxItems_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICaseManagement/GetMobileCaseInboxItemsResponse" message="tns:ICaseManagement_GetMobileCaseInboxItems_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCaseStatistics">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICaseManagement/GetCaseStatistics" message="tns:ICaseManagement_GetCaseStatistics_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICaseManagement/GetCaseStatisticsResponse" message="tns:ICaseManagement_GetCaseStatistics_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateSessionTimeout">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICaseManagement/UpdateSessionTimeout" message="tns:ICaseManagement_UpdateSessionTimeout_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICaseManagement/UpdateSessionTimeoutResponse" message="tns:ICaseManagement_UpdateSessionTimeout_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCaseActivityNote">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICaseManagement/DeleteCaseActivityNote" message="tns:ICaseManagement_DeleteCaseActivityNote_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICaseManagement/DeleteCaseActivityNoteResponse" message="tns:ICaseManagement_DeleteCaseActivityNote_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateNotification">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICaseManagement/CreateNotification" message="tns:ICaseManagement_CreateNotification_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICaseManagement/CreateNotificationResponse" message="tns:ICaseManagement_CreateNotification_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateMessage">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICaseManagement/CreateMessage" message="tns:ICaseManagement_CreateMessage_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICaseManagement/CreateMessageResponse" message="tns:ICaseManagement_CreateMessage_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMessages">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICaseManagement/GetMessages" message="tns:ICaseManagement_GetMessages_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICaseManagement/GetMessagesResponse" message="tns:ICaseManagement_GetMessages_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMessageScriptedResponses">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICaseManagement/GetMessageScriptedResponses" message="tns:ICaseManagement_GetMessageScriptedResponses_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICaseManagement/GetMessageScriptedResponsesResponse" message="tns:ICaseManagement_GetMessageScriptedResponses_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MarkMessagesRead">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICaseManagement/MarkMessagesRead" message="tns:ICaseManagement_MarkMessagesRead_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICaseManagement/MarkMessagesReadResponse" message="tns:ICaseManagement_MarkMessagesRead_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetMobileNotificationMode">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICaseManagement/SetMobileNotificationMode" message="tns:ICaseManagement_SetMobileNotificationMode_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICaseManagement/SetMobileNotificationModeResponse" message="tns:ICaseManagement_SetMobileNotificationMode_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TestCall">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICaseManagement/TestCall" message="tns:ICaseManagement_TestCall_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICaseManagement/TestCallResponse" message="tns:ICaseManagement_TestCall_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:service name="CaseManagement" />
+</wsdl:definitions>
