@@ -10,7 +10,7 @@ namespace Web
             CaseManagementClient client = new CaseManagementClient();
 
             //userName, password, companyName companyId
-            var authResponse = client.Authenticate("", "", "", 0);
+            var authResponse = client.Authenticate("sqgabriel@hotmail.com", "Porsche986", "", 10200);
 
             if (authResponse != null)
             {
