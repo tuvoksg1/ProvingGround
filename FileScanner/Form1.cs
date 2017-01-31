@@ -24,9 +24,9 @@ namespace FileScanner
 
         private void ScanBtn_Click(object sender, EventArgs e)
         {
-            string[] files = null;
-
-            files = !string.IsNullOrWhiteSpace(PatternTxt.Text) ? Directory.GetFiles(FolderTxt.Text, PatternTxt.Text, SearchOption.AllDirectories) : Directory.GetFiles(FolderTxt.Text, "*.*", SearchOption.AllDirectories);
+            var files = !string.IsNullOrWhiteSpace(PatternTxt.Text) ? 
+                Directory.GetFiles(FolderTxt.Text, PatternTxt.Text, SearchOption.AllDirectories) : 
+                Directory.GetFiles(FolderTxt.Text, "*.*", SearchOption.AllDirectories);
 
             var builder = new StringBuilder("File, SourceFolder, Valid, Processed");
             builder.AppendLine();

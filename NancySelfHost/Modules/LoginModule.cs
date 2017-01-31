@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Nancy;
@@ -14,16 +11,15 @@ namespace NancySelfHost.Modules
     {
         public LoginModule()
         {
-            Get["/core/custom/login/{id}", runAsync: true] = LoginGet;
+            Get["/core/custom/login/{id}", true] = LoginGet;
 
-            Post["/core/custom/login/{test}", runAsync: true] = LoginPost;
+            Post["/core/custom/login/{test}", true] = LoginPost;
         }
 
         private async Task<dynamic> LoginGet(dynamic parameters, CancellationToken token)
         {
             await Task.Delay(0, token);
             var userId = ((DynamicDictionary)parameters)["id"].Value;
-            //return View["login"];
             return Negotiate
                 .WithModel(new LoginModel { UserName = "Nancy", Password = "Reagan", SignInId = userId })
                 .WithView("login");
@@ -32,12 +28,10 @@ namespace NancySelfHost.Modules
         private async Task<dynamic> LoginPost(dynamic parameters, CancellationToken token)
         {
             var model = this.Bind<LoginModel>();
-            var userId = ((DynamicDictionary)parameters)["id"].Value;
             Console.WriteLine($"Logged in for {model.UserName}");
             await Task.Delay(0, token);
 
             return Response.AsRedirect("~/?status=test");
-            //return Task.FromResult(View["index"]);
         }
     }
 }

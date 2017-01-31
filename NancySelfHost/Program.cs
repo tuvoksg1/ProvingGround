@@ -9,18 +9,7 @@ namespace NancySelfHost
     {
         static void Main(string[] args)
         {
-            var url = "https://localhost:44388";
-
-            var uri =
-                new Uri(url);
-
-            var config = new HostConfiguration
-            {
-                UrlReservations = new UrlReservations
-                {
-                    CreateAutomatically = true
-                }
-            };
+            const string url = "https://localhost:44388";
 
             using (WebApp.Start<Startup>(url))
             {
@@ -28,15 +17,6 @@ namespace NancySelfHost
                 Console.WriteLine("Press enter to exit");
                 Console.ReadLine();
             }
-
-            //using (var host = new NancyHost(config, uri))
-            //{
-            //    host.Start();
-
-            //    Console.WriteLine("Your application is running on " + uri);
-            //    Console.WriteLine("Press any [Enter] to close the host.");
-            //    Console.ReadLine();
-            //}
         }
     }
 }

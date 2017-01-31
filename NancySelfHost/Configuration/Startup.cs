@@ -17,10 +17,7 @@ namespace NancySelfHost.Configuration
                   context.Response.StatusCode == HttpStatusCode.NotFound
             };
 
-            //option.PassThroughWhenStatusCodesAre(HttpStatusCode.ServiceUnavailable);
             app.UseNancy(option);
-            //app.UseNancy();
-
             app.Map("/core",
             coreApp =>
             {

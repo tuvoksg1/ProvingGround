@@ -23,7 +23,7 @@ namespace NancySelfHost.Modules
                 Console.WriteLine("After Hook Complete");
             };
 
-            Get["/", runAsync: true] = async (parameters, token) =>
+            Get["/", true] = async (parameters, token) =>
             {
                 Console.WriteLine("Doing work");
                 await Task.Delay(0);
