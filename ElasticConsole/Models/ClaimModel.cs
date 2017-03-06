@@ -8,5 +8,7 @@ namespace ElasticConsole.Models
         public string Owner { get; set; }
         public string Type { get; set; }
         public string Value { get; set; }
+        public Guid ClaimId { get; set; }
+        public DateTime DateCreated { get; set; }
     }
 }

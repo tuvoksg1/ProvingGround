@@ -8,11 +8,12 @@ namespace ElasticConsole.Data
 {
     public class Storage
     {
-        private const string DefaultIndex = "cx_passport";
-        internal const string ServiceIndex = "cx_passport_apps";
-        internal const string UserIndex = "cx_passport_users";
-        internal const string ClaimIndex = "cx_passport_claims";
-        internal const string TenantIndex = "cx_passport_tenants";
+        private const string DefaultIndex = "cx_demo";
+        internal const string ServiceIndex = "cx_demo_apps";
+        internal const string UserIndex = "cx_demo_users";
+        internal const string ClaimIndex = "cx_demo_claims_1";
+        internal const string TenantIndex = "cx_demo_tenants";
+        internal const string ClaimsAlias = "ClaimsIndex";
 
         internal static readonly string HsbcId = Guid.Parse("{B21D76EE-4EE2-459C-B40D-DDA1D5AD68EB}").ToString();
         internal static readonly string NissanId = Guid.Parse("{CE1C55FB-C4E6-45FA-8E5B-17BF18845CD0}").ToString();
@@ -35,7 +36,7 @@ namespace ElasticConsole.Data
 
         public Storage(string serverUrl)
         {
-            var passportIndices = new List<string> { ServiceIndex, UserIndex, ClaimIndex, TenantIndex };
+            var passportIndices = new List<string> { ClaimIndex };
 
             var local = new Uri(serverUrl);
             var settings = new ConnectionSettings(local).DefaultIndex(DefaultIndex);
@@ -70,6 +71,8 @@ namespace ElasticConsole.Data
 
         private void InitialiseIndex(string index)
         {
+            #region Applications
+
             if (index == ServiceIndex)
             {
                 _client.CreateIndex(new IndexName
@@ -100,6 +103,10 @@ namespace ElasticConsole.Data
                                     .Index(NonStringIndexOption.No))))));
             }
 
+            #endregion
+
+            #region Organisations
+
             if (index == TenantIndex)
             {
                 _client.CreateIndex(new IndexName
@@ -124,6 +131,10 @@ namespace ElasticConsole.Data
                                     .Index(NonStringIndexOption.No))
                                 .Nested<ClaimModel>(field => field.Name(child => child.Claims))))));
             }
+
+            #endregion
+
+            #region Users
 
             if (index == UserIndex)
             {
@@ -178,7 +189,9 @@ namespace ElasticConsole.Data
                                     .Name(name => name.UserName)
                                     .Index(FieldIndexOption.Analyzed))
                                 .Nested<ClaimModel>(field => field.Name(child => child.Claims))))));
-            }
+            } 
+
+            #endregion
 
             if (index == ClaimIndex)
             {
@@ -198,7 +211,8 @@ namespace ElasticConsole.Data
                                     .Index(FieldIndexOption.NotAnalyzed))
                                 .String(field => field
                                     .Name(name => name.Value)
-                                    .Index(FieldIndexOption.No))))));
+                                    .Index(FieldIndexOption.No)))))
+                    .Aliases(als => als.Alias(ClaimsAlias)));
             }
 
             Console.WriteLine($"{index} Index created");
@@ -209,6 +223,8 @@ namespace ElasticConsole.Data
 
         private void AddDataToStorage(string index)
         {
+            #region Applications
+
             if (index == ServiceIndex)
             {
                 var items = Services();
@@ -223,6 +239,10 @@ namespace ElasticConsole.Data
 
                 Console.WriteLine($"{items.Count} services indexed");
             }
+
+            #endregion
+
+            #region Organisations
 
             if (index == TenantIndex)
             {
@@ -239,6 +259,10 @@ namespace ElasticConsole.Data
                 Console.WriteLine($"{items.Count} organisations indexed");
             }
 
+            #endregion
+
+            #region Users
+
             if (index == UserIndex)
             {
                 var items = Users();
@@ -252,7 +276,9 @@ namespace ElasticConsole.Data
                 }
 
                 Console.WriteLine($"{items.Count} users indexed");
-            }
+            } 
+
+            #endregion
 
             if (index == ClaimIndex)
             {
@@ -261,7 +287,7 @@ namespace ElasticConsole.Data
                 foreach (var item in items)
                 {
                     _client.Index(item, p => p
-                        .Index(index)
+                        .Index(ClaimsAlias)
                         .Id(item.Id.ToString())
                         .Refresh());
                 }

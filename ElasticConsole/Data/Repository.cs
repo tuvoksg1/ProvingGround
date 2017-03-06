@@ -8,20 +8,12 @@ namespace ElasticConsole.Data
 {
     internal class Repository
     {
-        //private const string DefaultIndex = "cx_passport";
-        //private const string ServiceIndex = "cx_passport_apps";
-        //private const string UserIndex = "cx_passport_users";
-        //private const string ClaimIndex = "cx_passport_claims";
-        //private const string OrgIndex = "cx_passport_tenants";
-        //private readonly List<string> _passportIndices;
         private readonly IElasticClient _client;
 
         public Repository()
         {
-            //_passportIndices = new List<string> {ServiceIndex, UserIndex, ClaimIndex, OrgIndex};
             var storage = new Storage("http://localhost:9200");
             _client = storage.Connection;
-            //InitialiseConnection();
         }
 
         public void QueryClients()
@@ -166,13 +158,16 @@ namespace ElasticConsole.Data
                 : $"Unable to update user: {model.UserName}");
         }
 
-        public IEnumerable<ClaimModel> GetClaimsForEntity(Guid ownerId)
+        public IEnumerable<ClaimModel> GetClaimsForEntity(string ownerId)
         {
             var matchResult = _client.Search<ClaimModel>(search =>
-                search.Index(Storage.ClaimIndex)
-                    .Query(query => query.Term(term => term
-                        .Field(field => field.Owner)
-                        .Value(ownerId.ToString()))));
+                search.Index(Storage.ClaimsAlias)
+                    .Query(query => query
+                    .Bool(condition => condition
+                        .Must(must => must
+                            .Match(match => match
+                                .Field(field => field.Owner)
+                                .Query(ownerId))))));
 
             return matchResult.ApiCall.Success ? matchResult.Hits.Select(arg => arg.Source) : new List<ClaimModel>();
         }
@@ -266,22 +261,59 @@ namespace ElasticConsole.Data
 
         public void PrintCounts()
         {
-            var userCount = _client.Count<Models.User>(search => search
-                .Index(Storage.UserIndex));
+            //var userCount = _client.Count<Models.User>(search => search
+            //    .Index(Storage.UserIndex));
 
-            var orgCount = _client.Count<TenantModel>(search => search
-                .Index(Storage.TenantIndex));
+            //var orgCount = _client.Count<TenantModel>(search => search
+            //    .Index(Storage.TenantIndex));
 
-            var appCount = _client.Count<ServiceModel>(search => search
-                .Index(Storage.ServiceIndex));
+            //var appCount = _client.Count<ServiceModel>(search => search
+            //    .Index(Storage.ServiceIndex));
 
-            var jointCount = _client.Count<ServiceModel>(search => search
-                .Index(Indices.Parse($"{Storage.UserIndex}, {Storage.TenantIndex}, {Storage.ServiceIndex}")));
+            //var jointCount = _client.Count<ServiceModel>(search => search
+            //    .Index(Indices.Parse($"{Storage.UserIndex}, {Storage.TenantIndex}, {Storage.ServiceIndex}")));
 
-            Console.WriteLine($"Users: {userCount.Count}");
-            Console.WriteLine($"Tenant: {orgCount.Count}");
-            Console.WriteLine($"Service: {appCount.Count}");
-            Console.WriteLine($"Total: {jointCount.Count}");
+            var claimCount = _client.Count<ClaimModel>(search => search
+                .Index(Storage.ClaimsAlias));
+
+            //Console.WriteLine($"Users: {userCount.Count}");
+            //Console.WriteLine($"Tenant: {orgCount.Count}");
+            //Console.WriteLine($"Service: {appCount.Count}");
+            //Console.WriteLine($"Total: {jointCount.Count}");
+
+            Console.WriteLine($"Users: {claimCount.Count}");
+        }
+
+        public void ReIndex()
+        {
+            const string newIndex = "cx_demo_claims_2";
+            var reindex =
+                _client.Reindex<ClaimModel>(Storage.ClaimIndex, newIndex, (inbox => inbox
+                    .Query(query => query.MatchAll())
+                    .Scroll("10s")
+                    .CreateIndex(index => index
+                        .Mappings(ms => ms
+                            .Map<ClaimModel>(m => m.AutoMap()
+                                .Properties(prop => prop
+                                    .String(field => field
+                                        .Name(name => name.Owner)
+                                        .Index(FieldIndexOption.NotAnalyzed))
+                                    .String(field => field
+                                        .Name(name => name.Type)
+                                        .Index(FieldIndexOption.NotAnalyzed))
+                                    .String(field => field
+                                        .Name(name => name.Value)
+                                        .Index(FieldIndexOption.No))))))));
+
+            var observer = new ReindexObserver<ClaimModel>(onError: error =>
+            {
+                Console.WriteLine($"Document error occured: {error.Message}");
+            });
+
+            reindex.Subscribe(observer);
+
+            _client.DeleteIndex(Indices.Index(new IndexName {Name = Storage.ClaimIndex}));
+            _client.Alias(x => x.Add(a => a.Alias(Storage.ClaimsAlias).Index(newIndex)));
         }
     }
 }

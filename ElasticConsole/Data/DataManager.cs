@@ -140,10 +140,19 @@ namespace ElasticConsole.Data
             }
         }
 
+        private void GetClaims()
+        {
+            var claims = _repository.GetClaimsForEntity("b31e7fc8-07e7-4092-af4e-96421fe762a0");
+
+            foreach (var claim in claims)
+            {
+                Console.WriteLine($"Value:{claim.Value} - Id: {claim.ClaimId} - Created: {claim.DateCreated}");
+            }
+        }
         private void RunQuery()
         {
-            //_repository.QueryMatchingServices(new List<string> {"js", "homeoffice", "commandline"});
             _repository.PrintCounts();
+            GetClaims();
         }
     }
 }
