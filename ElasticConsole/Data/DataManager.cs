@@ -142,11 +142,13 @@ namespace ElasticConsole.Data
 
         private void GetClaims()
         {
-            var claims = _repository.GetClaimsForEntity("b31e7fc8-07e7-4092-af4e-96421fe762a0");
+            _repository.ReIndex();
+
+            var claims = _repository.GetClaimsForEntity(Storage.AnonymousId);
 
             foreach (var claim in claims)
             {
-                Console.WriteLine($"Value:{claim.Value} - Id: {claim.ClaimId} - Created: {claim.DateCreated}");
+                Console.WriteLine($"Value:{claim.Code}");
             }
         }
         private void RunQuery()

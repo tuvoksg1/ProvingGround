@@ -162,6 +162,7 @@ namespace ElasticConsole.Data
         {
             var matchResult = _client.Search<ClaimModel>(search =>
                 search.Index(Storage.ClaimsAlias)
+                    .Size(30)
                     .Query(query => query
                     .Bool(condition => condition
                         .Must(must => must
@@ -296,6 +297,9 @@ namespace ElasticConsole.Data
                             .Map<ClaimModel>(m => m.AutoMap()
                                 .Properties(prop => prop
                                     .String(field => field
+                                        .Name(name => name.Id)
+                                        .Index(FieldIndexOption.NotAnalyzed))
+                                    .String(field => field
                                         .Name(name => name.Owner)
                                         .Index(FieldIndexOption.NotAnalyzed))
                                     .String(field => field
@@ -303,11 +307,27 @@ namespace ElasticConsole.Data
                                         .Index(FieldIndexOption.NotAnalyzed))
                                     .String(field => field
                                         .Name(name => name.Value)
-                                        .Index(FieldIndexOption.No))))))));
+                                        .Index(FieldIndexOption.No))
+                                    .Number(field => field
+                                        .Name(name => name.Code)
+                                        .Index(NonStringIndexOption.No))
+                                    .Number(field => field
+                                        .Name(name => name.Size)
+                                        .Index(NonStringIndexOption.No))
+                                    .Number(field => field
+                                        .Name(name => name.Origin)
+                                        .Index(NonStringIndexOption.No))))))));
 
-            var observer = new ReindexObserver<ClaimModel>(onError: error =>
+            var observer = new ReindexObserver<ClaimModel>(onNext: response =>
+            {
+                Console.WriteLine($"Indexing document: {response.IsValid}");
+            }, onError: error =>
             {
                 Console.WriteLine($"Document error occured: {error.Message}");
+            },
+            completed: () =>
+            {
+                Console.WriteLine($"Document re-index");
             });
 
             reindex.Subscribe(observer);

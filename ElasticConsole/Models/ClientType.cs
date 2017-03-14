@@ -24,6 +24,10 @@
         /// <summary>
         /// For applications that will have access to user login credentials
         /// </summary>
-        Login
+        Login,
+        /// <summary>
+        /// The mobile
+        /// </summary>
+        Mobile
     }
 }

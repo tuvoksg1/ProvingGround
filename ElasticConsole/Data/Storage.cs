@@ -282,7 +282,7 @@ namespace ElasticConsole.Data
 
             if (index == ClaimIndex)
             {
-                var items = Claims();
+                var items = TestClaims();
 
                 foreach (var item in items)
                 {
@@ -524,6 +524,27 @@ namespace ElasticConsole.Data
             }
 
             return orgId;
+        }
+
+        private static List<ClaimModel> TestClaims()
+        {
+            var claims = new List<ClaimModel>();
+
+            for (var index = 0; index < 15; index++)
+            {
+                claims.Add(new ClaimModel
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Owner = AnonymousId,
+                    Type = ServiceClaim,
+                    Size = index,
+                    Code = $"{index}",
+                    Value = $"{ServiceClaim}_claim_anon",
+                    Origin = index == 0 ? ClientType.Mobile : ClientType.Console
+                });
+            }
+
+            return claims;
         }
 
         private static List<ClaimModel> Claims()
