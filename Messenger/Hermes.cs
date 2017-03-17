@@ -3,15 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using Elasticsearch.Net;
 using Nest;
+using Newtonsoft.Json.Linq;
 
 namespace Messenger
 {
-    public class Hermes<T> where T : Message
+    public class Hermes<T> where T : class
     {
         private const string DefaultIndex = "mount_olympus";
         private const string ServerUrl = "localhost:9200";
         private readonly ElasticClient _client;
         private readonly string _index;
+
+        public Hermes()
+        {
+            const string userName = "elastic";
+            const string password = "changeme";
+            var local = new Uri($"http://{userName}:{password}@{ServerUrl}");
+            var settings = new ConnectionSettings(local).DefaultIndex(DefaultIndex);
+            _client = new ElasticClient(settings);
+
+            var res = _client.LowLevel.ClusterHealth<object>();
+
+            if (!res.SuccessOrKnownError)
+            {
+                throw new InvalidOperationException("Elastic search server is not reachable");
+            }
+        }
 
         public Hermes(string index)
         {
@@ -61,11 +78,21 @@ namespace Messenger
             }
         }
 
+        private void InitialiseIndex(JObject definition)
+        {
+            _client.PutIndexTemplate("pledge_template", tmp => tmp
+                .Create()
+                .Template("pledge_run")
+                .Mappings(map => map.Map("pledgerun", typ => typ.DateDetection())));
+            //-----------------------------------------------------------------------------------
+            _client.LowLevel.IndicesPutTemplatePostForAll<object>("pledge_run", new PostData<object>(definition.ToString()));
+        }
+
         public void AddMessage(T message)
         {
             var response = _client.Index(message, p => p
                         .Index(_index)
-                        .Id(message.Id)
+                        //.Id(message.Id)
                         .Refresh(new Refresh()));
 
             if (!response.IsValid)

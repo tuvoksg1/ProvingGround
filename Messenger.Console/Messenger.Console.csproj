@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Gods\Ares.cs" />
     <Compile Include="Gods\Athena.cs" />
     <Compile Include="Gods\Hades.cs" />
     <Compile Include="Gods\Poseidon.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Models\IncidenceMessage.cs" />
     <Compile Include="Interfaces\IGod.cs" />
     <Compile Include="Models\InvoiceMessage.cs" />
+    <Compile Include="Models\PledgeRun.cs" />
     <Compile Include="Models\TraceMessage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

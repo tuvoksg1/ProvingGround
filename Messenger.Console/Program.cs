@@ -6,7 +6,7 @@ namespace Messenger.Console
     {
         static void Main(string[] args)
         {
-            var god = new Hades();
+            var god = new Ares();
             god.AddMessages();
             god.ListMessages();
 
