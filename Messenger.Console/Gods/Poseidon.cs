@@ -26,12 +26,12 @@ namespace Messenger.Console.Gods
 
             var index = 0;
 
-            while (index++ < 25)
+            while (index++ < 50)
             {
                 var message = new TraceMessage
                 {
                     Id = Guid.NewGuid().ToString(),
-                    EventDate = DateTime.Now,
+                    EventDate = GetDate(),
                     TenantCode = "MaritzCX",
                     ApplicationSource = "Pledge",
                     Content = $"Trace {index}",
@@ -74,6 +74,13 @@ namespace Messenger.Console.Gods
                 default:
                     return "Third.config";
             }
+        }
+
+        private DateTime GetDate()
+        {
+            var offset = _randomizer.Next(1, 30) * -1;
+
+            return DateTime.Now.AddDays(offset);
         }
     }
 }

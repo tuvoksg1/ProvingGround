@@ -19,6 +19,7 @@ using Nest;
 using Newtonsoft.Json.Linq;
 using RestSharp.Extensions.MonoHttp;
 using Twilio;
+using Result = Windows.Models.IterateTab.Result;
 
 //using Windows.Models.Extensions;
 

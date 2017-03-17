@@ -6,9 +6,11 @@ namespace Messenger.Console.Gods
     class Athena : IGod
     {
         private readonly Hermes<Message> _messenger;
+        private readonly Random _randomizer;
 
         public Athena()
         {
+            _randomizer = new Random();
             _messenger = new Hermes<Message>("athena");
         }
 
@@ -23,12 +25,12 @@ namespace Messenger.Console.Gods
 
             var index = 0;
 
-            while (index++ < 25)
+            while (index++ < 50)
             {
                 var message = new Message
                 {
                     Id = Guid.NewGuid().ToString(),
-                    EventDate = DateTime.Now,
+                    EventDate = GetDate(),
                     TenantCode = "MaritzCX",
                     ApplicationSource = "Pledge",
                     Content = $"Event {index}"
@@ -46,6 +48,13 @@ namespace Messenger.Console.Gods
             {
                 System.Console.WriteLine(message.Content);
             }
+        }
+
+        private DateTime GetDate()
+        {
+            var offset = _randomizer.Next(1, 30) * -1;
+
+            return DateTime.Now.AddDays(offset);
         }
     }
 }

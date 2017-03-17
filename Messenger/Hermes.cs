@@ -1,20 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Elasticsearch.Net;
 using Nest;
 
 namespace Messenger
 {
     public class Hermes<T> where T : Message
     {
-        private const string DefaultIndex = "olympus";
-        private const string ServerUrl = "http://localhost:9200";
+        private const string DefaultIndex = "mount_olympus";
+        private const string ServerUrl = "localhost:9200";
         private readonly ElasticClient _client;
         private readonly string _index;
 
         public Hermes(string index)
         {
-            var local = new Uri(ServerUrl);
+            const string userName = "elastic";
+            const string password = "changeme";
+            var local = new Uri($"http://{userName}:{password}@{ServerUrl}");
             var settings = new ConnectionSettings(local).DefaultIndex(DefaultIndex);
             _client = new ElasticClient(settings);
 
@@ -63,7 +66,7 @@ namespace Messenger
             var response = _client.Index(message, p => p
                         .Index(_index)
                         .Id(message.Id)
-                        .Refresh());
+                        .Refresh(new Refresh()));
 
             if (!response.IsValid)
             {
@@ -76,7 +79,7 @@ namespace Messenger
             var response = _client.Search<T>(s => s
                 .Index(_index)
                 .From(0)
-                .Size(20)
+                .Size(100)
                 .Query(q => q.MatchAll()));
 
             if (!response.IsValid)

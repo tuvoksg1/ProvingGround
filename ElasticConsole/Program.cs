@@ -76,8 +76,8 @@ namespace ElasticConsole
 
             Func<QueryContainerDescriptor<BlogPost>, QueryContainer> filter = f => f
                 .Bool(b => b
-                    .Must(m2 => m2
-                        .Missing(p => p.Field(fd => fd.Body))));
+                    .MustNot(m2 => m2
+                        .Exists(p => p.Field(fd => fd.Body))));
 
             Func<QueryContainerDescriptor<BlogPost>, QueryContainer> query = q => q
                 .Bool(b => boolQuery(b)
@@ -99,7 +99,7 @@ namespace ElasticConsole
             var missingResult = elastic.Search<BlogPost>(s => s
                 .Query(fq => fq
                     .MatchAll())
-                .PostFilter(f2 => f2.Missing(p => p.Field(f3 => f3.Body))));
+                .Aggregations(f2 => f2.Missing("PostsWithNoBody", p => p.Field(f3 => f3.Body))));
 
             Console.WriteLine(missingResult.ApiCall.Success);
             Console.WriteLine(missingResult.Hits.Count());
@@ -147,7 +147,7 @@ namespace ElasticConsole
             {
                 elastic.Index(blogPost, p => p
                     .Id(blogPost.Id.ToString())
-                    .Refresh());
+                    .Refresh(new Refresh()));
             }
 
             //add blog with missing property
@@ -168,7 +168,7 @@ namespace ElasticConsole
 
             elastic.Index(blogPost1, p => p
                .Id(blogPost1.Id.ToString())
-               .Refresh());
+               .Refresh(new Refresh()));
 
             Console.WriteLine("Nested blogs indexed");
         }
@@ -269,7 +269,7 @@ namespace ElasticConsole
             {
                 elastic.Index(blogPost, p => p
                     .Id(blogPost.Id.ToString())
-                    .Refresh());
+                    .Refresh(new Refresh()));
             }
         }
 
@@ -302,7 +302,7 @@ namespace ElasticConsole
                 };
                 elastic.Index(blogPost, p => p
                     .Id(blogPost.Id.ToString())
-                    .Refresh());
+                    .Refresh(new Refresh()));
             }
         }
 
@@ -319,7 +319,7 @@ namespace ElasticConsole
 
             var indexResult = elastic.Index(blogPost, p => p
                 .Id(blogPost.Id.ToString())
-                .Refresh());
+                .Refresh(new Refresh()));
 
             Console.WriteLine(indexResult.ApiCall.Success);
 

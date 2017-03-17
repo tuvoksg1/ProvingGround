@@ -26,7 +26,7 @@ namespace Messenger.Console.Gods
 
             var index = 0;
 
-            while (index++ < 25)
+            while (index++ < 50)
             {
                 var message = new IncidenceMessage
                 {

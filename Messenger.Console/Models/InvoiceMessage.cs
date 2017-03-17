@@ -5,13 +5,13 @@ namespace Messenger.Console.Models
     [ElasticsearchType(Name = "invoiceMessage")]
     public class InvoiceMessage : Message
     {
-        [Number(Name = "recordsProcessed", Index = NonStringIndexOption.NotAnalyzed)]
+        [Number(Name = "recordsProcessed", Index = true)]
         public int RecordsProcessed { get; set; }
 
-        [String(Name = "country", Index = FieldIndexOption.Analyzed)]
+        [Keyword(Name = "country", Index = true)]
         public string Country { get; set; }
 
-        [String(Name = "dealer", Index = FieldIndexOption.Analyzed)]
+        [Keyword(Name = "dealer", Index = true)]
         public string Dealer { get; set; }
     }
 }

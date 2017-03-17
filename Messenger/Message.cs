@@ -6,15 +6,15 @@ namespace Messenger
     [ElasticsearchType(Name = "message")]
     public class Message
     {
-        [String(Name = "id", Analyzer = "keyword")]
+        [Keyword(Name = "id")]
         public string Id { get; set; }
-        [Date(Name = "eventDate", Index = NonStringIndexOption.NotAnalyzed, Format = "dateOptionalTime")]
+        [Date(Name = "eventDate", Index = true, Format = "dateOptionalTime")]
         public DateTime EventDate { get; set; }
-        [String(Name = "tenantCode", Index = FieldIndexOption.Analyzed)]
+        [Keyword(Name = "tenantCode", Index = true)]
         public string TenantCode { get; set; }
-        [String(Name = "applicationSource", Index = FieldIndexOption.Analyzed)]
+        [Keyword(Name = "applicationSource", Index = true)]
         public string ApplicationSource { get; set; }
-        [String(Name = "content", Index = FieldIndexOption.NotAnalyzed)]
+        [Text(Name = "content", Index = true)]
         public string Content { get; set; }
     }
 }
