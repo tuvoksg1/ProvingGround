@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Elasticsearch.Net;
 using Nest;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Messenger
@@ -14,12 +16,14 @@ namespace Messenger
         private readonly ElasticClient _client;
         private readonly string _index;
 
-        public Hermes()
+        public Hermes(string indexTemplate, JObject templateDefinition)
         {
             const string userName = "elastic";
             const string password = "changeme";
             var local = new Uri($"http://{userName}:{password}@{ServerUrl}");
-            var settings = new ConnectionSettings(local).DefaultIndex(DefaultIndex);
+            var settings = new ConnectionSettings(local)
+                .DefaultIndex(DefaultIndex)
+                .DisableDirectStreaming();
             _client = new ElasticClient(settings);
 
             var res = _client.LowLevel.ClusterHealth<object>();
@@ -28,6 +32,8 @@ namespace Messenger
             {
                 throw new InvalidOperationException("Elastic search server is not reachable");
             }
+
+            //InitialiseIndex(indexTemplate, templateDefinition);
         }
 
         public Hermes(string index)
@@ -78,14 +84,17 @@ namespace Messenger
             }
         }
 
-        private void InitialiseIndex(JObject definition)
+        private void InitialiseIndex(string indexTemplate, JObject templateDefinition)
         {
-            _client.PutIndexTemplate("pledge_template", tmp => tmp
-                .Create()
-                .Template("pledge_run")
-                .Mappings(map => map.Map("pledgerun", typ => typ.DateDetection())));
-            //-----------------------------------------------------------------------------------
-            _client.LowLevel.IndicesPutTemplatePostForAll<object>("pledge_run", new PostData<object>(definition.ToString()));
+            var response = _client.LowLevel.IndicesPutTemplateForAll<object>(indexTemplate, new PostData<object>(templateDefinition.ToString()));
+
+            if (!response.Success)
+            {
+                Console.WriteLine($"{response.ServerError.Error.Reason}");
+                return;
+            }
+
+            Console.WriteLine($"{indexTemplate} template registered");
         }
 
         public void AddMessage(T message)
@@ -96,6 +105,16 @@ namespace Messenger
                         .Refresh(new Refresh()));
 
             if (!response.IsValid)
+            {
+                Console.WriteLine($"{response.ServerError.Error.Reason}");
+            }
+        }
+
+        public void AddMessage(object message, string index, string type)
+        {
+            var response = _client.LowLevel.Index<object>(index, type, new PostData<object>(message));
+
+            if (!response.Success)
             {
                 Console.WriteLine($"{response.ServerError.Error.Reason}");
             }
@@ -118,6 +137,24 @@ namespace Messenger
             return response.ApiCall.Success ? response.Hits.Select(arg => arg.Source) : new List<T>();
         }
 
+        public IEnumerable<object> GetMessages(string index, string type)
+        {
+            var response = _client.LowLevel.SearchGet<object>(index, type, arg => arg.AddQueryString("size", "10000"));
+
+            if (!response.Success)
+            {
+                Console.WriteLine($"{response.ServerError.Error.Reason}");
+                return null;
+            }
+
+            var bytesAsString = Encoding.UTF8.GetString(response.ResponseBodyInBytes);
+            var root = JObject.FromObject(JsonConvert.DeserializeObject(bytesAsString));
+
+            return root["hits"]["hits"]
+                .Select(item => item["_source"].ToString())
+                .Select(JsonConvert.DeserializeObject).ToList();
+        }
+
         public long GetMessageCount()
         {
             var response = _client.Count<T>(search => search
@@ -130,6 +167,22 @@ namespace Messenger
             }
 
             return response.Count;
+        }
+
+        public long GetMessageCount(string index, string type)
+        {
+            var response = _client.LowLevel.Count<object>(index, type, null, null);
+
+            if (!response.Success)
+            {
+                Console.WriteLine($"{response.ServerError.Error.Reason}");
+                return -1;
+            }
+
+            var bytesAsString = Encoding.UTF8.GetString(response.ResponseBodyInBytes);
+            var root = JObject.FromObject(JsonConvert.DeserializeObject(bytesAsString));
+
+            return (int )root["count"];
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using Messenger.Console.Interfaces;
 using Messenger.Console.Models;
+using Newtonsoft.Json.Linq;
 
 namespace Messenger.Console.Gods
 {
@@ -8,20 +9,22 @@ namespace Messenger.Console.Gods
     {
         private readonly Hermes<PledgeRun> _messenger;
         private readonly Random _randomizer;
+        private const string IndexName = "cx_post_ares";
+        private const string TypeName = "auditRecord";
 
         public Ares()
         {
             _randomizer = new Random();
-            _messenger = new Hermes<PledgeRun>();
+            _messenger = new Hermes<PledgeRun>("ares_template", GetIndexTemplate());
         }
 
         public void AddMessages()
         {
-            var count = _messenger.GetMessageCount();
+            var count = _messenger.GetMessageCount(IndexName, TypeName);
 
-            if (count != 0)
+            if (count > 0)
             {
-                return;
+                //return;
             }
 
             var index = 0;
@@ -39,22 +42,41 @@ namespace Messenger.Console.Gods
                     TotalFail = GetCount(),
                     TotalPass = GetCount(),
                     FileName = GetFile(index),
-                    RunId = Guid.NewGuid().ToString(),
-                    JobId = Guid.NewGuid().ToString()
-                };
+                    RecordId = Guid.NewGuid().ToString(),
+                    JobPostId = Guid.NewGuid().ToString(),
+                    Message = new Message
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        EventDate = GetDate(),
+                        TenantCode = "MaritzCX",
+                        ApplicationSource = "Pledge",
+                        Content = $"Event {index}"
+                    }
+            };
 
-                _messenger.AddMessage(message);
+                _messenger.AddMessage(message, IndexName, TypeName);
             }
         }
 
         public void ListMessages()
         {
-            var messages = _messenger.GetMessages();
+            var messages = _messenger.GetMessages(IndexName, TypeName);
 
-            foreach (var message in messages)
+            if (messages != null)
             {
-                System.Console.WriteLine($"{message.Content} - File: {message.FileName}, " +
-                    $"Pass: {message.TotalPass}, Fail: {message.TotalFail}");
+                foreach (var item in messages)
+                {
+                    var message = DataJsonSerializer<PledgeRun>.DeserializeFromJson(item.ToString());
+
+                    if (message == null)
+                    {
+                        System.Console.WriteLine("Unable to retrieve pledge run data");
+                        return;
+                    }
+
+                    System.Console.WriteLine($"{message.Content} - File: {message.FileName}, " +
+                                             $"Pass: {message.TotalPass}, Fail: {message.TotalFail}");
+                }
             }
         }
 
@@ -88,6 +110,58 @@ namespace Messenger.Console.Gods
             }
 
             return DateTime.Now.AddDays(offset);
+        }
+
+        private DateTime GetDate()
+        {
+            var offset = _randomizer.Next(1, 30) * -1;
+
+            //return DateTime.Now.AddDays(offset);
+            return DateTime.Now;
+        }
+
+        private JObject GetIndexTemplate()
+        {
+            var request = new JObject
+            {
+                {"template", IndexName}
+            };
+
+            var templates = request.AddObject("mappings").AddObject(TypeName).AddArray("dynamic_templates");
+
+            var jobIdMapping = new JObject {
+                { "match", "jobId"},
+                { "match_mapping_type", "string"}
+            };
+
+            jobIdMapping.AddObject("mapping").Add("type", "keyword");
+
+            var mapJobId = new JObject {{"mapJobId", jobIdMapping}};
+
+            var runIdMapping = new JObject {
+                { "match", "runId"},
+                { "match_mapping_type", "string"}
+            };
+
+            runIdMapping.AddObject("mapping").Add("type", "keyword");
+
+            var mapRunId = new JObject { { "mapRunId", runIdMapping } };
+
+            var messageIdMapping = new JObject
+            {
+                {"path_match", "message.id"},
+                { "match_mapping_type", "string"}
+            };
+
+            messageIdMapping.AddObject("mapping").Add("type", "keyword");
+
+            var mapMessageId = new JObject {{"mapMessageId", messageIdMapping}};
+
+            templates.Add(mapJobId);
+            templates.Add(mapMessageId);
+            templates.Add(mapRunId);
+
+            return request;
         }
     }
 }
