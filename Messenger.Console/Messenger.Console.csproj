@@ -60,6 +60,7 @@
     <Compile Include="Gods\Hades.cs" />
     <Compile Include="Gods\Poseidon.cs" />
     <Compile Include="Gods\Zeus.cs" />
+    <Compile Include="JsonBuilder.cs" />
     <Compile Include="Models\IncidenceMessage.cs" />
     <Compile Include="Interfaces\IGod.cs" />
     <Compile Include="Models\InvoiceMessage.cs" />

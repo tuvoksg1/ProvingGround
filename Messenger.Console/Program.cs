@@ -6,10 +6,10 @@ namespace Messenger.Console
     {
         static void Main(string[] args)
         {
-            var god = new Ares();
-            god.AddMessages();
-            god.ListMessages();
-
+            //var god = new Ares();
+            //god.AddMessages();
+            //god.ListMessages();
+            JsonBuilder.Build();
             System.Console.ReadLine();
         }
     }
