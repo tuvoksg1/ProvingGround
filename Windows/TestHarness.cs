@@ -334,8 +334,7 @@ namespace Windows
             var plainText = plainTxt.Text;
             var passphrase = encPhraseTxt.Text;
 
-            var crypto = new DataCrypto(passphrase);
-            encTxt.Text = crypto.Encrypt(plainText);
+            encTxt.Text = plainText.Encrypt(passphrase);
             decrPhraseTxt.Text = passphrase;
         }
 
@@ -344,8 +343,7 @@ namespace Windows
             var encryptedText = encTxt.Text;
             var passphrase = decrPhraseTxt.Text;
 
-            var crypto = new DataCrypto(passphrase);
-            resultTxt.Text = crypto.Decrypt(encryptedText);
+            resultTxt.Text = encryptedText.Decrypt(passphrase);
         }
     }
 }

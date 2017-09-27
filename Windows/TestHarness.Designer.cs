@@ -346,6 +346,7 @@
             this.plainTxt.Name = "plainTxt";
             this.plainTxt.Size = new System.Drawing.Size(125, 20);
             this.plainTxt.TabIndex = 0;
+            this.plainTxt.Text = "Hello";
             // 
             // encPhraseTxt
             // 
@@ -353,6 +354,7 @@
             this.encPhraseTxt.Name = "encPhraseTxt";
             this.encPhraseTxt.Size = new System.Drawing.Size(144, 20);
             this.encPhraseTxt.TabIndex = 1;
+            this.encPhraseTxt.Text = "World";
             // 
             // label2
             // 
