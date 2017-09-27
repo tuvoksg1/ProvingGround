@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Windows.Models.Elastic;
+using Windows.Models.Encryption;
 using Windows.Models.Extensions;
 using Windows.Models.IterateTab;
 using Windows.Models.SendGrid;
@@ -326,6 +327,25 @@ namespace Windows
             var result = testValue.Substring(startPosition, copyLength);
 
             MessageBox.Show($"The substring value is [{result}]");
+        }
+
+        private void encryptBtn_Click(object sender, EventArgs e)
+        {
+            var plainText = plainTxt.Text;
+            var passphrase = encPhraseTxt.Text;
+
+            var crypto = new DataCrypto(passphrase);
+            encTxt.Text = crypto.Encrypt(plainText);
+            decrPhraseTxt.Text = passphrase;
+        }
+
+        private void decryptBtn_Click(object sender, EventArgs e)
+        {
+            var encryptedText = encTxt.Text;
+            var passphrase = decrPhraseTxt.Text;
+
+            var crypto = new DataCrypto(passphrase);
+            resultTxt.Text = crypto.Decrypt(encryptedText);
         }
     }
 }
