@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4EA89558-6EAD-414E-A1EF-8AB4B4D13A34}</ProjectGuid>
+    <ProjectGuid>{84458851-48E2-4356-B6BC-3F431CB199B0}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ElasticConsole</RootNamespace>
-    <AssemblyName>ElasticConsole</AssemblyName>
+    <RootNamespace>Messenger.Console</RootNamespace>
+    <AssemblyName>Messenger.Console</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -37,6 +37,10 @@
       <HintPath>..\packages\Elasticsearch.Net.5.2.0\lib\net45\Elasticsearch.Net.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="kafka-net, Version=0.9.0.65, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\kafka-net.0.9.0.65\lib\net45\kafka-net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Nest, Version=5.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d, processorArchitecture=MSIL">
       <HintPath>..\packages\NEST.5.2.0\lib\net45\Nest.dll</HintPath>
       <Private>True</Private>
@@ -46,7 +50,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -56,24 +59,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Author.cs" />
-    <Compile Include="BlogPost.cs" />
-    <Compile Include="Data\DataManager.cs" />
-    <Compile Include="Data\Repository.cs" />
-    <Compile Include="Models\ClaimModel.cs" />
-    <Compile Include="Models\ServiceModel.cs" />
-    <Compile Include="Models\ClientType.cs" />
-    <Compile Include="Models\ScopeModel.cs" />
-    <Compile Include="Data\Storage.cs" />
-    <Compile Include="Models\TenantModel.cs" />
-    <Compile Include="Models\IdentityUser.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="Gods\Ares.cs" />
+    <Compile Include="Gods\Athena.cs" />
+    <Compile Include="Gods\Hades.cs" />
+    <Compile Include="Gods\Poseidon.cs" />
+    <Compile Include="Gods\Zeus.cs" />
+    <Compile Include="JsonBuilder.cs" />
+    <Compile Include="Models\IncidenceMessage.cs" />
+    <Compile Include="Interfaces\IGod.cs" />
+    <Compile Include="Models\InvoiceMessage.cs" />
+    <Compile Include="Models\PledgeRun.cs" />
+    <Compile Include="Models\TraceMessage.cs" />
+    <Compile Include="Postman.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Messenger\Messenger.csproj">
+      <Project>{53ab2946-526b-4be4-95ae-a5a74c0c5edf}</Project>
+      <Name>Messenger</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

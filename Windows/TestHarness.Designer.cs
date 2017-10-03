@@ -50,6 +50,19 @@
             this.SendMailBtn = new System.Windows.Forms.Button();
             this.TestTab = new System.Windows.Forms.TabPage();
             this.TestBtn = new System.Windows.Forms.Button();
+            this.cryptoTab = new System.Windows.Forms.TabPage();
+            this.plainTxt = new System.Windows.Forms.TextBox();
+            this.encPhraseTxt = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.encryptBtn = new System.Windows.Forms.Button();
+            this.decryptBtn = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.decrPhraseTxt = new System.Windows.Forms.TextBox();
+            this.encTxt = new System.Windows.Forms.TextBox();
+            this.resultTxt = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.TestMenu.SuspendLayout();
             this.EnumerateTab.SuspendLayout();
             this.SerializationTab.SuspendLayout();
@@ -57,6 +70,7 @@
             this.ElasticTab.SuspendLayout();
             this.MailTab.SuspendLayout();
             this.TestTab.SuspendLayout();
+            this.cryptoTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // TestMenu
@@ -70,6 +84,7 @@
             this.TestMenu.Controls.Add(this.ElasticTab);
             this.TestMenu.Controls.Add(this.MailTab);
             this.TestMenu.Controls.Add(this.TestTab);
+            this.TestMenu.Controls.Add(this.cryptoTab);
             this.TestMenu.Location = new System.Drawing.Point(12, 12);
             this.TestMenu.Name = "TestMenu";
             this.TestMenu.SelectedIndex = 0;
@@ -304,6 +319,129 @@
             this.TestBtn.UseVisualStyleBackColor = true;
             this.TestBtn.Click += new System.EventHandler(this.TestBtn_Click);
             // 
+            // cryptoTab
+            // 
+            this.cryptoTab.Controls.Add(this.label6);
+            this.cryptoTab.Controls.Add(this.resultTxt);
+            this.cryptoTab.Controls.Add(this.decryptBtn);
+            this.cryptoTab.Controls.Add(this.label4);
+            this.cryptoTab.Controls.Add(this.label5);
+            this.cryptoTab.Controls.Add(this.decrPhraseTxt);
+            this.cryptoTab.Controls.Add(this.encTxt);
+            this.cryptoTab.Controls.Add(this.encryptBtn);
+            this.cryptoTab.Controls.Add(this.label3);
+            this.cryptoTab.Controls.Add(this.label2);
+            this.cryptoTab.Controls.Add(this.encPhraseTxt);
+            this.cryptoTab.Controls.Add(this.plainTxt);
+            this.cryptoTab.Location = new System.Drawing.Point(4, 22);
+            this.cryptoTab.Name = "cryptoTab";
+            this.cryptoTab.Size = new System.Drawing.Size(518, 474);
+            this.cryptoTab.TabIndex = 6;
+            this.cryptoTab.Text = "Encryption";
+            this.cryptoTab.UseVisualStyleBackColor = true;
+            // 
+            // plainTxt
+            // 
+            this.plainTxt.Location = new System.Drawing.Point(73, 83);
+            this.plainTxt.Name = "plainTxt";
+            this.plainTxt.Size = new System.Drawing.Size(125, 20);
+            this.plainTxt.TabIndex = 0;
+            this.plainTxt.Text = "Hello";
+            // 
+            // encPhraseTxt
+            // 
+            this.encPhraseTxt.Location = new System.Drawing.Point(272, 83);
+            this.encPhraseTxt.Name = "encPhraseTxt";
+            this.encPhraseTxt.Size = new System.Drawing.Size(144, 20);
+            this.encPhraseTxt.TabIndex = 1;
+            this.encPhraseTxt.Text = "World";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(13, 86);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(54, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Plain Text";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(204, 86);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(62, 13);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Passphrase";
+            // 
+            // encryptBtn
+            // 
+            this.encryptBtn.Location = new System.Drawing.Point(431, 80);
+            this.encryptBtn.Name = "encryptBtn";
+            this.encryptBtn.Size = new System.Drawing.Size(75, 23);
+            this.encryptBtn.TabIndex = 4;
+            this.encryptBtn.Text = "Encrypt";
+            this.encryptBtn.UseVisualStyleBackColor = true;
+            this.encryptBtn.Click += new System.EventHandler(this.encryptBtn_Click);
+            // 
+            // decryptBtn
+            // 
+            this.decryptBtn.Location = new System.Drawing.Point(431, 151);
+            this.decryptBtn.Name = "decryptBtn";
+            this.decryptBtn.Size = new System.Drawing.Size(75, 23);
+            this.decryptBtn.TabIndex = 9;
+            this.decryptBtn.Text = "Decrypt";
+            this.decryptBtn.UseVisualStyleBackColor = true;
+            this.decryptBtn.Click += new System.EventHandler(this.decryptBtn_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(204, 157);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(62, 13);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "Passphrase";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(13, 157);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(61, 13);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "Crypto Text";
+            // 
+            // decrPhraseTxt
+            // 
+            this.decrPhraseTxt.Location = new System.Drawing.Point(272, 154);
+            this.decrPhraseTxt.Name = "decrPhraseTxt";
+            this.decrPhraseTxt.Size = new System.Drawing.Size(144, 20);
+            this.decrPhraseTxt.TabIndex = 6;
+            // 
+            // encTxt
+            // 
+            this.encTxt.Location = new System.Drawing.Point(73, 154);
+            this.encTxt.Name = "encTxt";
+            this.encTxt.Size = new System.Drawing.Size(125, 20);
+            this.encTxt.TabIndex = 5;
+            // 
+            // resultTxt
+            // 
+            this.resultTxt.Location = new System.Drawing.Point(73, 225);
+            this.resultTxt.Name = "resultTxt";
+            this.resultTxt.Size = new System.Drawing.Size(343, 20);
+            this.resultTxt.TabIndex = 10;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(13, 225);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(37, 13);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "Result";
+            // 
             // TestHarness
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -321,6 +459,8 @@
             this.ElasticTab.PerformLayout();
             this.MailTab.ResumeLayout(false);
             this.TestTab.ResumeLayout(false);
+            this.cryptoTab.ResumeLayout(false);
+            this.cryptoTab.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -349,6 +489,19 @@
         private System.Windows.Forms.Button SendSMSButton;
         private System.Windows.Forms.TabPage TestTab;
         private System.Windows.Forms.Button TestBtn;
+        private System.Windows.Forms.TabPage cryptoTab;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox resultTxt;
+        private System.Windows.Forms.Button decryptBtn;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox decrPhraseTxt;
+        private System.Windows.Forms.TextBox encTxt;
+        private System.Windows.Forms.Button encryptBtn;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox encPhraseTxt;
+        private System.Windows.Forms.TextBox plainTxt;
     }
 }
 

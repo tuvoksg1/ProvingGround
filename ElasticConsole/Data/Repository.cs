@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ElasticConsole.Models;
+using Elasticsearch.Net;
 using Nest;
 
 namespace ElasticConsole.Data
@@ -81,7 +82,7 @@ namespace ElasticConsole.Data
 
             var deleteResults = deletedObjects.Hits.Select(hit =>
                 _client.Delete(new DocumentPath<ServiceModel>(hit.Id)
-                .Type(hit.Type), item => item.Refresh())
+                .Type(hit.Type), item => item.Refresh(new Refresh()))
             );
 
             var deleteCount = deleteResults.Count(arg => arg.ApiCall.Success);
@@ -90,7 +91,7 @@ namespace ElasticConsole.Data
 
         public void UpdateClient(ServiceModel model)
         {
-            var result = _client.Update<ServiceModel>(model.Id.ToString(), item => item.Doc(model).Refresh());
+            var result = _client.Update<ServiceModel>(model.Id.ToString(), item => item.Doc(model).Refresh(new Refresh()));
 
             Console.WriteLine(result.ApiCall.Success
                 ? $"Updated client with handle: {model.Handle}"
@@ -151,7 +152,7 @@ namespace ElasticConsole.Data
 
         public void UpdateUser(Models.User model)
         {
-            var result = _client.Update<Models.User>(model.Id.ToString(), item => item.Index(Storage.UserIndex).Doc(model).Refresh());
+            var result = _client.Update<Models.User>(model.Id, item => item.Index(Storage.UserIndex).Doc(model).Refresh(new Refresh()));
 
             Console.WriteLine(result.ApiCall.Success
                 ? $"Updated user: {model.UserName}"
@@ -162,6 +163,7 @@ namespace ElasticConsole.Data
         {
             var matchResult = _client.Search<ClaimModel>(search =>
                 search.Index(Storage.ClaimsAlias)
+                    .Size(30)
                     .Query(query => query
                     .Bool(condition => condition
                         .Must(must => must
@@ -177,13 +179,13 @@ namespace ElasticConsole.Data
             _client.Index(claim, p => p
                        .Index(Storage.ClaimIndex)
                        .Id(claim.Id.ToString())
-                       .Refresh());
+                       .Refresh(new Refresh()));
         }
 
         public void RemoveClaimFromOwner(Guid claimId)
         {
             _client.Delete(new DocumentPath<ClaimModel>(claimId)
-                .Index(Storage.ClaimIndex), item => item.Refresh());
+                .Index(Storage.ClaimIndex), item => item.Refresh(new Refresh()));
         }
 
         public void QueryMatchingServices(IEnumerable<string> options)
@@ -289,25 +291,18 @@ namespace ElasticConsole.Data
             const string newIndex = "cx_demo_claims_2";
             var reindex =
                 _client.Reindex<ClaimModel>(Storage.ClaimIndex, newIndex, (inbox => inbox
-                    .Query(query => query.MatchAll())
-                    .Scroll("10s")
-                    .CreateIndex(index => index
-                        .Mappings(ms => ms
-                            .Map<ClaimModel>(m => m.AutoMap()
-                                .Properties(prop => prop
-                                    .String(field => field
-                                        .Name(name => name.Owner)
-                                        .Index(FieldIndexOption.NotAnalyzed))
-                                    .String(field => field
-                                        .Name(name => name.Type)
-                                        .Index(FieldIndexOption.NotAnalyzed))
-                                    .String(field => field
-                                        .Name(name => name.Value)
-                                        .Index(FieldIndexOption.No))))))));
+                .MatchAll()));
 
-            var observer = new ReindexObserver<ClaimModel>(onError: error =>
+            var observer = new ReindexObserver(onNext: response =>
+            {
+                Console.WriteLine($"Indexing documents");
+            }, onError: error =>
             {
                 Console.WriteLine($"Document error occured: {error.Message}");
+            },
+            onCompleted: () =>
+            {
+                Console.WriteLine($"Document re-index");
             });
 
             reindex.Subscribe(observer);

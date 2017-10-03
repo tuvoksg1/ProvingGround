@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using ElasticConsole.Models;
+using Elasticsearch.Net;
 using Nest;
 using User = ElasticConsole.Models.User;
 
@@ -83,24 +84,24 @@ namespace ElasticConsole.Data
                     .Mappings(ms => ms
                         .Map<ServiceModel>(m => m.AutoMap()
                             .Properties(prop => prop
-                                .String(field => field
+                                .Keyword(field => field
                                     .Name(name => name.Handle)
-                                    .Index(FieldIndexOption.NotAnalyzed))
-                                .String(field => field
+                                    .Index())
+                                .Keyword(field => field
                                     .Name(name => name.Name)
-                                    .Index(FieldIndexOption.NotAnalyzed))
+                                    .Index(false))
                                 .Boolean(field => field
                                     .Name(name => name.IsDisabled)
-                                    .Index(NonStringIndexOption.No))
+                                    .Index(false))
                                 .Boolean(field => field
                                     .Name(name => name.RequiresAllGrants)
-                                    .Index(NonStringIndexOption.No))
+                                    .Index(false))
                                 .Boolean(field => field
                                     .Name(name => name.RequiresRefreshToken)
-                                    .Index(NonStringIndexOption.No))
+                                    .Index(false))
                                 .Number(field => field
                                     .Name(name => name.Type)
-                                    .Index(NonStringIndexOption.No))))));
+                                    .Index(false))))));
             }
 
             #endregion
@@ -117,18 +118,18 @@ namespace ElasticConsole.Data
                     .Mappings(ms => ms
                         .Map<TenantModel>(m => m.AutoMap()
                             .Properties(prop => prop
-                                .String(field => field
+                                .Keyword(field => field
                                     .Name(name => name.Claim)
-                                    .Index(FieldIndexOption.NotAnalyzed))
-                                .String(field => field
+                                    .Index(false))
+                                .Keyword(field => field
                                     .Name(name => name.Name)
-                                    .Index(FieldIndexOption.NotAnalyzed))
+                                    .Index(false))
                                 .Boolean(field => field
                                     .Name(name => name.IsActive)
-                                    .Index(NonStringIndexOption.No))
+                                    .Index(false))
                                 .Number(field => field
                                     .Name(name => name.UserCount)
-                                    .Index(NonStringIndexOption.No))
+                                    .Index(false))
                                 .Nested<ClaimModel>(field => field.Name(child => child.Claims))))));
             }
 
@@ -148,46 +149,46 @@ namespace ElasticConsole.Data
                             .Properties(prop => prop
                                 .Number(field => field
                                    .Name(name => name.AccessFailedCount)
-                                   .Index(NonStringIndexOption.No))
-                                .String(field => field
+                                   .Index(false))
+                                .Keyword(field => field
                                     .Name(name => name.Email)
-                                    .Index(FieldIndexOption.NotAnalyzed))
+                                    .Index())
                                 .Boolean(field => field
                                     .Name(name => name.EmailConfirmed)
-                                    .Index(NonStringIndexOption.No))
-                                .String(field => field
+                                    .Index(false))
+                                .Keyword(field => field
                                     .Name(name => name.FirstName)
-                                    .Index(FieldIndexOption.NotAnalyzed))
-                                .String(field => field
+                                    .Index(false))
+                                .Keyword(field => field
                                     .Name(name => name.LastName)
-                                    .Index(FieldIndexOption.NotAnalyzed))
+                                    .Index(false))
                                 .Boolean(field => field
                                     .Name(name => name.LockoutEnabled)
-                                    .Index(NonStringIndexOption.No))
+                                    .Index(false))
                                 .Date(field => field
                                     .Name(name => name.LockoutEndDateUtc)
-                                    .Index(NonStringIndexOption.No))
-                                .String(field => field
+                                    .Index(false))
+                                .Keyword(field => field
                                     .Name(name => name.PasswordHash)
-                                    .Index(FieldIndexOption.No))
-                                .String(field => field
+                                    .Index(false))
+                                .Keyword(field => field
                                     .Name(name => name.PhoneNumber)
-                                    .Index(FieldIndexOption.No))
+                                    .Index(false))
                                 .Boolean(field => field
                                     .Name(name => name.PhoneNumberConfirmed)
-                                    .Index(NonStringIndexOption.No))
-                                .String(field => field
+                                    .Index(false))
+                                .Keyword(field => field
                                     .Name(name => name.SecurityStamp)
-                                    .Index(FieldIndexOption.No))
-                                .String(field => field
+                                    .Index(false))
+                                .Keyword(field => field
                                     .Name(name => name.TenantId)
-                                    .Index(FieldIndexOption.Analyzed))
+                                    .Index())
                                 .Boolean(field => field
                                     .Name(name => name.TwoFactorEnabled)
-                                    .Index(NonStringIndexOption.No))
-                                .String(field => field
+                                    .Index(false))
+                                .Keyword(field => field
                                     .Name(name => name.UserName)
-                                    .Index(FieldIndexOption.Analyzed))
+                                    .Index())
                                 .Nested<ClaimModel>(field => field.Name(child => child.Claims))))));
             } 
 
@@ -203,15 +204,15 @@ namespace ElasticConsole.Data
                     .Mappings(ms => ms
                         .Map<ClaimModel>(m => m.AutoMap()
                             .Properties(prop => prop
-                                .String(field => field
+                                .Keyword(field => field
                                     .Name(name => name.Owner)
-                                    .Index(FieldIndexOption.NotAnalyzed))
-                                .String(field => field
+                                    .Index(false))
+                                .Keyword(field => field
                                     .Name(name => name.Type)
-                                    .Index(FieldIndexOption.NotAnalyzed))
-                                .String(field => field
+                                    .Index(false))
+                                .Keyword(field => field
                                     .Name(name => name.Value)
-                                    .Index(FieldIndexOption.No)))))
+                                    .Index(false)))))
                     .Aliases(als => als.Alias(ClaimsAlias)));
             }
 
@@ -234,7 +235,7 @@ namespace ElasticConsole.Data
                     _client.Index(item, p => p
                         .Index(index)
                         .Id(item.Id.ToString())
-                        .Refresh());
+                        .Refresh(new Refresh()));
                 }
 
                 Console.WriteLine($"{items.Count} services indexed");
@@ -253,7 +254,7 @@ namespace ElasticConsole.Data
                     _client.Index(item, p => p
                         .Index(index)
                         .Id(item.Id.ToString())
-                        .Refresh());
+                        .Refresh(new Refresh()));
                 }
 
                 Console.WriteLine($"{items.Count} organisations indexed");
@@ -272,7 +273,7 @@ namespace ElasticConsole.Data
                     _client.Index(item, p => p
                         .Index(index)
                         .Id(item.Id)
-                        .Refresh());
+                        .Refresh(new Refresh()));
                 }
 
                 Console.WriteLine($"{items.Count} users indexed");
@@ -282,14 +283,14 @@ namespace ElasticConsole.Data
 
             if (index == ClaimIndex)
             {
-                var items = Claims();
+                var items = TestClaims();
 
                 foreach (var item in items)
                 {
                     _client.Index(item, p => p
                         .Index(ClaimsAlias)
                         .Id(item.Id.ToString())
-                        .Refresh());
+                        .Refresh(new Refresh()));
                 }
 
                 Console.WriteLine($"{items.Count} claims indexed");
@@ -524,6 +525,27 @@ namespace ElasticConsole.Data
             }
 
             return orgId;
+        }
+
+        private static List<ClaimModel> TestClaims()
+        {
+            var claims = new List<ClaimModel>();
+
+            for (var index = 0; index < 15; index++)
+            {
+                claims.Add(new ClaimModel
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Owner = AnonymousId,
+                    Type = ServiceClaim,
+                    Size = index,
+                    Code = $"{index}",
+                    Value = $"{ServiceClaim}_claim_anon",
+                    Origin = index == 0 ? ClientType.Mobile : ClientType.Console
+                });
+            }
+
+            return claims;
         }
 
         private static List<ClaimModel> Claims()

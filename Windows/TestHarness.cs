@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Windows.Models.Elastic;
+using Windows.Models.Encryption;
 using Windows.Models.Extensions;
 using Windows.Models.IterateTab;
 using Windows.Models.SendGrid;
@@ -19,6 +20,7 @@ using Nest;
 using Newtonsoft.Json.Linq;
 using RestSharp.Extensions.MonoHttp;
 using Twilio;
+using Result = Windows.Models.IterateTab.Result;
 
 //using Windows.Models.Extensions;
 
@@ -325,6 +327,23 @@ namespace Windows
             var result = testValue.Substring(startPosition, copyLength);
 
             MessageBox.Show($"The substring value is [{result}]");
+        }
+
+        private void encryptBtn_Click(object sender, EventArgs e)
+        {
+            var plainText = plainTxt.Text;
+            var passphrase = encPhraseTxt.Text;
+
+            encTxt.Text = plainText.Encrypt(passphrase);
+            decrPhraseTxt.Text = passphrase;
+        }
+
+        private void decryptBtn_Click(object sender, EventArgs e)
+        {
+            var encryptedText = encTxt.Text;
+            var passphrase = decrPhraseTxt.Text;
+
+            resultTxt.Text = encryptedText.Decrypt(passphrase);
         }
     }
 }
