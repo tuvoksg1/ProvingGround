@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BB29C892-0EA5-45BB-9EE9-A92D506FD760}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Pledge.Common</RootNamespace>
+    <AssemblyName>Pledge.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Pledge.Common.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CXUtils, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CXUtils.1.0.8\lib\net452\CXUtils.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Hosting, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Hosting.3.0.1\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Topshelf, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b800c4cfcdeea87b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Topshelf.4.0.3\lib\net452\Topshelf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AbstractListProvider.cs" />
+    <Compile Include="Auditing\RunLog.cs" />
+    <Compile Include="BaseDocument.cs" />
+    <Compile Include="BaseRule.cs" />
+    <Compile Include="Converter\MillisecondsDateTimeConverter.cs" />
+    <Compile Include="Events\EventsManager.cs" />
+    <Compile Include="Exceptions\PledgeColumnMismatchException.cs" />
+    <Compile Include="Exceptions\PledgeConfigurationException.cs" />
+    <Compile Include="Exceptions\PledgeMissingListException.cs" />
+    <Compile Include="Exceptions\PledgeMissingListFolderException.cs" />
+    <Compile Include="Exceptions\PledgeMissingListMetadataException.cs" />
+    <Compile Include="Exceptions\PledgeRunException.cs" />
+    <Compile Include="Exceptions\PledgeServiceUnavailableException.cs" />
+    <Compile Include="Extensions\EnumExtension.cs" />
+    <Compile Include="Extensions\ExceptionExtension.cs" />
+    <Compile Include="Extensions\OperandExtension.cs" />
+    <Compile Include="Extensions\RunLogExtension.cs" />
+    <Compile Include="Extensions\PropertyBagExtension.cs" />
+    <Compile Include="Extensions\StringExtension.cs" />
+    <Compile Include="InfoSerializer.cs" />
+    <Compile Include="Interfaces\Automation\IConnectionManager.cs" />
+    <Compile Include="Interfaces\Automation\IWorkflowManager.cs" />
+    <Compile Include="Interfaces\Lookup\IListSourceBuilder.cs" />
+    <Compile Include="Interfaces\IAuditor.cs" />
+    <Compile Include="Interfaces\IBuilder.cs" />
+    <Compile Include="Interfaces\IConfiguration.cs" />
+    <Compile Include="Interfaces\IConfigurationManager.cs" />
+    <Compile Include="Interfaces\IDisposition.cs" />
+    <Compile Include="Interfaces\IDocument.cs" />
+    <Compile Include="Interfaces\IFileEgestMedium.cs" />
+    <Compile Include="Interfaces\Lookup\IListManager.cs" />
+    <Compile Include="Interfaces\Lookup\IListProvider.cs" />
+    <Compile Include="Interfaces\Lookup\IListProxy.cs" />
+    <Compile Include="Interfaces\IGroupDisposition.cs" />
+    <Compile Include="Interfaces\IPipelineHead.cs" />
+    <Compile Include="Interfaces\IPipelineMember.cs" />
+    <Compile Include="Interfaces\IPledgeFileResult.cs" />
+    <Compile Include="Interfaces\IRemoteJob.cs" />
+    <Compile Include="Interfaces\IJobData.cs" />
+    <Compile Include="Interfaces\IOperand.cs" />
+    <Compile Include="Interfaces\IPledgeAuditor.cs" />
+    <Compile Include="Interfaces\IPledgeManager.cs" />
+    <Compile Include="Interfaces\IPledgeResult.cs" />
+    <Compile Include="Interfaces\IRecord.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\IResult.cs" />
+    <Compile Include="Interfaces\IRule.cs" />
+    <Compile Include="Interfaces\IRuleSet.cs" />
+    <Compile Include="Interfaces\IUserGroupManager.cs" />
+    <Compile Include="Interfaces\Offline\IOfflineAuditor.cs" />
+    <Compile Include="Interfaces\Offline\IOfflineRepository.cs" />
+    <Compile Include="Models\Automation\AutomationMatrix.cs" />
+    <Compile Include="Models\Automation\CategoryInfo.cs" />
+    <Compile Include="Models\Automation\CategoryMap.cs" />
+    <Compile Include="Models\Automation\CategoryType.cs" />
+    <Compile Include="Models\Automation\Connection.cs" />
+    <Compile Include="Models\Automation\PledgeData.cs" />
+    <Compile Include="Models\Automation\Interval.cs" />
+    <Compile Include="Models\Automation\Schedule.cs" />
+    <Compile Include="Models\Automation\Task.cs" />
+    <Compile Include="Models\Automation\TaskInfo.cs" />
+    <Compile Include="Models\Automation\TaskMap.cs" />
+    <Compile Include="Models\Automation\TaskType.cs" />
+    <Compile Include="Models\Automation\Workflow.cs" />
+    <Compile Include="Models\Automation\ConnectionType.cs" />
+    <Compile Include="Models\BaseConfiguration.cs" />
+    <Compile Include="Models\Cell.cs" />
+    <Compile Include="Models\Lookup\ListMetadata.cs" />
+    <Compile Include="Models\GroupDisposition.cs" />
+    <Compile Include="Models\Operand.cs" />
+    <Compile Include="Models\ConfigurationOptions.cs" />
+    <Compile Include="Models\ConfigurationCore.cs" />
+    <Compile Include="Models\ConfigurationInfo.cs" />
+    <Compile Include="Models\DataMap.cs" />
+    <Compile Include="Models\DataType.cs" />
+    <Compile Include="Models\Lookup\List.cs" />
+    <Compile Include="Models\Lookup\ListGlobal.cs" />
+    <Compile Include="Models\Lookup\ListType.cs" />
+    <Compile Include="Models\Lookup\Provider.cs" />
+    <Compile Include="Models\Lookup\ProviderMatrix.cs" />
+    <Compile Include="Models\RecordSchemaState.cs" />
+    <Compile Include="Models\Remote\LocalRuntimeSettings.cs" />
+    <Compile Include="Models\Remote\PledgeRuntime.cs" />
+    <Compile Include="Models\Remote\RemoteJobInfo.cs" />
+    <Compile Include="Models\Remote\RemoteRuntimeSettings.cs" />
+    <Compile Include="Models\Remote\RuntimeMode.cs" />
+    <Compile Include="Models\Security\GroupMember.cs" />
+    <Compile Include="Models\PledgeIOResult.cs" />
+    <Compile Include="Models\Remote\PipelineArguments.cs" />
+    <Compile Include="Models\Remote\PipelinePayload.cs" />
+    <Compile Include="Models\RestResult.cs" />
+    <Compile Include="Operands\CellOperand.cs" />
+    <Compile Include="Operands\ConstantOperand.cs" />
+    <Compile Include="Operands\RecordAccessor.cs" />
+    <Compile Include="Startup\PledgeService.cs" />
+    <Compile Include="StaticData\AppendValueOptions.cs" />
+    <Compile Include="StaticData\Automation\ProcessedFileTransferOptions.cs" />
+    <Compile Include="StaticData\Automation\SourceSftpFileTransferOptions.cs" />
+    <Compile Include="StaticData\ComparatorTypes.cs" />
+    <Compile Include="StaticData\DataTypeInfo.cs" />
+    <Compile Include="Models\Definition.cs" />
+    <Compile Include="Models\Disposition.cs" />
+    <Compile Include="Models\DocumentType.cs" />
+    <Compile Include="Models\EvaluationType.cs" />
+    <Compile Include="Models\Remote\HandlerSetting.cs" />
+    <Compile Include="Models\Remote\Property.cs" />
+    <Compile Include="Models\Remote\JobData.cs" />
+    <Compile Include="Models\LogicType.cs" />
+    <Compile Include="Models\PledgeGlobal.cs" />
+    <Compile Include="Models\PledgeResult.cs" />
+    <Compile Include="Models\PledgeRule.cs" />
+    <Compile Include="Models\Remote\HandlerType.cs" />
+    <Compile Include="Models\Remote\HandlerTypeInfo.cs" />
+    <Compile Include="Models\Remote\PropertyMatrix.cs" />
+    <Compile Include="Models\Result.cs" />
+    <Compile Include="Models\ResultType.cs" />
+    <Compile Include="Models\RuleMap.cs" />
+    <Compile Include="StaticData\DateFormatOptions.cs" />
+    <Compile Include="StaticData\RandomCharacterOptions.cs" />
+    <Compile Include="StaticData\DialogOptionInfo.cs" />
+    <Compile Include="StaticData\RuleTypeInfo.cs" />
+    <Compile Include="Models\RuleMatrix.cs" />
+    <Compile Include="Models\RuleType.cs" />
+    <Compile Include="Models\Remote\RemoteJob.cs" />
+    <Compile Include="StaticData\DateWindowOptions.cs" />
+    <Compile Include="StaticData\TextContainsOptions.cs" />
+    <Compile Include="StaticData\TransformCalculateOptions.cs" />
+    <Compile Include="StaticData\TransformLookupAndReplaceOptions.cs" />
+    <Compile Include="StaticData\TextLengthOptions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RuleArguments.cs" />
+    <Compile Include="SerializableDictionary.cs" />
+    <Compile Include="Interfaces\IAuditorRestClient.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="ClassDocumentation\PledgeCommonDocumentation.zip" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
