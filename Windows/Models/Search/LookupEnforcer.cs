@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Pledge.Common.Models;
 using Pledge.Lookup.Core.IO;
 
@@ -11,9 +9,17 @@ namespace Windows.Models.Search
 {
     public class LookupEnforcer
     {
-        private List<Cell> _rowCells = null;
+        private readonly List<List<Cell>> _rowCells;
+        private readonly int _cellIndex;
 
-        public List<Cell> LoadRecords(string file)
+        public LookupEnforcer(string file, int cellIndex)
+        {
+            _rowCells = new List<List<Cell>>();
+            LoadRecords(file);
+            _cellIndex = cellIndex;
+        }
+
+        private void LoadRecords(string file)
         {
             using (var reader = new StreamReader(file))
             {
@@ -22,30 +28,38 @@ namespace Windows.Models.Search
                 {
                     var cells = line.Split(new[] { '|' }, StringSplitOptions.None);
 
-                    _rowCells = cells.Select(item => new Cell
+                    var rowCells = cells.Select(item => new Cell
                     {
                         Value = item
                     }).ToList();
+
+                    _rowCells.Add(rowCells);
                 }
             }
-
-            return _rowCells;
         }
 
-        public void PerformLookup(string listId, string listName, string tenantId)
+        public string PerformLookup(string listId, string listName, string tenantId)
         {
             var listProvider = new FileListProvider();
-            var list = listProvider.GetList(listId, listName, tenantId);
+            var list = listProvider.GetList(listId, listName, tenantId).Select(arg => arg.First()).ToList();
+
+            var result = new LookupResult(_rowCells.Count, list.Count);
 
             foreach (var cell in _rowCells)
             {
-                
+                if (IsInList(list, cell[_cellIndex].Value))
+                {
+                    break;
+                }
             }
+
+            return result.GetResult();
         }
 
-        public bool IsInList(string text)
+        private static bool IsInList(IEnumerable<string> list, string text)
         {
-            
+            return list.Any(item => item.Equals(text,
+                StringComparison.OrdinalIgnoreCase));
         }
     }
 }

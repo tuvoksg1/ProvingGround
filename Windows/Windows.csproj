@@ -100,6 +100,7 @@
     <Compile Include="Models\IterateTab\ITreeNode.cs" />
     <Compile Include="Models\IterateTab\Result.cs" />
     <Compile Include="Models\Search\LookupEnforcer.cs" />
+    <Compile Include="Models\Search\LookupResult.cs" />
     <Compile Include="Models\SendGrid\EmailMessage.cs" />
     <Compile Include="Models\SendGrid\EmailService.cs" />
     <Compile Include="Models\SendGrid\MailServiceInfo.cs" />

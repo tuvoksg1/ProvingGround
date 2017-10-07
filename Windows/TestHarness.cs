@@ -12,6 +12,7 @@ using Windows.Models.Elastic;
 using Windows.Models.Encryption;
 using Windows.Models.Extensions;
 using Windows.Models.IterateTab;
+using Windows.Models.Search;
 using Windows.Models.SendGrid;
 using Windows.Models.Serialization;
 using Windows.Models.Stream;
@@ -307,26 +308,14 @@ namespace Windows
 
         private void TestBtn_Click(object sender, EventArgs e)
         {
-            const string testValue = "May";
-            var startPosition = 9;
-            var copyLength = 2;
+            const string tenantId = "1430bb8e-43ba-40a7-915e-4d73cc66cd66";
+            const string listId = "386b4c5e-4482-400e-89ca-f592c89e6816";
+            const string listName = "GM_Master_EmailBlackList";
+            const string targetFile = @"C:\Users\Fola\Dropbox\Pledge\Lookup\Colombia.txt";
+            var enforcer = new LookupEnforcer(targetFile, 3);
+            var result = enforcer.PerformLookup(listId, listName, tenantId);
 
-            startPosition = startPosition < 0 ? 0 : startPosition;
-            copyLength = copyLength < 0 ? 0 : copyLength;
-
-            if (testValue.Length < startPosition)
-            {
-                startPosition = testValue.Length;
-            }
-
-            if (testValue.Length < startPosition + copyLength)
-            {
-                copyLength = testValue.Length - startPosition;
-            }
-
-            var result = testValue.Substring(startPosition, copyLength);
-
-            MessageBox.Show($"The substring value is [{result}]");
+            MessageBox.Show(result);
         }
 
         private void encryptBtn_Click(object sender, EventArgs e)
