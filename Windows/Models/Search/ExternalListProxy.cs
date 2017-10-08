@@ -27,8 +27,8 @@ namespace Windows.Models.Search
         /// The raw list cache (list of a list of strings) - could be single column or multiple
         /// </summary>
         protected readonly Dictionary<string, List<string[]>> RawListCache = new Dictionary<string, List<string[]>>();
-        private readonly Dictionary<string, HashSet<IOperand>> _singleColumnListCache = new Dictionary<string, HashSet<IOperand>>();
-        private readonly Dictionary<string, IReadOnlyList<IReadOnlyList<IOperand>>> _multiColumnListCache = new Dictionary<string, IReadOnlyList<IReadOnlyList<IOperand>>>();
+        private readonly Dictionary<string, OperandLookup> _singleColumnListCache = new Dictionary<string, OperandLookup>();
+        private readonly Dictionary<string, IReadOnlyList<OperandLookup>> _multiColumnListCache = new Dictionary<string, IReadOnlyList<OperandLookup>>();
 
         /// <summary>
         /// Creates an instance of the proxy
@@ -60,7 +60,7 @@ namespace Windows.Models.Search
         /// <param name="listType">This is the type of the rawList</param>
         /// <param name="tenantId">This is the tenant identifier</param>
         /// <returns></returns>
-        public HashSet<IOperand> GetList(string listId, string name, ListType listType, string tenantId)
+        public OperandLookup GetList(string listId, string name, ListType listType, string tenantId)
         {
             if (!IsInSingleColumnListCache(listId))
                 _singleColumnListCache.Add(listId, ConvertToSingleColumnList(GetRawList(listId, name, listType, tenantId)));
@@ -81,7 +81,7 @@ namespace Windows.Models.Search
         /// <param name="listType">This is the type of the rawList</param>
         /// <param name="tenantId">This is the tenant identifier</param>
         /// <returns></returns>
-        public IReadOnlyList<IReadOnlyList<IOperand>> GetMultiColumnList(string listId, string name, ListType listType, string tenantId)
+        public IReadOnlyList<OperandLookup> GetMultiColumnList(string listId, string name, ListType listType, string tenantId)
         {
             if (!IsInMultiColumnListCache(listId))
                 _multiColumnListCache.Add(listId, ConvertToMultiColumnList(GetRawList(listId, name, listType, tenantId)));
@@ -95,7 +95,7 @@ namespace Windows.Models.Search
         /// <param name="listId">This is the id of the rawList</param>
         /// <param name="multiColumnList">This items to convert</param>
         /// <returns></returns>
-        public IReadOnlyList<IReadOnlyList<IOperand>> GetMultiColumnList(string listId, List<string[]> multiColumnList)
+        public IReadOnlyList<OperandLookup> GetMultiColumnList(string listId, List<string[]> multiColumnList)
         {
             if (!IsInMultiColumnListCache(listId))
                 _multiColumnListCache.Add(listId, ConvertToMultiColumnList(multiColumnList));
@@ -108,17 +108,17 @@ namespace Windows.Models.Search
             return _multiColumnListCache.ContainsKey(name);
         }
 
-        private static IReadOnlyList<IReadOnlyList<IOperand>> ConvertToMultiColumnList(List<string[]> rawList)
+        private static IReadOnlyList<OperandLookup> ConvertToMultiColumnList(List<string[]> rawList)
         {
             return rawList?.FindAll(WithMinRowSize).ConvertAll(ToMultiConstantOperands);
         }
 
-        private static IReadOnlyList<IOperand> ToMultiConstantOperands(string[] input)
+        private static OperandLookup ToMultiConstantOperands(string[] input)
         {
             var operandList = new List<IOperand>();
             if (input != null)
                 operandList.AddRange(input.Select(CreateConstantOperand));
-            return operandList;
+            return new OperandLookup(operandList);
         }
 
         private List<string[]> GetRawList(string listId, string name, ListType listType, string tenantId)
@@ -159,11 +159,9 @@ namespace Windows.Models.Search
             return RawListCache.ContainsKey(name);
         }
 
-        private static HashSet<IOperand> ConvertToSingleColumnList(List<string[]> rawList)
+        private static OperandLookup ConvertToSingleColumnList(List<string[]> rawList)
         {
-            return rawList == null ? 
-                new HashSet<IOperand>() : 
-                new HashSet<IOperand>(rawList.FindAll(WithMinRowSize).ConvertAll(ToConstantOperand));
+            return new OperandLookup(rawList?.FindAll(WithMinRowSize).ConvertAll(ToConstantOperand));
         }
 
         private static IOperand ToConstantOperand(string[] row)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Pledge.Common.Interfaces;
 
-namespace Windows.Models.Extensions
+namespace Pledge.Common.Extensions
 {
     /// <summary>
     /// Applies a hash lookup on an IOperand collection

@@ -72,16 +72,19 @@ namespace Windows.Models.Search
             var list = listProvider.GetList(listId, listName, ListType.FileSystem, tenantId);
             var comparer = new OperandComparer();
 
-            var result = new LookupResult(_rowCells.Count, list.Count);
+            var result = new LookupResult(_rowCells.Count, list.ReferenceList.Count);
 
             foreach (var cell in _rowCells)
             {
-                if (IsInList(list, cell[_cellIndex].Value, comparer))
+                //if (IsInList(list.SearchList, cell[_cellIndex].Value))
+                //{
+                //    break;
+                //}
+                if (list.SearchList.Contains(cell[_cellIndex].Value))
                 {
                     break;
                 }
-
-                //if (IsInHashSet(hashSet, cell[_cellIndex].Value))
+                //if (IsInHashSet(list.SearchList, cell[_cellIndex].Value))
                 //{
                 //    break;
                 //}
@@ -98,12 +101,12 @@ namespace Windows.Models.Search
             return list.Contains(text);
         }
 
-        private static bool IsInList(HashSet<IOperand> list, string text, IEqualityComparer<IOperand> comparer)
+        private static bool IsInList(HashSet<IOperand> list, string text)
         {
             //return list.Any(item => item.TextValue().Equals(text,
             //    StringComparison.OrdinalIgnoreCase));
 
-            return list.Contains(new ConstantOperand(text), comparer);
+            return list.Contains(new ConstantOperand(text));
         }
 
         private static bool IsInHashSet(ICollection<string> list, string text)

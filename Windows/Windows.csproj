@@ -92,7 +92,6 @@
     <Compile Include="Models\Encryption\DataCrypto.cs" />
     <Compile Include="Models\Extensions\EnumExtension.cs" />
     <Compile Include="Models\Extensions\EnumInfo.cs" />
-    <Compile Include="Models\Extensions\LookupExtension.cs" />
     <Compile Include="Models\IterateTab\BaseNode.cs" />
     <Compile Include="Models\IterateTab\Enums.cs" />
     <Compile Include="Models\IterateTab\IResult.cs" />

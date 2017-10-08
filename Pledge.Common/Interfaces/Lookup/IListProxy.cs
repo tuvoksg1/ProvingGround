@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Pledge.Common.Models.Lookup;
+using Pledge.Common.Operands;
 
 namespace Pledge.Common.Interfaces.Lookup
 {
@@ -16,7 +17,7 @@ namespace Pledge.Common.Interfaces.Lookup
         /// <param name="listType">This is the type of the list</param>
         /// <param name="tenantId">This is the tenant identifier</param>
         /// <returns></returns>
-        HashSet<IOperand> GetList(string listId, string name, ListType listType, string tenantId);
+        OperandLookup GetList(string listId, string name, ListType listType, string tenantId);
 
         /// <summary>
         /// Get the content of the list.
@@ -26,7 +27,7 @@ namespace Pledge.Common.Interfaces.Lookup
         /// <param name="listType"></param>
         /// <param name="tenantId"></param>
         /// <returns></returns>
-        IReadOnlyList<IReadOnlyList<IOperand>> GetMultiColumnList(string listId, string name, ListType listType, string tenantId);
+        IReadOnlyList<OperandLookup> GetMultiColumnList(string listId, string name, ListType listType, string tenantId);
 
         /// <summary>
         /// Get multi column list of operands.
@@ -34,7 +35,7 @@ namespace Pledge.Common.Interfaces.Lookup
         /// <param name="name"></param>
         /// <param name="multiColumnList">This items to convert</param>
         /// <returns></returns>        
-        IReadOnlyList<IReadOnlyList<IOperand>> GetMultiColumnList(string name, List<string[]> multiColumnList);
+        IReadOnlyList<OperandLookup> GetMultiColumnList(string name, List<string[]> multiColumnList);
 
         /// <summary>
         /// Get the list of all external lists.
