@@ -72,7 +72,7 @@ namespace Windows.Models.Search
             var list = listProvider.GetList(listId, listName, ListType.FileSystem, tenantId);
             var comparer = new OperandComparer();
 
-            var result = new LookupResult(_rowCells.Count, list.ReferenceList.Count);
+            var result = new LookupResult(_rowCells.Count, list.Count);
 
             foreach (var cell in _rowCells)
             {
@@ -103,16 +103,11 @@ namespace Windows.Models.Search
 
         private static bool IsInList(HashSet<IOperand> list, string text)
         {
-            //return list.Any(item => item.TextValue().Equals(text,
-            //    StringComparison.OrdinalIgnoreCase));
-
             return list.Contains(new ConstantOperand(text));
         }
 
         private static bool IsInHashSet(ICollection<string> list, string text)
         {
-            //return list.Any(item => item.Equals(text,
-            //    StringComparison.OrdinalIgnoreCase));
             return list.Contains(text, StringComparer.OrdinalIgnoreCase);
         }
     }

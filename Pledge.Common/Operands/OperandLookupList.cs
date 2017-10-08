@@ -12,7 +12,7 @@ namespace Pledge.Common.Operands
     /// <summary>
     /// Represents a wrapper around a list of IOprand objects
     /// </summary>
-    public class OperandLookup
+    public class OperandLookup : List<IOperand>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="OperandLookup"/> class.
@@ -20,18 +20,13 @@ namespace Pledge.Common.Operands
         /// <param name="list">The list.</param>
         public OperandLookup(IReadOnlyList<IOperand> list)
         {
-            ReferenceList = list;
             SearchList = list.ToHashSet();
+            AddRange(list);
         }
 
         /// <summary>
         /// Gets for the list for searching.
         /// </summary>
         public HashSet<string> SearchList { get; }
-
-        /// <summary>
-        /// Gets for the list for referencing.
-        /// </summary>
-        public IReadOnlyList<IOperand> ReferenceList { get; }
     }
 }
