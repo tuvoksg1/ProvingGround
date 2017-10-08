@@ -16,7 +16,7 @@ namespace Pledge.Common.Interfaces.Lookup
         /// <param name="listType">This is the type of the list</param>
         /// <param name="tenantId">This is the tenant identifier</param>
         /// <returns></returns>
-        IReadOnlyList<IOperand> GetList(string listId, string name, ListType listType, string tenantId);
+        HashSet<IOperand> GetList(string listId, string name, ListType listType, string tenantId);
 
         /// <summary>
         /// Get the content of the list.

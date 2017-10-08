@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Windows.Models.Extensions;
+using Pledge.Common.Interfaces;
 using Pledge.Common.Models;
+using Pledge.Common.Models.Lookup;
+using Pledge.Common.Operands;
 using Pledge.Lookup.Core.IO;
 
 namespace Windows.Models.Search
@@ -42,6 +46,7 @@ namespace Windows.Models.Search
         {
             var listProvider = new FileListProvider();
             var list = listProvider.GetList(listId, listName, tenantId).Select(arg => arg.First()).ToList();
+            var hashSet = new HashSet<string>(list);
 
             var result = new LookupResult(_rowCells.Count, list.Count);
 
@@ -51,6 +56,35 @@ namespace Windows.Models.Search
                 {
                     break;
                 }
+
+                //if (IsInHashSet(hashSet, cell[_cellIndex].Value))
+                //{
+                //    break;
+                //}
+            }
+
+            return result.GetResult();
+        }
+
+        public string PerformProxyLookup(string listId, string listName, string tenantId)
+        {
+            var listProvider = new ExternalListProxy();
+            var list = listProvider.GetList(listId, listName, ListType.FileSystem, tenantId);
+            var comparer = new OperandComparer();
+
+            var result = new LookupResult(_rowCells.Count, list.Count);
+
+            foreach (var cell in _rowCells)
+            {
+                if (IsInList(list, cell[_cellIndex].Value, comparer))
+                {
+                    break;
+                }
+
+                //if (IsInHashSet(hashSet, cell[_cellIndex].Value))
+                //{
+                //    break;
+                //}
             }
 
             return result.GetResult();
@@ -58,8 +92,25 @@ namespace Windows.Models.Search
 
         private static bool IsInList(IEnumerable<string> list, string text)
         {
-            return list.Any(item => item.Equals(text,
-                StringComparison.OrdinalIgnoreCase));
+            //return list.Any(item => item.Equals(text,
+            //    StringComparison.OrdinalIgnoreCase));
+
+            return list.Contains(text);
+        }
+
+        private static bool IsInList(HashSet<IOperand> list, string text, IEqualityComparer<IOperand> comparer)
+        {
+            //return list.Any(item => item.TextValue().Equals(text,
+            //    StringComparison.OrdinalIgnoreCase));
+
+            return list.Contains(new ConstantOperand(text), comparer);
+        }
+
+        private static bool IsInHashSet(ICollection<string> list, string text)
+        {
+            //return list.Any(item => item.Equals(text,
+            //    StringComparison.OrdinalIgnoreCase));
+            return list.Contains(text, StringComparer.OrdinalIgnoreCase);
         }
     }
 }

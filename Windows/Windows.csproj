@@ -92,6 +92,7 @@
     <Compile Include="Models\Encryption\DataCrypto.cs" />
     <Compile Include="Models\Extensions\EnumExtension.cs" />
     <Compile Include="Models\Extensions\EnumInfo.cs" />
+    <Compile Include="Models\Extensions\LookupExtension.cs" />
     <Compile Include="Models\IterateTab\BaseNode.cs" />
     <Compile Include="Models\IterateTab\Enums.cs" />
     <Compile Include="Models\IterateTab\IResult.cs" />
@@ -99,8 +100,10 @@
     <Compile Include="Models\IterateTab\Nodes.cs" />
     <Compile Include="Models\IterateTab\ITreeNode.cs" />
     <Compile Include="Models\IterateTab\Result.cs" />
+    <Compile Include="Models\Search\ExternalListProxy.cs" />
     <Compile Include="Models\Search\LookupEnforcer.cs" />
     <Compile Include="Models\Search\LookupResult.cs" />
+    <Compile Include="Models\Search\OperandComparer.cs" />
     <Compile Include="Models\SendGrid\EmailMessage.cs" />
     <Compile Include="Models\SendGrid\EmailService.cs" />
     <Compile Include="Models\SendGrid\MailServiceInfo.cs" />

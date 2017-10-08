@@ -313,7 +313,7 @@ namespace Windows
             const string listName = "GM_Master_EmailBlackList";
             const string targetFile = @"C:\Users\Fola\Dropbox\Pledge\Lookup\Colombia.txt";
             var enforcer = new LookupEnforcer(targetFile, 3);
-            var result = enforcer.PerformLookup(listId, listName, tenantId);
+            var result = enforcer.PerformProxyLookup(listId, listName, tenantId);
 
             MessageBox.Show(result);
         }
