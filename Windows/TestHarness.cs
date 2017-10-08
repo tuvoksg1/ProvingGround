@@ -267,12 +267,14 @@ namespace Windows
 
         private async void SendMailBtn_Click(object sender, EventArgs e)
         {
+            var cipher = "tc/4qmbuYesQfO4+rflaITfjmeAS47Wc3tV3pX+dD9Q=".Decrypt(string.Empty);
+            var crypto = new DataCrypto(cipher);
             var info = new MailServiceInfo
             {
-                Host = "smtp.sendgrid.net",
+                Host = cipher,
                 DisplayName = "Joe Bloggs",
-                MailAccount = "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",
-                Password = "z1vylF9W2laxL38",
+                MailAccount = "YHPOot/GoFLsq+0hxYgGhF+pSenRsbeh0v6QOkoLzGKQwcGEsBDa9PBqI2kEFh0cr7Rm+Tdh1tn9l2+dmiINt24fq5B8uRp8Cc3qEoMhfRo=".Decrypt(cipher),
+                Password = "9XW1J+TODt0dk6Sz/4a4HmnwhP6O8PaVpaLIkbIkZ5w=".Decrypt(cipher),
                 PortNumber = 10000,
                 SendAddress = "nobody@nowhere.com",
                 Timeout = 25000
