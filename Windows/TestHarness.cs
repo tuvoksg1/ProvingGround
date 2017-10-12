@@ -273,7 +273,7 @@ namespace Windows
             {
                 Host = cipher,
                 DisplayName = "Joe Bloggs",
-                MailAccount = "YHPOot/GoFLsq+0hxYgGhF+pSenRsbeh0v6QOkoLzGKQwcGEsBDa9PBqI2kEFh0cr7Rm+Tdh1tn9l2+dmiINt24fq5B8uRp8Cc3qEoMhfRo=".Decrypt(cipher),
+                MailAccount = "CqhpePRgzEzIaLH87Th/wSACwmIe6gR57DbKKOLM+nJ9FNhuT7d2yuK3+XJFEkyaknH375vyS55S3eRdp1mfxZ2YQGcKl2t6sG3SjLeaXas=".Decrypt(cipher),
                 Password = "9XW1J+TODt0dk6Sz/4a4HmnwhP6O8PaVpaLIkbIkZ5w=".Decrypt(cipher),
                 PortNumber = 10000,
                 SendAddress = "nobody@nowhere.com",
