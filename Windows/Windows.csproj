@@ -64,6 +64,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -99,6 +100,7 @@
     <Compile Include="Models\IterateTab\Nodes.cs" />
     <Compile Include="Models\IterateTab\ITreeNode.cs" />
     <Compile Include="Models\IterateTab\Result.cs" />
+    <Compile Include="Models\Reflection\Cron\TaskRunner.cs" />
     <Compile Include="Models\Search\ExternalListProxy.cs" />
     <Compile Include="Models\Search\LookupEnforcer.cs" />
     <Compile Include="Models\Search\LookupResult.cs" />

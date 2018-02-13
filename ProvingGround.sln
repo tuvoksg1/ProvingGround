@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windows", "Windows\Windows.csproj", "{563012A8-CB33-4B02-BEED-AC7F0C94034A}"
 EndProject
@@ -28,6 +28,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pledge.Lookup.Core", "Pledge.Lookup.Core\Pledge.Lookup.Core.csproj", "{386F68AB-1862-4073-B75E-9BAA5EB8B469}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pledge.Common", "Pledge.Common\Pledge.Common.csproj", "{BB29C892-0EA5-45BB-9EE9-A92D506FD760}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicContainer", "DynamicContainer\DynamicContainer.csproj", "{6BA0B525-6466-4DB0-AE8B-37AB2430ED96}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,6 +81,10 @@ Global
 		{BB29C892-0EA5-45BB-9EE9-A92D506FD760}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB29C892-0EA5-45BB-9EE9-A92D506FD760}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB29C892-0EA5-45BB-9EE9-A92D506FD760}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BA0B525-6466-4DB0-AE8B-37AB2430ED96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BA0B525-6466-4DB0-AE8B-37AB2430ED96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BA0B525-6466-4DB0-AE8B-37AB2430ED96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BA0B525-6466-4DB0-AE8B-37AB2430ED96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

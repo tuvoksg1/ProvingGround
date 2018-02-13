@@ -12,6 +12,7 @@ using Windows.Models.Elastic;
 using Windows.Models.Encryption;
 using Windows.Models.Extensions;
 using Windows.Models.IterateTab;
+using Windows.Models.Reflection.Cron;
 using Windows.Models.Search;
 using Windows.Models.SendGrid;
 using Windows.Models.Serialization;
@@ -310,12 +311,14 @@ namespace Windows
 
         private void TestBtn_Click(object sender, EventArgs e)
         {
-            const string tenantId = "1430bb8e-43ba-40a7-915e-4d73cc66cd66";
-            const string listId = "386b4c5e-4482-400e-89ca-f592c89e6816";
-            const string listName = "GM_Master_EmailBlackList";
-            const string targetFile = @"C:\Users\Fola\Dropbox\Pledge\Lookup\Colombia.txt";
-            var enforcer = new LookupEnforcer(targetFile, 3);
-            var result = enforcer.PerformProxyLookup(listId, listName, tenantId);
+            //const string tenantId = "1430bb8e-43ba-40a7-915e-4d73cc66cd66";
+            //const string listId = "386b4c5e-4482-400e-89ca-f592c89e6816";
+            //const string listName = "GM_Master_EmailBlackList";
+            //const string targetFile = @"C:\Users\Fola\Dropbox\Pledge\Lookup\Colombia.txt";
+            //var enforcer = new LookupEnforcer(targetFile, 3);
+            //var result = enforcer.PerformProxyLookup(listId, listName, tenantId);
+
+            var result = TaskRunner.ExecuteInstance();
 
             MessageBox.Show(result);
         }
