@@ -46,6 +46,7 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -58,10 +59,12 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Credential.cs" />
     <Compile Include="ListUploader.cs" />
+    <Compile Include="ListViewModel.cs" />
     <Compile Include="LocalRuntimeSettings.cs" />
     <Compile Include="PledgeRuntime.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RemoteRuntimeSettings.cs" />
+    <Compile Include="ResourceState.cs" />
     <Compile Include="RuntimeMode.cs" />
   </ItemGroup>
   <ItemGroup>
