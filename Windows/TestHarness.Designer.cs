@@ -37,8 +37,6 @@
             this.DeserializeBtn = new System.Windows.Forms.Button();
             this.SerializeBtn = new System.Windows.Forms.Button();
             this.IOTab = new System.Windows.Forms.TabPage();
-            this.StreamBtn = new System.Windows.Forms.Button();
-            this.GetFilesBtn = new System.Windows.Forms.Button();
             this.ElasticTab = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
             this.SearchDateTxt = new System.Windows.Forms.TextBox();
@@ -51,22 +49,21 @@
             this.TestTab = new System.Windows.Forms.TabPage();
             this.TestBtn = new System.Windows.Forms.Button();
             this.cryptoTab = new System.Windows.Forms.TabPage();
-            this.plainTxt = new System.Windows.Forms.TextBox();
-            this.encPhraseTxt = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.encryptBtn = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.resultTxt = new System.Windows.Forms.TextBox();
             this.decryptBtn = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.decrPhraseTxt = new System.Windows.Forms.TextBox();
             this.encTxt = new System.Windows.Forms.TextBox();
-            this.resultTxt = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.encryptBtn = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.encPhraseTxt = new System.Windows.Forms.TextBox();
+            this.plainTxt = new System.Windows.Forms.TextBox();
             this.TestMenu.SuspendLayout();
             this.EnumerateTab.SuspendLayout();
             this.SerializationTab.SuspendLayout();
-            this.IOTab.SuspendLayout();
             this.ElasticTab.SuspendLayout();
             this.MailTab.SuspendLayout();
             this.TestTab.SuspendLayout();
@@ -88,7 +85,7 @@
             this.TestMenu.Location = new System.Drawing.Point(12, 12);
             this.TestMenu.Name = "TestMenu";
             this.TestMenu.SelectedIndex = 0;
-            this.TestMenu.Size = new System.Drawing.Size(526, 500);
+            this.TestMenu.Size = new System.Drawing.Size(619, 517);
             this.TestMenu.TabIndex = 0;
             // 
             // EnumerateTab
@@ -100,7 +97,7 @@
             this.EnumerateTab.Location = new System.Drawing.Point(4, 22);
             this.EnumerateTab.Name = "EnumerateTab";
             this.EnumerateTab.Padding = new System.Windows.Forms.Padding(3);
-            this.EnumerateTab.Size = new System.Drawing.Size(518, 474);
+            this.EnumerateTab.Size = new System.Drawing.Size(611, 491);
             this.EnumerateTab.TabIndex = 0;
             this.EnumerateTab.Text = "Enumerate Tree";
             // 
@@ -124,7 +121,7 @@
             this.TreeOutputList.FormattingEnabled = true;
             this.TreeOutputList.Location = new System.Drawing.Point(23, 57);
             this.TreeOutputList.Name = "TreeOutputList";
-            this.TreeOutputList.Size = new System.Drawing.Size(471, 381);
+            this.TreeOutputList.Size = new System.Drawing.Size(564, 394);
             this.TreeOutputList.TabIndex = 1;
             // 
             // IterateBtn
@@ -144,7 +141,7 @@
             this.SerializationTab.Location = new System.Drawing.Point(4, 22);
             this.SerializationTab.Name = "SerializationTab";
             this.SerializationTab.Padding = new System.Windows.Forms.Padding(3);
-            this.SerializationTab.Size = new System.Drawing.Size(518, 474);
+            this.SerializationTab.Size = new System.Drawing.Size(611, 491);
             this.SerializationTab.TabIndex = 1;
             this.SerializationTab.Text = "Serialization Test";
             this.SerializationTab.UseVisualStyleBackColor = true;
@@ -171,35 +168,13 @@
             // 
             // IOTab
             // 
-            this.IOTab.Controls.Add(this.StreamBtn);
-            this.IOTab.Controls.Add(this.GetFilesBtn);
             this.IOTab.Location = new System.Drawing.Point(4, 22);
             this.IOTab.Name = "IOTab";
             this.IOTab.Padding = new System.Windows.Forms.Padding(3);
-            this.IOTab.Size = new System.Drawing.Size(518, 474);
+            this.IOTab.Size = new System.Drawing.Size(611, 491);
             this.IOTab.TabIndex = 2;
-            this.IOTab.Text = "IO Test";
+            this.IOTab.Text = "Redis Cache";
             this.IOTab.UseVisualStyleBackColor = true;
-            // 
-            // StreamBtn
-            // 
-            this.StreamBtn.Location = new System.Drawing.Point(33, 116);
-            this.StreamBtn.Name = "StreamBtn";
-            this.StreamBtn.Size = new System.Drawing.Size(146, 51);
-            this.StreamBtn.TabIndex = 1;
-            this.StreamBtn.Text = "Run Stream Benchmark Tests";
-            this.StreamBtn.UseVisualStyleBackColor = true;
-            this.StreamBtn.Click += new System.EventHandler(this.StreamBtn_Click);
-            // 
-            // GetFilesBtn
-            // 
-            this.GetFilesBtn.Location = new System.Drawing.Point(33, 25);
-            this.GetFilesBtn.Name = "GetFilesBtn";
-            this.GetFilesBtn.Size = new System.Drawing.Size(146, 40);
-            this.GetFilesBtn.TabIndex = 0;
-            this.GetFilesBtn.Text = "Get Files Test";
-            this.GetFilesBtn.UseVisualStyleBackColor = true;
-            this.GetFilesBtn.Click += new System.EventHandler(this.GetFilesBtn_Click);
             // 
             // ElasticTab
             // 
@@ -211,7 +186,7 @@
             this.ElasticTab.Location = new System.Drawing.Point(4, 22);
             this.ElasticTab.Name = "ElasticTab";
             this.ElasticTab.Padding = new System.Windows.Forms.Padding(3);
-            this.ElasticTab.Size = new System.Drawing.Size(518, 474);
+            this.ElasticTab.Size = new System.Drawing.Size(611, 491);
             this.ElasticTab.TabIndex = 3;
             this.ElasticTab.Text = "Elastic Search";
             this.ElasticTab.UseVisualStyleBackColor = true;
@@ -270,7 +245,7 @@
             this.MailTab.Location = new System.Drawing.Point(4, 22);
             this.MailTab.Name = "MailTab";
             this.MailTab.Padding = new System.Windows.Forms.Padding(3);
-            this.MailTab.Size = new System.Drawing.Size(518, 474);
+            this.MailTab.Size = new System.Drawing.Size(611, 491);
             this.MailTab.TabIndex = 4;
             this.MailTab.Text = " SendGrid Mail";
             this.MailTab.UseVisualStyleBackColor = true;
@@ -301,7 +276,7 @@
             this.TestTab.Location = new System.Drawing.Point(4, 22);
             this.TestTab.Name = "TestTab";
             this.TestTab.Padding = new System.Windows.Forms.Padding(3);
-            this.TestTab.Size = new System.Drawing.Size(518, 474);
+            this.TestTab.Size = new System.Drawing.Size(611, 491);
             this.TestTab.TabIndex = 5;
             this.TestTab.Text = "Run Test";
             this.TestTab.UseVisualStyleBackColor = true;
@@ -313,7 +288,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TestBtn.Location = new System.Drawing.Point(200, 179);
             this.TestBtn.Name = "TestBtn";
-            this.TestBtn.Size = new System.Drawing.Size(101, 39);
+            this.TestBtn.Size = new System.Drawing.Size(194, 56);
             this.TestBtn.TabIndex = 0;
             this.TestBtn.Text = "Execute";
             this.TestBtn.UseVisualStyleBackColor = true;
@@ -335,54 +310,26 @@
             this.cryptoTab.Controls.Add(this.plainTxt);
             this.cryptoTab.Location = new System.Drawing.Point(4, 22);
             this.cryptoTab.Name = "cryptoTab";
-            this.cryptoTab.Size = new System.Drawing.Size(518, 474);
+            this.cryptoTab.Size = new System.Drawing.Size(611, 491);
             this.cryptoTab.TabIndex = 6;
             this.cryptoTab.Text = "Encryption";
             this.cryptoTab.UseVisualStyleBackColor = true;
             // 
-            // plainTxt
+            // label6
             // 
-            this.plainTxt.Location = new System.Drawing.Point(73, 83);
-            this.plainTxt.Name = "plainTxt";
-            this.plainTxt.Size = new System.Drawing.Size(125, 20);
-            this.plainTxt.TabIndex = 0;
-            this.plainTxt.Text = "Hello";
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(13, 225);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(37, 13);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "Result";
             // 
-            // encPhraseTxt
+            // resultTxt
             // 
-            this.encPhraseTxt.Location = new System.Drawing.Point(272, 83);
-            this.encPhraseTxt.Name = "encPhraseTxt";
-            this.encPhraseTxt.Size = new System.Drawing.Size(144, 20);
-            this.encPhraseTxt.TabIndex = 1;
-            this.encPhraseTxt.Text = "World";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 86);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(54, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Plain Text";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(204, 86);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(62, 13);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Passphrase";
-            // 
-            // encryptBtn
-            // 
-            this.encryptBtn.Location = new System.Drawing.Point(431, 80);
-            this.encryptBtn.Name = "encryptBtn";
-            this.encryptBtn.Size = new System.Drawing.Size(75, 23);
-            this.encryptBtn.TabIndex = 4;
-            this.encryptBtn.Text = "Encrypt";
-            this.encryptBtn.UseVisualStyleBackColor = true;
-            this.encryptBtn.Click += new System.EventHandler(this.encryptBtn_Click);
+            this.resultTxt.Location = new System.Drawing.Point(73, 225);
+            this.resultTxt.Name = "resultTxt";
+            this.resultTxt.Size = new System.Drawing.Size(343, 20);
+            this.resultTxt.TabIndex = 10;
             // 
             // decryptBtn
             // 
@@ -426,27 +373,55 @@
             this.encTxt.Size = new System.Drawing.Size(125, 20);
             this.encTxt.TabIndex = 5;
             // 
-            // resultTxt
+            // encryptBtn
             // 
-            this.resultTxt.Location = new System.Drawing.Point(73, 225);
-            this.resultTxt.Name = "resultTxt";
-            this.resultTxt.Size = new System.Drawing.Size(343, 20);
-            this.resultTxt.TabIndex = 10;
+            this.encryptBtn.Location = new System.Drawing.Point(431, 80);
+            this.encryptBtn.Name = "encryptBtn";
+            this.encryptBtn.Size = new System.Drawing.Size(75, 23);
+            this.encryptBtn.TabIndex = 4;
+            this.encryptBtn.Text = "Encrypt";
+            this.encryptBtn.UseVisualStyleBackColor = true;
+            this.encryptBtn.Click += new System.EventHandler(this.encryptBtn_Click);
             // 
-            // label6
+            // label3
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(13, 225);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(37, 13);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "Result";
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(204, 86);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(62, 13);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Passphrase";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(13, 86);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(54, 13);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Plain Text";
+            // 
+            // encPhraseTxt
+            // 
+            this.encPhraseTxt.Location = new System.Drawing.Point(272, 83);
+            this.encPhraseTxt.Name = "encPhraseTxt";
+            this.encPhraseTxt.Size = new System.Drawing.Size(144, 20);
+            this.encPhraseTxt.TabIndex = 1;
+            this.encPhraseTxt.Text = "World";
+            // 
+            // plainTxt
+            // 
+            this.plainTxt.Location = new System.Drawing.Point(73, 83);
+            this.plainTxt.Name = "plainTxt";
+            this.plainTxt.Size = new System.Drawing.Size(125, 20);
+            this.plainTxt.TabIndex = 0;
+            this.plainTxt.Text = "Hello";
             // 
             // TestHarness
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(550, 524);
+            this.ClientSize = new System.Drawing.Size(643, 541);
             this.Controls.Add(this.TestMenu);
             this.Name = "TestHarness";
             this.Text = "Tesh Harness";
@@ -454,7 +429,6 @@
             this.EnumerateTab.ResumeLayout(false);
             this.EnumerateTab.PerformLayout();
             this.SerializationTab.ResumeLayout(false);
-            this.IOTab.ResumeLayout(false);
             this.ElasticTab.ResumeLayout(false);
             this.ElasticTab.PerformLayout();
             this.MailTab.ResumeLayout(false);
@@ -476,11 +450,9 @@
         private System.Windows.Forms.Button DeserializeBtn;
         private System.Windows.Forms.Button SerializeBtn;
         private System.Windows.Forms.TabPage IOTab;
-        private System.Windows.Forms.Button GetFilesBtn;
         private System.Windows.Forms.TabPage ElasticTab;
         private System.Windows.Forms.Button IndexBtn;
         private System.Windows.Forms.Button LoadBtn;
-        private System.Windows.Forms.Button StreamBtn;
         private System.Windows.Forms.Button QueryBtn;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox SearchDateTxt;

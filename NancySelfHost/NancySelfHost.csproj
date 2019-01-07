@@ -140,7 +140,6 @@
     </Content>
     <None Include="Entities\DevRoot.cer" />
     <None Include="Entities\idsrv3test.cer" />
-    <EmbeddedResource Include="Entities\idsrv3test.pfx" />
     <None Include="Views\Login\login.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

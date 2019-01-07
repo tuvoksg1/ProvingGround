@@ -101,17 +101,11 @@
     <Compile Include="Models\IterateTab\ITreeNode.cs" />
     <Compile Include="Models\IterateTab\Result.cs" />
     <Compile Include="Models\Reflection\Cron\TaskRunner.cs" />
-    <Compile Include="Models\Search\ExternalListProxy.cs" />
-    <Compile Include="Models\Search\LookupEnforcer.cs" />
-    <Compile Include="Models\Search\LookupResult.cs" />
-    <Compile Include="Models\Search\OperandComparer.cs" />
     <Compile Include="Models\SendGrid\EmailMessage.cs" />
     <Compile Include="Models\SendGrid\EmailService.cs" />
     <Compile Include="Models\SendGrid\MailServiceInfo.cs" />
     <Compile Include="Models\Serialization\ComplexObject.cs" />
     <Compile Include="Models\Serialization\SerializableDictionary.cs" />
-    <Compile Include="Models\Stream\StreamProcessor.cs" />
-    <Compile Include="Models\Stream\StreamProcessor.Setup.cs" />
     <Compile Include="TestHarness.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,7 +128,6 @@
       <DependentUpon>TestHarness.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
-    <Compile Include="Models\Stream\StreamProcessor.Functions.cs" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -150,14 +143,6 @@
     <ProjectReference Include="..\LoggingUtility\LoggingUtility.csproj">
       <Project>{01f07d43-d5f7-4e89-8f2a-c94e33421a79}</Project>
       <Name>LoggingUtility</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pledge.Common\Pledge.Common.csproj">
-      <Project>{bb29c892-0ea5-45bb-9ee9-a92d506fd760}</Project>
-      <Name>Pledge.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Pledge.Lookup.Core\Pledge.Lookup.Core.csproj">
-      <Project>{386f68ab-1862-4073-b75e-9baa5eb8b469}</Project>
-      <Name>Pledge.Lookup.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

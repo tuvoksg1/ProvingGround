@@ -13,10 +13,8 @@ using Windows.Models.Encryption;
 using Windows.Models.Extensions;
 using Windows.Models.IterateTab;
 using Windows.Models.Reflection.Cron;
-using Windows.Models.Search;
 using Windows.Models.SendGrid;
 using Windows.Models.Serialization;
-using Windows.Models.Stream;
 using Elasticsearch.Net;
 using Nest;
 using Newtonsoft.Json.Linq;
@@ -160,15 +158,6 @@ namespace Windows
             MessageBox.Show(@"Done");
         }
 
-        private void GetFilesBtn_Click(object sender, EventArgs e)
-        {
-            const string directory = @"C:\Users\sonoikf\Code\Common\PledgeMCX\Development\Pledge\netwrite\Export";
-            const string pattern = "PledgeConfiguration_2*";
-
-            var count = Directory.GetFiles(directory, pattern);
-
-            MessageBox.Show($"Detected {count.Length} files in the directory");
-        }
 
         private static Uri _node;
         private static ConnectionSettings _settings;
@@ -208,13 +197,6 @@ namespace Windows
             }
 
             MessageBox.Show($"Loaded {count} logs from DB");
-        }
-
-        private void StreamBtn_Click(object sender, EventArgs e)
-        {
-            StreamProcessor.Start();
-
-            MessageBox.Show(@"Processing complete");
         }
 
         private void QueryBtn_Click(object sender, EventArgs e)

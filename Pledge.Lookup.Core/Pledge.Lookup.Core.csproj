@@ -70,12 +70,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pledge.Common\Pledge.Common.csproj">
-      <Project>{bb29c892-0ea5-45bb-9ee9-a92d506fd760}</Project>
-      <Name>Pledge.Common</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="DB\Pledge External Data.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
