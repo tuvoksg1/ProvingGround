@@ -18,9 +18,9 @@ using Windows.Models.Serialization;
 using Elasticsearch.Net;
 using Nest;
 using Newtonsoft.Json.Linq;
-using RestSharp.Extensions.MonoHttp;
 using Twilio;
 using Result = Windows.Models.IterateTab.Result;
+using RedisCache;
 
 //using Windows.Models.Extensions;
 
@@ -31,6 +31,7 @@ namespace Windows
         public TestHarness()
         {
             InitializeComponent();
+            SessionCombo.SelectedIndex = 0;
         }
 
         private void OnIterateClick(object sender, EventArgs e)
@@ -193,7 +194,7 @@ namespace Windows
             foreach (var log in logs)
             {
                 count++;
-                _client.Index(log);
+                //_client.Index(log);
             }
 
             MessageBox.Show($"Loaded {count} logs from DB");
@@ -230,20 +231,20 @@ namespace Windows
             var node = new Uri("http://boom-box-1.boomerang.com:9200");
             var config = new ConnectionConfiguration(node);
             var client = new ElasticLowLevelClient(config);
-            var result = client.SearchGet<object>("hsbc_conform", "osf_hierarchies", (arg) => arg.AddQueryString("size", "100"));
-            var root = JObject.FromObject(result.Body);
+            //var result = client.SearchGet<object>("hsbc_conform", "osf_hierarchies", (arg) => arg.AddQueryString("size", "100"));
+            //var root = JObject.FromObject(result.Body);
             var hierarchies = new List<Tuple<string, string, string, DateTime>>();
 
-            foreach (var item in root["hits"]["hits"])
-            {
-                var date = item["_source"]["ctl"]["effective_date"].Value<string>();
-                var country = item["_source"]["conform"]["geography"].Value<string>();
-                var channel = item["_source"]["conform"]["channel"].Value<string>();
+            //foreach (var item in root["hits"]["hits"])
+            //{
+            //    var date = item["_source"]["ctl"]["effective_date"].Value<string>();
+            //    var country = item["_source"]["conform"]["geography"].Value<string>();
+            //    var channel = item["_source"]["conform"]["channel"].Value<string>();
 
-                var parsedDate = DateTime.ParseExact(date, "yyyyMMdd", CultureInfo.InvariantCulture);
-                var tuple = Tuple.Create(channel, country, date, parsedDate);
-                hierarchies.Add(tuple);
-            }
+            //    var parsedDate = DateTime.ParseExact(date, "yyyyMMdd", CultureInfo.InvariantCulture);
+            //    var tuple = Tuple.Create(channel, country, date, parsedDate);
+            //    hierarchies.Add(tuple);
+            //}
 
             return hierarchies;
         }
@@ -278,10 +279,10 @@ namespace Windows
         {
             var originalText = "https://localhost:44340/core/connect/authorize?client_id=listservice&redirect_uri=http%3A%2F%2Flocalhost%3A52300%2FList%2FIndex%2F&response_mode=form_post&response_type=code%20id_token%20token&scope=openid%20profile%20offline_access%20api%20listservice&state=OpenIdConnect.AuthenticationProperties%3DpbyYssoNwD_DtPGpLAXpUcqGFbnzEVCUHStyLL_flr2Q5qhC-wuTp3zMK85SCLXnDKyyFN_Q3-Li-yLE35icB67DICo3sVp_pYXhkKiBlIWwtGvD0Xwkszuja0f9DEaPqH3LGUOPn6GJUI35k_gg18EOxNtUabMHYvSBTZK3rPG3Y3_9FtrjW9ysHN5N1j0rawPyqrYB4fWW9IETq2QcQg&nonce=636067951330093052.NzkwNjRjYjQtOGYxOC00MTFlLTk3ZTMtMDBlMmI3ZDQ1MTYxMWI4MDI0ZjktNTM5ZS00NTYwLThlYzctZWNiNzgxYjM1YzZm";
 
-            var queryStringCollection = HttpUtility.ParseQueryString(originalText, Encoding.UTF8);
+            //var queryStringCollection = HttpUtility.ParseQueryString(originalText, Encoding.UTF8);
 
-            var redirectUrl = queryStringCollection["redirect_uri"];
-            var finalText = HttpUtility.UrlDecode(redirectUrl, Encoding.UTF8);
+            //var redirectUrl = queryStringCollection["redirect_uri"];
+            //var finalText = HttpUtility.UrlDecode(redirectUrl, Encoding.UTF8);
             //var twilio = new TwilioRestClient("ACafbd4ac2cb2d264856b110ab36bb1478", "d37cca9d8e9f52f6c2c5a308e7305a59");
 
             //var result = twilio.SendMessage("+447481344084", "+447944062159", "2FA Test");
@@ -305,7 +306,7 @@ namespace Windows
             MessageBox.Show(result);
         }
 
-        private void encryptBtn_Click(object sender, EventArgs e)
+        private void EncryptBtn_Click(object sender, EventArgs e)
         {
             var plainText = plainTxt.Text;
             var passphrase = encPhraseTxt.Text;
@@ -314,7 +315,7 @@ namespace Windows
             decrPhraseTxt.Text = passphrase;
         }
 
-        private void decryptBtn_Click(object sender, EventArgs e)
+        private void DecryptBtn_Click(object sender, EventArgs e)
         {
             var encryptedText = encTxt.Text;
             var passphrase = decrPhraseTxt.Text;
@@ -322,9 +323,21 @@ namespace Windows
             resultTxt.Text = encryptedText.Decrypt(passphrase);
         }
 
+        private readonly JobServer _jobServer = new JobServer();
         private void FetchBtn_Click(object sender, EventArgs e)
         {
+            var sessionId = SessionCombo.SelectedItem.ToString();
+            var page = (int)pagePicker.Value;
+            var results = _jobServer.GetJobs(sessionId, page);
 
+            ResultListBox.Items.Add($"Page {page} search for {sessionId}");
+            ResultListBox.Items.AddRange(results.ToArray());
+            ResultListBox.Items.Add("******************************************");
+        }
+
+        private void ClearBtn_Click(object sender, EventArgs e)
+        {
+            ResultListBox.Items.Clear();
         }
     }
 }

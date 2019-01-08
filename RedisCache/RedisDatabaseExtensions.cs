@@ -113,11 +113,15 @@ namespace RedisCache
 
         private static string ToJson(object value)
         {
+            if (value == null) return null;
+
             return JsonConvert.SerializeObject(value);
         }
 
         private static T FromJson<T>(string value)
         {
+            if (value == null) return default(T);
+
             return JsonConvert.DeserializeObject<T>(value);
         }
     }

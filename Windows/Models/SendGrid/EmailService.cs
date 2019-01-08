@@ -66,21 +66,22 @@ namespace Windows.Models.SendGrid
 
         private async Task SendEmailAsync(EmailMessage message)
         {
-            dynamic sendGrid = new SendGridAPIClient(MailAccount);
+            await Task.Delay(0);
+            //dynamic sendGrid = new SendGridAPIClient(MailAccount);
 
-            var from = new Email(SendAddress);
-            var to = new Email(message.Destination);
-            var content = new Content("text/plain", message.Body);
-            var mail = new Mail(from, message.Subject, to, content);
+            //var from = new Email(SendAddress);
+            //var to = new Email(message.Destination);
+            //var content = new Content("text/plain", message.Body);
+            //var mail = new Mail(from, message.Subject, to, content);
 
-            try
-            {
-                dynamic response = await sendGrid.client.mail.send.post(requestBody: mail.Get());
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceError(ex.Message + " SendGrid probably not configured correctly.");
-            }
+            //try
+            //{
+            //    dynamic response = await sendGrid.client.mail.send.post(requestBody: mail.Get());
+            //}
+            //catch (Exception ex)
+            //{
+            //    Trace.TraceError(ex.Message + " SendGrid probably not configured correctly.");
+            //}
         }
     }
 }

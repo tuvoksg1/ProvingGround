@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CacheItem.cs" />
+    <Compile Include="CacheList.cs" />
     <Compile Include="JobCache.cs" />
     <Compile Include="JobComparer.cs" />
     <Compile Include="JobResult.cs" />

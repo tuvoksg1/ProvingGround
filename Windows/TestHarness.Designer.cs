@@ -37,6 +37,11 @@
             this.DeserializeBtn = new System.Windows.Forms.Button();
             this.SerializeBtn = new System.Windows.Forms.Button();
             this.IOTab = new System.Windows.Forms.TabPage();
+            this.SessionCombo = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.FetchBtn = new System.Windows.Forms.Button();
+            this.ResultListBox = new System.Windows.Forms.ListBox();
+            this.pagePicker = new System.Windows.Forms.NumericUpDown();
             this.ElasticTab = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
             this.SearchDateTxt = new System.Windows.Forms.TextBox();
@@ -61,19 +66,16 @@
             this.label2 = new System.Windows.Forms.Label();
             this.encPhraseTxt = new System.Windows.Forms.TextBox();
             this.plainTxt = new System.Windows.Forms.TextBox();
-            this.pageControl = new System.Windows.Forms.NumericUpDown();
-            this.ResultListBox = new System.Windows.Forms.ListBox();
-            this.FetchBtn = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
+            this.ClearBtn = new System.Windows.Forms.Button();
             this.TestMenu.SuspendLayout();
             this.EnumerateTab.SuspendLayout();
             this.SerializationTab.SuspendLayout();
             this.IOTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pagePicker)).BeginInit();
             this.ElasticTab.SuspendLayout();
             this.MailTab.SuspendLayout();
             this.TestTab.SuspendLayout();
             this.cryptoTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pageControl)).BeginInit();
             this.SuspendLayout();
             // 
             // TestMenu
@@ -174,10 +176,12 @@
             // 
             // IOTab
             // 
+            this.IOTab.Controls.Add(this.ClearBtn);
+            this.IOTab.Controls.Add(this.SessionCombo);
             this.IOTab.Controls.Add(this.label7);
             this.IOTab.Controls.Add(this.FetchBtn);
             this.IOTab.Controls.Add(this.ResultListBox);
-            this.IOTab.Controls.Add(this.pageControl);
+            this.IOTab.Controls.Add(this.pagePicker);
             this.IOTab.Location = new System.Drawing.Point(4, 22);
             this.IOTab.Name = "IOTab";
             this.IOTab.Padding = new System.Windows.Forms.Padding(3);
@@ -185,6 +189,81 @@
             this.IOTab.TabIndex = 2;
             this.IOTab.Text = "Redis Cache";
             this.IOTab.UseVisualStyleBackColor = true;
+            // 
+            // SessionCombo
+            // 
+            this.SessionCombo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.SessionCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.SessionCombo.FormattingEnabled = true;
+            this.SessionCombo.Items.AddRange(new object[] {
+            "Chris",
+            "Fola",
+            "James",
+            "Shlomi",
+            "Andy",
+            "Dave"});
+            this.SessionCombo.Location = new System.Drawing.Point(15, 15);
+            this.SessionCombo.Name = "SessionCombo";
+            this.SessionCombo.Size = new System.Drawing.Size(121, 21);
+            this.SessionCombo.TabIndex = 4;
+            // 
+            // label7
+            // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(12, 68);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(32, 13);
+            this.label7.TabIndex = 3;
+            this.label7.Text = "Page";
+            // 
+            // FetchBtn
+            // 
+            this.FetchBtn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.FetchBtn.Location = new System.Drawing.Point(15, 112);
+            this.FetchBtn.Name = "FetchBtn";
+            this.FetchBtn.Size = new System.Drawing.Size(121, 23);
+            this.FetchBtn.TabIndex = 2;
+            this.FetchBtn.Text = "Fetch";
+            this.FetchBtn.UseVisualStyleBackColor = true;
+            this.FetchBtn.Click += new System.EventHandler(this.FetchBtn_Click);
+            // 
+            // ResultListBox
+            // 
+            this.ResultListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ResultListBox.FormattingEnabled = true;
+            this.ResultListBox.Location = new System.Drawing.Point(162, 15);
+            this.ResultListBox.Name = "ResultListBox";
+            this.ResultListBox.Size = new System.Drawing.Size(415, 459);
+            this.ResultListBox.TabIndex = 1;
+            // 
+            // pagePicker
+            // 
+            this.pagePicker.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.pagePicker.Location = new System.Drawing.Point(50, 66);
+            this.pagePicker.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.pagePicker.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.pagePicker.Name = "pagePicker";
+            this.pagePicker.Size = new System.Drawing.Size(86, 20);
+            this.pagePicker.TabIndex = 0;
+            this.pagePicker.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // ElasticTab
             // 
@@ -349,7 +428,7 @@
             this.decryptBtn.TabIndex = 9;
             this.decryptBtn.Text = "Decrypt";
             this.decryptBtn.UseVisualStyleBackColor = true;
-            this.decryptBtn.Click += new System.EventHandler(this.decryptBtn_Click);
+            this.decryptBtn.Click += new System.EventHandler(this.DecryptBtn_Click);
             // 
             // label4
             // 
@@ -391,7 +470,7 @@
             this.encryptBtn.TabIndex = 4;
             this.encryptBtn.Text = "Encrypt";
             this.encryptBtn.UseVisualStyleBackColor = true;
-            this.encryptBtn.Click += new System.EventHandler(this.encryptBtn_Click);
+            this.encryptBtn.Click += new System.EventHandler(this.EncryptBtn_Click);
             // 
             // label3
             // 
@@ -427,47 +506,15 @@
             this.plainTxt.TabIndex = 0;
             this.plainTxt.Text = "Hello";
             // 
-            // pageControl
+            // ClearBtn
             // 
-            this.pageControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.pageControl.Location = new System.Drawing.Point(62, 15);
-            this.pageControl.Name = "pageControl";
-            this.pageControl.Size = new System.Drawing.Size(65, 20);
-            this.pageControl.TabIndex = 0;
-            // 
-            // ResultListBox
-            // 
-            this.ResultListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ResultListBox.FormattingEnabled = true;
-            this.ResultListBox.Location = new System.Drawing.Point(162, 15);
-            this.ResultListBox.Name = "ResultListBox";
-            this.ResultListBox.Size = new System.Drawing.Size(415, 459);
-            this.ResultListBox.TabIndex = 1;
-            // 
-            // FetchBtn
-            // 
-            this.FetchBtn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.FetchBtn.Location = new System.Drawing.Point(27, 62);
-            this.FetchBtn.Name = "FetchBtn";
-            this.FetchBtn.Size = new System.Drawing.Size(100, 23);
-            this.FetchBtn.TabIndex = 2;
-            this.FetchBtn.Text = "Fetch";
-            this.FetchBtn.UseVisualStyleBackColor = true;
-            this.FetchBtn.Click += new System.EventHandler(this.FetchBtn_Click);
-            // 
-            // label7
-            // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(24, 19);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(32, 13);
-            this.label7.TabIndex = 3;
-            this.label7.Text = "Page";
+            this.ClearBtn.Location = new System.Drawing.Point(15, 376);
+            this.ClearBtn.Name = "ClearBtn";
+            this.ClearBtn.Size = new System.Drawing.Size(121, 23);
+            this.ClearBtn.TabIndex = 5;
+            this.ClearBtn.Text = "Clear";
+            this.ClearBtn.UseVisualStyleBackColor = true;
+            this.ClearBtn.Click += new System.EventHandler(this.ClearBtn_Click);
             // 
             // TestHarness
             // 
@@ -483,13 +530,13 @@
             this.SerializationTab.ResumeLayout(false);
             this.IOTab.ResumeLayout(false);
             this.IOTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pagePicker)).EndInit();
             this.ElasticTab.ResumeLayout(false);
             this.ElasticTab.PerformLayout();
             this.MailTab.ResumeLayout(false);
             this.TestTab.ResumeLayout(false);
             this.cryptoTab.ResumeLayout(false);
             this.cryptoTab.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pageControl)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -532,7 +579,9 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button FetchBtn;
         private System.Windows.Forms.ListBox ResultListBox;
-        private System.Windows.Forms.NumericUpDown pageControl;
+        private System.Windows.Forms.NumericUpDown pagePicker;
+        private System.Windows.Forms.ComboBox SessionCombo;
+        private System.Windows.Forms.Button ClearBtn;
     }
 }
 

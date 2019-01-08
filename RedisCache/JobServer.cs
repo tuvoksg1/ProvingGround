@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RedisCache
 {
@@ -15,6 +13,10 @@ namespace RedisCache
         private static List<JobResult> _database;
         private static readonly Random _randomizer = new Random();
         private static readonly JobComparer _comparer = new JobComparer();
+        private const int MaxPromotedPages = 3;
+        private const int PromotionsPerPage = 2;
+        private const int PageSize = 10;
+        private const int TTL = 22;
 
         public JobServer()
         {
@@ -24,23 +26,37 @@ namespace RedisCache
         public List<JobResult> GetJobs(string sessionId, int page)
         {
             var standardResults = GetSearchJobs(page);
-            var promoJobs = GetPromotedJobs(sessionId);
-            return promoJobs.Union(standardResults, _comparer).Take(10).ToList();
+            var promoJobs = GetPromotedJobs(sessionId, page);
+            return promoJobs.Union(standardResults, _comparer).Take(PageSize).ToList();
         }
 
         private static List<JobResult> GetSearchJobs(int page)
         {
-            var skip = (page - 1) * 10;
+            var skip = (page - 1) * PageSize;
 
-            return _database.Skip(skip).Take(15).ToList();
+            return _database.Skip(skip).Take(PageSize + PromotionsPerPage).ToList();
         }
 
-        private List<JobResult> GetPromotedJobs(string sessionId)
+        private List<JobResult> GetPromotedJobs(string sessionId, int page)
         {
-            var cachedJobs = _cache.Database.Get<CacheItem>($"promoted_jobs_{sessionId}") ?? new CacheItem();
-            var promotedJobs = GetPromotedJobs().Except(cachedJobs.PromotedJobs).ToList();
+            var key = $"promoted_jobs_{sessionId}";
+            var cachedJobs = _cache.Database.Get<CacheList>(key) ?? new CacheList();
 
-            return GetRandomPromotions(promotedJobs, 2);
+            if (cachedJobs.Count > page) return cachedJobs.Single(item => item.Page == page).PromotedJobs;
+            if (cachedJobs.Count >= MaxPromotedPages) return new List<JobResult>();
+
+            var availablePromotions = GetPromotedJobs().Except(cachedJobs.All()).ToList();
+            var chosePromotions = GetRandomPromotions(availablePromotions, PromotionsPerPage);
+
+            cachedJobs.Add(new CacheItem
+            {
+                Page = page,
+                PromotedJobs = chosePromotions
+            });
+
+            _cache.Database.Set(key, cachedJobs, TimeSpan.FromMinutes(TTL));
+
+            return chosePromotions;
         }
 
         private List<JobResult> GetPromotedJobs()

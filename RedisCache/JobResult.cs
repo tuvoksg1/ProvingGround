@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RedisCache
+﻿namespace RedisCache
 {
     public class JobResult
     {
@@ -13,7 +7,7 @@ namespace RedisCache
         public string Title { get; set; }
         public override string ToString()
         {
-            return IsPromoted ? $"{(Title ?? "Promoted Job")}" : "Odd Job";
+            return IsPromoted ? $"{Title} - Promoted Job" : Title;
         }
     }
 }
