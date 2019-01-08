@@ -321,5 +321,10 @@ namespace Windows
 
             resultTxt.Text = encryptedText.Decrypt(passphrase);
         }
+
+        private void FetchBtn_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

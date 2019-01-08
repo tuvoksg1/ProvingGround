@@ -61,13 +61,19 @@
             this.label2 = new System.Windows.Forms.Label();
             this.encPhraseTxt = new System.Windows.Forms.TextBox();
             this.plainTxt = new System.Windows.Forms.TextBox();
+            this.pageControl = new System.Windows.Forms.NumericUpDown();
+            this.ResultListBox = new System.Windows.Forms.ListBox();
+            this.FetchBtn = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
             this.TestMenu.SuspendLayout();
             this.EnumerateTab.SuspendLayout();
             this.SerializationTab.SuspendLayout();
+            this.IOTab.SuspendLayout();
             this.ElasticTab.SuspendLayout();
             this.MailTab.SuspendLayout();
             this.TestTab.SuspendLayout();
             this.cryptoTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pageControl)).BeginInit();
             this.SuspendLayout();
             // 
             // TestMenu
@@ -168,6 +174,10 @@
             // 
             // IOTab
             // 
+            this.IOTab.Controls.Add(this.label7);
+            this.IOTab.Controls.Add(this.FetchBtn);
+            this.IOTab.Controls.Add(this.ResultListBox);
+            this.IOTab.Controls.Add(this.pageControl);
             this.IOTab.Location = new System.Drawing.Point(4, 22);
             this.IOTab.Name = "IOTab";
             this.IOTab.Padding = new System.Windows.Forms.Padding(3);
@@ -417,6 +427,48 @@
             this.plainTxt.TabIndex = 0;
             this.plainTxt.Text = "Hello";
             // 
+            // pageControl
+            // 
+            this.pageControl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.pageControl.Location = new System.Drawing.Point(62, 15);
+            this.pageControl.Name = "pageControl";
+            this.pageControl.Size = new System.Drawing.Size(65, 20);
+            this.pageControl.TabIndex = 0;
+            // 
+            // ResultListBox
+            // 
+            this.ResultListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ResultListBox.FormattingEnabled = true;
+            this.ResultListBox.Location = new System.Drawing.Point(162, 15);
+            this.ResultListBox.Name = "ResultListBox";
+            this.ResultListBox.Size = new System.Drawing.Size(415, 459);
+            this.ResultListBox.TabIndex = 1;
+            // 
+            // FetchBtn
+            // 
+            this.FetchBtn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.FetchBtn.Location = new System.Drawing.Point(27, 62);
+            this.FetchBtn.Name = "FetchBtn";
+            this.FetchBtn.Size = new System.Drawing.Size(100, 23);
+            this.FetchBtn.TabIndex = 2;
+            this.FetchBtn.Text = "Fetch";
+            this.FetchBtn.UseVisualStyleBackColor = true;
+            this.FetchBtn.Click += new System.EventHandler(this.FetchBtn_Click);
+            // 
+            // label7
+            // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(24, 19);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(32, 13);
+            this.label7.TabIndex = 3;
+            this.label7.Text = "Page";
+            // 
             // TestHarness
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -429,12 +481,15 @@
             this.EnumerateTab.ResumeLayout(false);
             this.EnumerateTab.PerformLayout();
             this.SerializationTab.ResumeLayout(false);
+            this.IOTab.ResumeLayout(false);
+            this.IOTab.PerformLayout();
             this.ElasticTab.ResumeLayout(false);
             this.ElasticTab.PerformLayout();
             this.MailTab.ResumeLayout(false);
             this.TestTab.ResumeLayout(false);
             this.cryptoTab.ResumeLayout(false);
             this.cryptoTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pageControl)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -474,6 +529,10 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox encPhraseTxt;
         private System.Windows.Forms.TextBox plainTxt;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button FetchBtn;
+        private System.Windows.Forms.ListBox ResultListBox;
+        private System.Windows.Forms.NumericUpDown pageControl;
     }
 }
 
