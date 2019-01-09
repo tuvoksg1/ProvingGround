@@ -16,7 +16,7 @@ namespace RedisCache
         private const int MaxPromotedPages = 3;
         private const int PromotionsPerPage = 2;
         private const int PageSize = 10;
-        private const int TTL = 22;
+        private const int TTL = 5;
 
         public JobServer()
         {
@@ -25,14 +25,17 @@ namespace RedisCache
 
         public List<JobResult> GetJobs(string sessionId, int page)
         {
-            var standardResults = GetSearchJobs(page);
             var promoJobs = GetPromotedJobs(sessionId, page);
-            return promoJobs.Union(standardResults, _comparer).Take(PageSize).ToList();
+            var standardResults = GetSearchJobs(page, promoJobs.Count).Take(PageSize);
+            
+            return promoJobs.Union(standardResults, _comparer).ToList();
         }
 
-        private static List<JobResult> GetSearchJobs(int page)
+        private static List<JobResult> GetSearchJobs(int page, int promoCount)
         {
             var skip = (page - 1) * PageSize;
+
+            //if (page > 1) skip -= promoCount;
 
             return _database.Skip(skip).Take(PageSize + PromotionsPerPage).ToList();
         }
@@ -42,11 +45,13 @@ namespace RedisCache
             var key = $"promoted_jobs_{sessionId}";
             var cachedJobs = _cache.Database.Get<CacheList>(key) ?? new CacheList();
 
-            if (cachedJobs.Count > page) return cachedJobs.Single(item => item.Page == page).PromotedJobs;
+            if (cachedJobs.Count >= page) return cachedJobs.Single(item => item.Page == page).PromotedJobs;
             if (cachedJobs.Count >= MaxPromotedPages) return new List<JobResult>();
 
             var availablePromotions = GetPromotedJobs().Except(cachedJobs.All()).ToList();
             var chosePromotions = GetRandomPromotions(availablePromotions, PromotionsPerPage);
+
+            chosePromotions.ForEach(item => item.IsHighlighted = true);
 
             cachedJobs.Add(new CacheItem
             {

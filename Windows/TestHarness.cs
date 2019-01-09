@@ -331,7 +331,7 @@ namespace Windows
             var results = _jobServer.GetJobs(sessionId, page);
 
             ResultListBox.Items.Add($"Page {page} search for {sessionId}");
-            ResultListBox.Items.AddRange(results.ToArray());
+            ResultListBox.Items.AddRange(results.Select((item, index) => $"{++index} {item}").ToArray());
             ResultListBox.Items.Add("******************************************");
         }
 
