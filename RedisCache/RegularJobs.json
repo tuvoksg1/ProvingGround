@@ -18,7 +18,7 @@
     "Id": 3
   },
   {
-    "IsPromoted": true,
+    "IsPromoted": false,
     "IsHighlighted": false,
     "Title": "BBB",
     "Id": 4
@@ -36,7 +36,7 @@
     "Id": 6
   },
   {
-    "IsPromoted": true,
+    "IsPromoted": false,
     "IsHighlighted": false,
     "Title": "CCC",
     "Id": 7
@@ -234,7 +234,7 @@
     "Id": 39
   },
   {
-    "IsPromoted": true,
+    "IsPromoted": false,
     "IsHighlighted": false,
     "Title": "NNN",
     "Id": 40
@@ -270,7 +270,7 @@
     "Id": 45
   },
   {
-    "IsPromoted": true,
+    "IsPromoted": false,
     "IsHighlighted": false,
     "Title": "PPP",
     "Id": 46

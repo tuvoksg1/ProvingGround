@@ -67,6 +67,8 @@
             this.encPhraseTxt = new System.Windows.Forms.TextBox();
             this.plainTxt = new System.Windows.Forms.TextBox();
             this.ClearBtn = new System.Windows.Forms.Button();
+            this.BackBtn = new System.Windows.Forms.Button();
+            this.NextBtn = new System.Windows.Forms.Button();
             this.TestMenu.SuspendLayout();
             this.EnumerateTab.SuspendLayout();
             this.SerializationTab.SuspendLayout();
@@ -176,6 +178,8 @@
             // 
             // IOTab
             // 
+            this.IOTab.Controls.Add(this.NextBtn);
+            this.IOTab.Controls.Add(this.BackBtn);
             this.IOTab.Controls.Add(this.ClearBtn);
             this.IOTab.Controls.Add(this.SessionCombo);
             this.IOTab.Controls.Add(this.label7);
@@ -221,8 +225,6 @@
             // 
             // FetchBtn
             // 
-            this.FetchBtn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
             this.FetchBtn.Location = new System.Drawing.Point(15, 112);
             this.FetchBtn.Name = "FetchBtn";
             this.FetchBtn.Size = new System.Drawing.Size(121, 23);
@@ -233,7 +235,8 @@
             // 
             // ResultListBox
             // 
-            this.ResultListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.ResultListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ResultListBox.FormattingEnabled = true;
             this.ResultListBox.Location = new System.Drawing.Point(162, 15);
@@ -516,6 +519,26 @@
             this.ClearBtn.UseVisualStyleBackColor = true;
             this.ClearBtn.Click += new System.EventHandler(this.ClearBtn_Click);
             // 
+            // BackBtn
+            // 
+            this.BackBtn.Location = new System.Drawing.Point(15, 154);
+            this.BackBtn.Name = "BackBtn";
+            this.BackBtn.Size = new System.Drawing.Size(57, 23);
+            this.BackBtn.TabIndex = 6;
+            this.BackBtn.Text = "Back";
+            this.BackBtn.UseVisualStyleBackColor = true;
+            this.BackBtn.Click += new System.EventHandler(this.BackBtn_Click);
+            // 
+            // NextBtn
+            // 
+            this.NextBtn.Location = new System.Drawing.Point(76, 154);
+            this.NextBtn.Name = "NextBtn";
+            this.NextBtn.Size = new System.Drawing.Size(57, 23);
+            this.NextBtn.TabIndex = 7;
+            this.NextBtn.Text = "Next";
+            this.NextBtn.UseVisualStyleBackColor = true;
+            this.NextBtn.Click += new System.EventHandler(this.NextBtn_Click);
+            // 
             // TestHarness
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -582,6 +605,8 @@
         private System.Windows.Forms.NumericUpDown pagePicker;
         private System.Windows.Forms.ComboBox SessionCombo;
         private System.Windows.Forms.Button ClearBtn;
+        private System.Windows.Forms.Button NextBtn;
+        private System.Windows.Forms.Button BackBtn;
     }
 }
 

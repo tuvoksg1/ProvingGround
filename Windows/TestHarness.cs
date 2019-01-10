@@ -326,18 +326,42 @@ namespace Windows
         private readonly JobServer _jobServer = new JobServer();
         private void FetchBtn_Click(object sender, EventArgs e)
         {
-            var sessionId = SessionCombo.SelectedItem.ToString();
-            var page = (int)pagePicker.Value;
-            var results = _jobServer.GetJobs(sessionId, page);
-
-            ResultListBox.Items.Add($"Page {page} search for {sessionId}");
-            ResultListBox.Items.AddRange(results.Select((item, index) => $"{++index} {item}").ToArray());
-            ResultListBox.Items.Add("******************************************");
+            FetchItems();
         }
 
         private void ClearBtn_Click(object sender, EventArgs e)
         {
             ResultListBox.Items.Clear();
+        }
+
+        private void BackBtn_Click(object sender, EventArgs e)
+        {
+            if (pagePicker.Value > pagePicker.Minimum)
+            {
+                --pagePicker.Value;
+            }
+            FetchItems();
+        }
+
+        private void NextBtn_Click(object sender, EventArgs e)
+        {
+            if(pagePicker.Value < pagePicker.Maximum)
+            {
+                ++pagePicker.Value;
+            }
+
+            FetchItems();
+        }
+
+        private void FetchItems()
+        {
+            var page = (int)pagePicker.Value;
+            var sessionId = SessionCombo.SelectedItem.ToString();
+            var results = _jobServer.GetJobs(sessionId, page);
+
+            ResultListBox.Items.Add($"Page {page} search for {sessionId}");
+            ResultListBox.Items.AddRange(results.Select((item, index) => $"{++index} {item}").ToArray());
+            ResultListBox.Items.Add("******************************************");
         }
     }
 }

@@ -42,27 +42,28 @@ namespace RedisCache
 
         private List<JobResult> GetPromotedJobs(string sessionId, int page)
         {
+            if (page > MaxPromotedPages) return new List<JobResult>();
+
             var key = $"promoted_jobs_{sessionId}";
-            var cachedJobs = _cache.Database.Get<CacheList>(key) ?? new CacheList();
+            var cacheList = _cache.Database.Get<CacheList>(key) ?? new CacheList();
 
-            if (cachedJobs.Count >= page) return cachedJobs.Single(item => item.Page == page).PromotedJobs;
-            if (cachedJobs.Count >= MaxPromotedPages) return new List<JobResult>();
+            if (cacheList.HasPage(page)) return cacheList.Fetch(page).PromotedJobs;
 
-            var availablePromotions = GetPromotedJobs().Except(cachedJobs.All()).ToList();
+            var availablePromotions = GetAllPromotedJobs().Except(cacheList.All(), _comparer).ToList();
             var chosePromotions = GetRandomPromotions(availablePromotions, PromotionsPerPage);
 
-            cachedJobs.Add(new CacheItem
+            cacheList.Add(new CacheItem
             {
                 Page = page,
                 PromotedJobs = chosePromotions
             });
 
-            _cache.Database.Set(key, cachedJobs, TimeSpan.FromMinutes(TTL));
+            _cache.Database.Set(key, cacheList, TimeSpan.FromMinutes(TTL));
 
             return chosePromotions;
         }
 
-        private List<JobResult> GetPromotedJobs()
+        private List<JobResult> GetAllPromotedJobs()
         {
             return _database.Where(job => job.IsPromoted).ToList();
         }
