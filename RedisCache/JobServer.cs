@@ -26,7 +26,7 @@ namespace RedisCache
         public List<JobResult> GetJobs(string sessionId, int page)
         {
             var promoJobs = GetPromotedJobs(sessionId, page);
-            var standardResults = GetSearchJobs(page, promoJobs.Count).Take(PageSize);
+            var standardResults = GetSearchJobs(page, promoJobs.Count).Take(PageSize - promoJobs.Count);
             
             return promoJobs.Union(standardResults, _comparer).ToList();
         }
@@ -35,7 +35,7 @@ namespace RedisCache
         {
             var skip = (page - 1) * PageSize;
 
-            //if (page > 1) skip -= promoCount;
+            if (page > 1) skip -= promoCount * (page - 1);
 
             return _database.Skip(skip).Take(PageSize + PromotionsPerPage).ToList();
         }
@@ -50,8 +50,6 @@ namespace RedisCache
 
             var availablePromotions = GetPromotedJobs().Except(cachedJobs.All()).ToList();
             var chosePromotions = GetRandomPromotions(availablePromotions, PromotionsPerPage);
-
-            chosePromotions.ForEach(item => item.IsHighlighted = true);
 
             cachedJobs.Add(new CacheItem
             {
@@ -71,7 +69,13 @@ namespace RedisCache
 
         private List<JobResult> GetRandomPromotions(List<JobResult> promotedJobs, int size)
         {
-            if(promotedJobs.Count <= size) return promotedJobs;
+            if(promotedJobs.Count <= size) return promotedJobs.Select(promo => new JobResult
+            {
+                Id = promo.Id,
+                Title = promo.Title,
+                IsPromoted = promo.IsPromoted,
+                IsHighlighted = true
+            }).ToList();
 
             var hashSet = new HashSet<int>();
             var selectedPromos = new List<JobResult>();
@@ -82,7 +86,14 @@ namespace RedisCache
 
                 if (hashSet.Add(index))
                 {
-                    selectedPromos.Add(promotedJobs[index]);
+                    var promo = promotedJobs[index];
+                    selectedPromos.Add(new JobResult
+                    {
+                        Id = promo.Id,
+                        Title = promo.Title,
+                        IsPromoted = promo.IsPromoted,
+                        IsHighlighted = true
+                    });
                 }
             }
 
