@@ -18,7 +18,7 @@
     "Id": 3
   },
   {
-    "IsPromoted": false,
+    "IsPromoted": true,
     "IsHighlighted": false,
     "Title": "BBB",
     "Id": 4
@@ -36,7 +36,7 @@
     "Id": 6
   },
   {
-    "IsPromoted": false,
+    "IsPromoted": true,
     "IsHighlighted": false,
     "Title": "CCC",
     "Id": 7
@@ -204,7 +204,7 @@
     "Id": 34
   },
   {
-    "IsPromoted": false,
+    "IsPromoted": true,
     "IsHighlighted": false,
     "Title": "LLM",
     "Id": 35
@@ -234,7 +234,7 @@
     "Id": 39
   },
   {
-    "IsPromoted": false,
+    "IsPromoted": true,
     "IsHighlighted": false,
     "Title": "NNN",
     "Id": 40
@@ -252,7 +252,7 @@
     "Id": 42
   },
   {
-    "IsPromoted": false,
+    "IsPromoted": true,
     "IsHighlighted": false,
     "Title": "OOO",
     "Id": 43
@@ -270,7 +270,7 @@
     "Id": 45
   },
   {
-    "IsPromoted": false,
+    "IsPromoted": true,
     "IsHighlighted": false,
     "Title": "PPP",
     "Id": 46

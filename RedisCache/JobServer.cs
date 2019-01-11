@@ -14,7 +14,7 @@ namespace RedisCache
         private static readonly Random _randomizer = new Random();
         private static readonly JobComparer _comparer = new JobComparer();
         private const int MaxPromotedPages = 3;
-        private const int PromotionsPerPage = 2;
+        private const int PromotionsPerPage = 15;
         private const int PageSize = 10;
         private const int TTL = 5;
 
@@ -26,7 +26,7 @@ namespace RedisCache
         public List<JobResult> GetJobs(string sessionId, int page)
         {
             var promoJobs = GetPromotedJobs(sessionId, page);
-            var standardResults = GetSearchJobs(page, promoJobs.Count).Take(PageSize - promoJobs.Count);
+            var standardResults = GetSearchJobs(page, promoJobs.Count()).Take(PageSize);
             
             return promoJobs.Union(standardResults, _comparer).ToList();
         }
@@ -35,14 +35,12 @@ namespace RedisCache
         {
             var skip = (page - 1) * PageSize;
 
-            if (page > 1) skip -= promoCount * (page - 1);
-
             return _database.Skip(skip).Take(PageSize + PromotionsPerPage).ToList();
         }
 
         private List<JobResult> GetPromotedJobs(string sessionId, int page)
         {
-            if (page > MaxPromotedPages) return new List<JobResult>();
+            if (PromotionsPerPage < 1 || page > MaxPromotedPages) return new List<JobResult>();
 
             var key = $"promoted_jobs_{sessionId}";
             var cacheList = _cache.Database.Get<CacheList>(key) ?? new CacheList();
@@ -50,7 +48,7 @@ namespace RedisCache
             if (cacheList.HasPage(page)) return cacheList.Fetch(page).PromotedJobs;
 
             var availablePromotions = GetAllPromotedJobs().Except(cacheList.All(), _comparer).ToList();
-            var chosePromotions = GetRandomPromotions(availablePromotions, PromotionsPerPage);
+            var chosePromotions = GetRandomPromotions(availablePromotions, CalculatePromoCount(page));
 
             cacheList.Add(new CacheItem
             {
@@ -63,7 +61,7 @@ namespace RedisCache
             return chosePromotions;
         }
 
-        private List<JobResult> GetAllPromotedJobs()
+        private static List<JobResult> GetAllPromotedJobs()
         {
             return _database.Where(job => job.IsPromoted).ToList();
         }
@@ -123,5 +121,18 @@ namespace RedisCache
             MissingMemberHandling = MissingMemberHandling.Ignore,
             NullValueHandling = NullValueHandling.Include
         };
+
+        private static int CalculatePromoCount(int page)
+        {
+            if (PromotionsPerPage < 1 || page > MaxPromotedPages) return 0;
+
+            var total = GetAllPromotedJobs().Count;
+
+            var quotient = Math.DivRem(total, PromotionsPerPage, out var remainder);
+
+            if (quotient < page - 1) return 0;
+
+            return quotient < page ? remainder : PromotionsPerPage;
+        }
     }
 }
