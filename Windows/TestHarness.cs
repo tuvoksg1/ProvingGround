@@ -277,19 +277,22 @@ namespace Windows
 
         private void SendSMSButton_Click(object sender, EventArgs e)
         {
-            var originalText = "https://localhost:44340/core/connect/authorize?client_id=listservice&redirect_uri=http%3A%2F%2Flocalhost%3A52300%2FList%2FIndex%2F&response_mode=form_post&response_type=code%20id_token%20token&scope=openid%20profile%20offline_access%20api%20listservice&state=OpenIdConnect.AuthenticationProperties%3DpbyYssoNwD_DtPGpLAXpUcqGFbnzEVCUHStyLL_flr2Q5qhC-wuTp3zMK85SCLXnDKyyFN_Q3-Li-yLE35icB67DICo3sVp_pYXhkKiBlIWwtGvD0Xwkszuja0f9DEaPqH3LGUOPn6GJUI35k_gg18EOxNtUabMHYvSBTZK3rPG3Y3_9FtrjW9ysHN5N1j0rawPyqrYB4fWW9IETq2QcQg&nonce=636067951330093052.NzkwNjRjYjQtOGYxOC00MTFlLTk3ZTMtMDBlMmI3ZDQ1MTYxMWI4MDI0ZjktNTM5ZS00NTYwLThlYzctZWNiNzgxYjM1YzZm";
+            //var originalText = "https://localhost:44340/core/connect/authorize?client_id=listservice&redirect_uri=http%3A%2F%2Flocalhost%3A52300%2FList%2FIndex%2F&response_mode=form_post&response_type=code%20id_token%20token&scope=openid%20profile%20offline_access%20api%20listservice&state=OpenIdConnect.AuthenticationProperties%3DpbyYssoNwD_DtPGpLAXpUcqGFbnzEVCUHStyLL_flr2Q5qhC-wuTp3zMK85SCLXnDKyyFN_Q3-Li-yLE35icB67DICo3sVp_pYXhkKiBlIWwtGvD0Xwkszuja0f9DEaPqH3LGUOPn6GJUI35k_gg18EOxNtUabMHYvSBTZK3rPG3Y3_9FtrjW9ysHN5N1j0rawPyqrYB4fWW9IETq2QcQg&nonce=636067951330093052.NzkwNjRjYjQtOGYxOC00MTFlLTk3ZTMtMDBlMmI3ZDQ1MTYxMWI4MDI0ZjktNTM5ZS00NTYwLThlYzctZWNiNzgxYjM1YzZm";
 
             //var queryStringCollection = HttpUtility.ParseQueryString(originalText, Encoding.UTF8);
 
             //var redirectUrl = queryStringCollection["redirect_uri"];
             //var finalText = HttpUtility.UrlDecode(redirectUrl, Encoding.UTF8);
-            //var twilio = new TwilioRestClient("ACafbd4ac2cb2d264856b110ab36bb1478", "d37cca9d8e9f52f6c2c5a308e7305a59");
+            var cipher = "FSjD4t6pvSgMI4sVXaY7YqBhvQ/qejpTqPfcQY4FHgE=".Decrypt(string.Empty);
+            var accountId = "mBK9T/a4LR1OwmgWzJb9djOzfMVb05iOwvxa1f31eCHre4mX3kNxUeL164kiWLPg".Decrypt(cipher);
+            var authToken = "lV9xMSRaofUDBDMH3kiFLFJsLztFW5WcbeuMzs2sM7jqlH5oWie2yC4k6RXMIoAB".Decrypt(cipher);
+            var twilio = new TwilioRestClient(accountId, authToken);
 
-            //var result = twilio.SendMessage("+447481344084", "+447944062159", "2FA Test");
+            var result = twilio.SendMessage("+447481344084", "+447944062159", "2FA Test");
 
-            //Trace.TraceInformation(result.Status);
+            Trace.TraceInformation(result.Status);
 
-            //MessageBox.Show(@"Message Sent");
+            MessageBox.Show(@"Message Sent");
         }
 
         private void TestBtn_Click(object sender, EventArgs e)
