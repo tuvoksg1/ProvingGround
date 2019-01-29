@@ -24,8 +24,10 @@ namespace RedisCache
         {
             var promoJobs = GetPromotedJobs(sessionId, page);
             var standardResults = GetSearchJobs(page, promoJobs.Count()).Take(PageSize);
-            
-            return promoJobs.Union(standardResults, _comparer).ToList();
+
+            //return promoJobs.Union(standardResults, _comparer).ToList();
+            promoJobs.AddRange(standardResults);
+            return promoJobs;
         }
 
         private static List<JobResult> GetSearchJobs(int page, int promoCount)

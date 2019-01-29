@@ -96,6 +96,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Debugging\Car.cs" />
+    <Compile Include="Models\Debugging\Factory.cs" />
+    <Compile Include="Models\Debugging\Seat.cs" />
+    <Compile Include="Models\Debugging\Wheel.cs" />
+    <Compile Include="Models\Debugging\Wheelbase.cs" />
     <Compile Include="Models\Elastic\LogEntry.cs" />
     <Compile Include="Models\Elastic\Repository.cs" />
     <Compile Include="Models\Encryption\CryptoExtension.cs" />

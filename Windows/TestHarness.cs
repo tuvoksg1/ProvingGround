@@ -21,6 +21,7 @@ using Newtonsoft.Json.Linq;
 using Twilio;
 using Result = Windows.Models.IterateTab.Result;
 using RedisCache;
+using Windows.Models.Debug;
 
 //using Windows.Models.Extensions;
 
@@ -297,16 +298,37 @@ namespace Windows
 
         private void TestBtn_Click(object sender, EventArgs e)
         {
-            //const string tenantId = "1430bb8e-43ba-40a7-915e-4d73cc66cd66";
-            //const string listId = "386b4c5e-4482-400e-89ca-f592c89e6816";
-            //const string listName = "GM_Master_EmailBlackList";
-            //const string targetFile = @"C:\Users\Fola\Dropbox\Pledge\Lookup\Colombia.txt";
-            //var enforcer = new LookupEnforcer(targetFile, 3);
-            //var result = enforcer.PerformProxyLookup(listId, listName, tenantId);
+            var car = new Car
+            {
+                Seats = new List<Seat>(),
+                Wheels = new List<Wheel>
+                {
+                    new Wheel{ Position = "Front Left"},
+                    new Wheel{ Position = "Front Right"},
+                    new Wheel{ Position = "Rear Left"},
+                    new Wheel{ Position = "Rear Right"}
+                }
+            };
 
-            var result = TaskRunner.ExecuteInstance();
+            var factory = new Factory();
 
-            MessageBox.Show(result);
+            string text = "Undefined";
+            Car wheel = null;
+            switch (wheel?.Wheelbase)
+            {
+                case Wheelbase.Short:
+                    text = "Short";
+                    break;
+                case Wheelbase.Long:
+                    text = "Long";
+                    break;
+                default:
+                    text = "None";
+                    break;
+            }
+            MessageBox.Show(text);
+
+            //MessageBox.Show(factory.Inspect(car, "MOT Pass"));
         }
 
         private void EncryptBtn_Click(object sender, EventArgs e)
