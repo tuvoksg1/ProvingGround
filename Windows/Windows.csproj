@@ -98,6 +98,7 @@
   <ItemGroup>
     <Compile Include="Models\Debugging\Car.cs" />
     <Compile Include="Models\Debugging\Factory.cs" />
+    <Compile Include="Models\Debugging\Manufacturer.cs" />
     <Compile Include="Models\Debugging\Seat.cs" />
     <Compile Include="Models\Debugging\Wheel.cs" />
     <Compile Include="Models\Debugging\Wheelbase.cs" />
@@ -142,6 +143,9 @@
       <DependentUpon>TestHarness.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="Manufacturers.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -161,6 +165,10 @@
     <ProjectReference Include="..\RedisCache\RedisCache.csproj">
       <Project>{155fa439-da16-4cc1-a1c9-9f28f200b2d9}</Project>
       <Name>RedisCache</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{69f8f8a5-c2c1-4be3-9003-c6901dcfb66d}</Project>
+      <Name>Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

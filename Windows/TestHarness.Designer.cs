@@ -37,6 +37,9 @@
             this.DeserializeBtn = new System.Windows.Forms.Button();
             this.SerializeBtn = new System.Windows.Forms.Button();
             this.IOTab = new System.Windows.Forms.TabPage();
+            this.NextBtn = new System.Windows.Forms.Button();
+            this.BackBtn = new System.Windows.Forms.Button();
+            this.ClearBtn = new System.Windows.Forms.Button();
             this.SessionCombo = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.FetchBtn = new System.Windows.Forms.Button();
@@ -66,9 +69,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.encPhraseTxt = new System.Windows.Forms.TextBox();
             this.plainTxt = new System.Windows.Forms.TextBox();
-            this.ClearBtn = new System.Windows.Forms.Button();
-            this.BackBtn = new System.Windows.Forms.Button();
-            this.NextBtn = new System.Windows.Forms.Button();
+            this.DataBox = new System.Windows.Forms.TextBox();
             this.TestMenu.SuspendLayout();
             this.EnumerateTab.SuspendLayout();
             this.SerializationTab.SuspendLayout();
@@ -193,6 +194,36 @@
             this.IOTab.TabIndex = 2;
             this.IOTab.Text = "Redis Cache";
             this.IOTab.UseVisualStyleBackColor = true;
+            // 
+            // NextBtn
+            // 
+            this.NextBtn.Location = new System.Drawing.Point(76, 154);
+            this.NextBtn.Name = "NextBtn";
+            this.NextBtn.Size = new System.Drawing.Size(57, 23);
+            this.NextBtn.TabIndex = 7;
+            this.NextBtn.Text = "Next";
+            this.NextBtn.UseVisualStyleBackColor = true;
+            this.NextBtn.Click += new System.EventHandler(this.NextBtn_Click);
+            // 
+            // BackBtn
+            // 
+            this.BackBtn.Location = new System.Drawing.Point(15, 154);
+            this.BackBtn.Name = "BackBtn";
+            this.BackBtn.Size = new System.Drawing.Size(57, 23);
+            this.BackBtn.TabIndex = 6;
+            this.BackBtn.Text = "Back";
+            this.BackBtn.UseVisualStyleBackColor = true;
+            this.BackBtn.Click += new System.EventHandler(this.BackBtn_Click);
+            // 
+            // ClearBtn
+            // 
+            this.ClearBtn.Location = new System.Drawing.Point(15, 376);
+            this.ClearBtn.Name = "ClearBtn";
+            this.ClearBtn.Size = new System.Drawing.Size(121, 23);
+            this.ClearBtn.TabIndex = 5;
+            this.ClearBtn.Text = "Clear";
+            this.ClearBtn.UseVisualStyleBackColor = true;
+            this.ClearBtn.Click += new System.EventHandler(this.ClearBtn_Click);
             // 
             // SessionCombo
             // 
@@ -364,6 +395,7 @@
             // 
             // TestTab
             // 
+            this.TestTab.Controls.Add(this.DataBox);
             this.TestTab.Controls.Add(this.TestBtn);
             this.TestTab.Location = new System.Drawing.Point(4, 22);
             this.TestTab.Name = "TestTab";
@@ -509,35 +541,12 @@
             this.plainTxt.TabIndex = 0;
             this.plainTxt.Text = "Hello";
             // 
-            // ClearBtn
+            // DataBox
             // 
-            this.ClearBtn.Location = new System.Drawing.Point(15, 376);
-            this.ClearBtn.Name = "ClearBtn";
-            this.ClearBtn.Size = new System.Drawing.Size(121, 23);
-            this.ClearBtn.TabIndex = 5;
-            this.ClearBtn.Text = "Clear";
-            this.ClearBtn.UseVisualStyleBackColor = true;
-            this.ClearBtn.Click += new System.EventHandler(this.ClearBtn_Click);
-            // 
-            // BackBtn
-            // 
-            this.BackBtn.Location = new System.Drawing.Point(15, 154);
-            this.BackBtn.Name = "BackBtn";
-            this.BackBtn.Size = new System.Drawing.Size(57, 23);
-            this.BackBtn.TabIndex = 6;
-            this.BackBtn.Text = "Back";
-            this.BackBtn.UseVisualStyleBackColor = true;
-            this.BackBtn.Click += new System.EventHandler(this.BackBtn_Click);
-            // 
-            // NextBtn
-            // 
-            this.NextBtn.Location = new System.Drawing.Point(76, 154);
-            this.NextBtn.Name = "NextBtn";
-            this.NextBtn.Size = new System.Drawing.Size(57, 23);
-            this.NextBtn.TabIndex = 7;
-            this.NextBtn.Text = "Next";
-            this.NextBtn.UseVisualStyleBackColor = true;
-            this.NextBtn.Click += new System.EventHandler(this.NextBtn_Click);
+            this.DataBox.Location = new System.Drawing.Point(200, 98);
+            this.DataBox.Name = "DataBox";
+            this.DataBox.Size = new System.Drawing.Size(194, 20);
+            this.DataBox.TabIndex = 1;
             // 
             // TestHarness
             // 
@@ -558,6 +567,7 @@
             this.ElasticTab.PerformLayout();
             this.MailTab.ResumeLayout(false);
             this.TestTab.ResumeLayout(false);
+            this.TestTab.PerformLayout();
             this.cryptoTab.ResumeLayout(false);
             this.cryptoTab.PerformLayout();
             this.ResumeLayout(false);
@@ -607,6 +617,7 @@
         private System.Windows.Forms.Button ClearBtn;
         private System.Windows.Forms.Button NextBtn;
         private System.Windows.Forms.Button BackBtn;
+        private System.Windows.Forms.TextBox DataBox;
     }
 }
 

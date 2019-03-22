@@ -16,6 +16,7 @@ using Twilio;
 using Result = Windows.Models.IterateTab.Result;
 using RedisCache;
 using Windows.Models.Debugging;
+using Utils;
 
 //using Windows.Models.Extensions;
 
@@ -292,37 +293,8 @@ namespace Windows
 
         private void TestBtn_Click(object sender, EventArgs e)
         {
-            var car = new Car
-            {
-                Seats = new List<Seat>(),
-                Wheels = new List<Wheel>
-                {
-                    new Wheel{ Position = "Front Left"},
-                    new Wheel{ Position = "Front Right"},
-                    new Wheel{ Position = "Rear Left"},
-                    new Wheel{ Position = "Rear Right"}
-                }
-            };
-
-            var factory = new Factory();
-
-            string text = "Undefined";
-            Car wheel = null;
-            switch (wheel?.Wheelbase)
-            {
-                case Wheelbase.Short:
-                    text = "Short";
-                    break;
-                case Wheelbase.Long:
-                    text = "Long";
-                    break;
-                default:
-                    text = "None";
-                    break;
-            }
-            MessageBox.Show(text);
-
-            //MessageBox.Show(factory.Inspect(car, "MOT Pass"));
+            //EvalauteConditional();
+            EvaulateEnums(DataBox.Text);
         }
 
         private void EncryptBtn_Click(object sender, EventArgs e)
@@ -381,6 +353,75 @@ namespace Windows
             ResultListBox.Items.Add($"Page {page} search for {sessionId}");
             ResultListBox.Items.AddRange(results.Select((item, index) => $"{++index} {item}").ToArray());
             ResultListBox.Items.Add("******************************************");
+        }
+
+        private void EvalauteConditional()
+        {
+            var car = new Car
+            {
+                Seats = new List<Seat>(),
+                Wheels = new List<Wheel>
+                {
+                    new Wheel{ Position = "Front Left"},
+                    new Wheel{ Position = "Front Right"},
+                    new Wheel{ Position = "Rear Left"},
+                    new Wheel{ Position = "Rear Right"}
+                }
+            };
+
+            var factory = new Factory();
+
+            string text = "Undefined";
+            Car wheel = null;
+            switch (wheel?.Wheelbase)
+            {
+                case Wheelbase.Short:
+                    text = "Short";
+                    break;
+                case Wheelbase.Long:
+                    text = "Long";
+                    break;
+                default:
+                    text = "None";
+                    break;
+            }
+            MessageBox.Show(text);
+
+            //MessageBox.Show(factory.Inspect(car, "MOT Pass"));
+        }
+
+        private void EvaulateEnums(string manufacturerName)
+        {
+            if(!Enum.IsDefined(typeof(Manufacturer), manufacturerName))
+            {
+                return;
+            }
+
+
+            //var configList = new List<Manufacturer> { Manufacturer.Ford, Manufacturer.Renault,
+            //    Manufacturer.Tesla, Manufacturer.Toyota, Manufacturer.Renault };
+
+            //JsonHelper.ToFile(configList, "Manufacturers.json");
+
+            if (Enum.TryParse<Manufacturer>(manufacturerName, out var manufacturer))
+            {
+                var message = manufacturer >= Manufacturer.Renault ? $"{manufacturer} is a sanctioned manufacturer" :
+                $"{manufacturer} is NOT a sanctioned manufacturer";
+
+                MessageBox.Show(message);
+            }
+
+        }
+
+        private void EvaulateEnums(Manufacturer manufacturer)
+        {
+            var data = JsonHelper.FromFile<List<Manufacturer>>("Manufacturers.json");
+            var combine = new HashSet<Manufacturer>(data);
+
+            var message = combine.Contains(manufacturer) ? $"{manufacturer} is a sanctioned manufacturer" :
+                $"{manufacturer} is NOT a sanctioned manufacturer";
+
+            MessageBox.Show(message);
         }
     }
 }
