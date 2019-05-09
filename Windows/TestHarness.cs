@@ -17,6 +17,7 @@ using Result = Windows.Models.IterateTab.Result;
 using RedisCache;
 using Windows.Models.Debugging;
 using Utils;
+using DapperConnect;
 
 //using Windows.Models.Extensions;
 
@@ -293,8 +294,8 @@ namespace Windows
 
         private void TestBtn_Click(object sender, EventArgs e)
         {
-            //EvalauteConditional();
-            EvaulateEnums(DataBox.Text);
+            var connect = new SqlConnector();
+            connect.RunQuery();
         }
 
         private void EncryptBtn_Click(object sender, EventArgs e)
@@ -314,7 +315,7 @@ namespace Windows
             resultTxt.Text = encryptedText.Decrypt(passphrase);
         }
 
-        private readonly JobServer _jobServer = new JobServer();
+        //private readonly JobServer _jobServer = new JobServer();
         private void FetchBtn_Click(object sender, EventArgs e)
         {
             FetchItems();
@@ -348,11 +349,11 @@ namespace Windows
         {
             var page = (int)pagePicker.Value;
             var sessionId = SessionCombo.SelectedItem.ToString();
-            var results = _jobServer.GetJobs(sessionId, page);
+            //var results = _jobServer.GetJobs(sessionId, page);
 
-            ResultListBox.Items.Add($"Page {page} search for {sessionId}");
-            ResultListBox.Items.AddRange(results.Select((item, index) => $"{++index} {item}").ToArray());
-            ResultListBox.Items.Add("******************************************");
+            //ResultListBox.Items.Add($"Page {page} search for {sessionId}");
+            //ResultListBox.Items.AddRange(results.Select((item, index) => $"{++index} {item}").ToArray());
+            //ResultListBox.Items.Add("******************************************");
         }
 
         private void EvalauteConditional()
@@ -422,6 +423,18 @@ namespace Windows
                 $"{manufacturer} is NOT a sanctioned manufacturer";
 
             MessageBox.Show(message);
+        }
+
+        private void SplitStringText(string text)
+        {
+            var wheel = new Wheel { Position = text };
+
+            var first = wheel.Level1() ?? "Null";
+            var second = wheel.Level2() ?? "Null";
+            var third = wheel.Level3() ?? "Null";
+            var fourth = wheel.Level4() ?? "Null";
+
+            MessageBox.Show($"First: {first}\nSecond: {second}\nThird: {third}\nFourth: {fourth}");
         }
     }
 }

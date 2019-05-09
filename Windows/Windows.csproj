@@ -108,6 +108,7 @@
     <Compile Include="Models\Encryption\DataCrypto.cs" />
     <Compile Include="Models\Extensions\EnumExtension.cs" />
     <Compile Include="Models\Extensions\EnumInfo.cs" />
+    <Compile Include="Models\Extensions\WheelExtension.cs" />
     <Compile Include="Models\IterateTab\BaseNode.cs" />
     <Compile Include="Models\IterateTab\Enums.cs" />
     <Compile Include="Models\IterateTab\IResult.cs" />
@@ -158,6 +159,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DapperConnect\DapperConnect.csproj">
+      <Project>{6879977f-6c12-4356-bcca-078c94606023}</Project>
+      <Name>DapperConnect</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LoggingUtility\LoggingUtility.csproj">
       <Project>{01f07d43-d5f7-4e89-8f2a-c94e33421a79}</Project>
       <Name>LoggingUtility</Name>
